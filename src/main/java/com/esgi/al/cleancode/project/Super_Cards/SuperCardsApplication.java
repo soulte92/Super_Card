@@ -1,13 +1,31 @@
 package com.esgi.al.cleancode.project.Super_Cards;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @SpringBootApplication
-public class SuperCardsApplication {
+public class SuperCardsApplication implements CommandLineRunner {
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SuperCardsApplication.class, args);
 	}
 
+	@Override
+	public void run(String... args) throws Exception {
+		// Insert Script
+		String sql = "INSERT INTO public.\"Hero\" " +
+				"(name, hp) VALUES ('Naruto', 254);";
+
+		int rows = jdbcTemplate.update(sql);
+		if (rows > 0){
+			System.out.println("A new row has been inserted.");
+		}
+
+	}
 }
