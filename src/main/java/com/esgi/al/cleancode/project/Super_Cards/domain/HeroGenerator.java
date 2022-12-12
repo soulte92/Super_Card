@@ -8,6 +8,8 @@ public class HeroGenerator {
     public static Hero generateRandomHeroWithSilverPack(){
         String speciality = SpecialityGenerator.generateRandomSpeciality();
         String rarety = RaretyGenerator.generateSilverCardRarety();
-        return new Hero("SUPER_TOTO", speciality, rarety);
+        Hero hero = new Hero("SUPER_TOTO", speciality, rarety);
+        hero = HeroConfiguration.initCarateristicsBySpeciality(hero);
+        return hero;
     }
 }

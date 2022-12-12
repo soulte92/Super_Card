@@ -1,5 +1,6 @@
 package com.esgi.al.cleancode.project.Super_Cards.domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,8 +78,16 @@ class HeroTest {
     @Test
     void should_throw_when_enhace_hero_caracteritics_with_negative_perCent(){
         Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
-        fail();
-        //assertThrows(HeroException.class, hero2.enhaceCaracteriticsByPerCent(-15.));
+        hero2 = HeroConfiguration.initCarateristicsBySpeciality(hero2);
+        Hero finalHero = hero2;
+
+        // Should throw exception when percent is not in ]0,1[
+        Assertions.assertThrows(HeroException.class, () -> {
+            finalHero.enhaceCaracteriticsByPerCent(-15.);
+        });
+        Assertions.assertThrows(HeroException.class, () -> {
+            finalHero.enhaceCaracteriticsByPerCent(5.);
+        });
     }
 
     @Test
@@ -153,11 +162,6 @@ class HeroTest {
         assertEquals(newHero.level, hero2.level);
         assertEquals(newHero.rarety, hero2.rarety);
         assertEquals(newHero.speciality, hero2.speciality);
-    }
-
-    @Test
-    void should_not_copy_hero(){
-        fail();
     }
 
     @Test

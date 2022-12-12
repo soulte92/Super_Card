@@ -1,5 +1,6 @@
 package com.esgi.al.cleancode.project.Super_Cards.domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,9 +32,11 @@ class HeroCaracteriticsTest {
 
     @Test
     void should_not_initialize_hero_carateristics_by_speciality(){
-        Hero hero1 = new Hero("toto", Speciality.TANK.label, Rarety.COMMON.label);
-        Hero newHero = HeroConfiguration.initCarateristicsBySpeciality(hero1);
-        fail();
+        Hero hero1 = new Hero("toto", "DEMON_SPECIALITY", Rarety.COMMON.label);
+        //Hero newHero = HeroConfiguration.initCarateristicsBySpeciality(hero1);
+        Assertions.assertThrows(HeroConfigurationException.class, () -> {
+            HeroConfiguration.initCarateristicsBySpeciality(hero1);
+        });
     }
 
     @Test
@@ -61,10 +64,12 @@ class HeroCaracteriticsTest {
 
     @Test
     void should_not_enhace_hero_caracteritics_by_not_supported_rarety(){
-        Hero hero1 = new Hero("toto", Speciality.TANK.label, "DEMON");
+        Hero hero1 = new Hero("toto", Speciality.TANK.label, "DEMON_RARETY");
         Hero newHero = HeroConfiguration.initCarateristicsBySpeciality(hero1);
-        newHero = HeroConfiguration.enhaceCaracteriticsByRarety(newHero);
-        fail();
+        //newHero = HeroConfiguration.enhaceCaracteriticsByRarety(newHero);
+        Assertions.assertThrows(HeroConfigurationException.class, () -> {
+            System.out.println(HeroConfiguration.enhaceCaracteriticsByRarety(newHero));
+        });
     }
 
 }

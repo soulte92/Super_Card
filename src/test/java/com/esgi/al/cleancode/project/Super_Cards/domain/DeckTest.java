@@ -1,11 +1,16 @@
 package com.esgi.al.cleancode.project.Super_Cards.domain;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doThrow;
 
+@ExtendWith(MockitoExtension.class)
 class DeckTest {
 
     @Test
@@ -89,9 +94,10 @@ class DeckTest {
         assertTrue(deck.heroArrayList.contains(newHero2));
         assertTrue(deck.heroArrayList.contains(newHero3));
 
+        //Hero retrievedHero = deck.heroArrayList.get(1);
         // After retrieve newHero2
         deck.retrieveHeroByIndex(1);
-        assertFalse(deck.heroArrayList.contains(newHero2));
+        assertFalse(deck.heroArrayList.contains(newHero2));//TODO memory issue
         assertEquals(deck.heroArrayList.size(), 2);
         assertEquals(deck.heroArrayList.get(0), newHero1);
         assertEquals(deck.heroArrayList.get(1), newHero3);
@@ -111,9 +117,10 @@ class DeckTest {
         assertEquals(deck.heroArrayList.size(), 1);
         assertTrue(deck.heroArrayList.contains(newHero1));
 
-        // After retrieve newHero2
-        deck.retrieveHeroByIndex(1);
-        fail();
+        // Throw exception because try to retrieve non-existing hero
+        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            deck.retrieveHeroByIndex(1);
+        });
     }
 
     @Test
@@ -126,7 +133,6 @@ class DeckTest {
         heroArrayList.add(newHero2);
 
         deck.addHeros(heroArrayList);
-
         assertEquals(deck.getHeroByIndex(1), newHero2);
     }
 
@@ -141,6 +147,9 @@ class DeckTest {
 
         deck.addHeros(heroArrayList);
 
-        assertEquals(deck.getHeroByIndex(2), newHero2);
+        // Throw exception because try to get non-existing hero
+        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {
+            deck.getHeroByIndex(2);
+        });
     }
 }

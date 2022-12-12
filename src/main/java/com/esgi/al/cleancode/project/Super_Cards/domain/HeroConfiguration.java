@@ -1,6 +1,7 @@
 package com.esgi.al.cleancode.project.Super_Cards.domain;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class HeroConfiguration {
     public static HashMap<String, HashMap<String, Integer>> configSpecialPowerMap(){
@@ -28,34 +29,34 @@ public class HeroConfiguration {
 
     public static Hero initCarateristicsBySpeciality(Hero hero){
         Hero newHero = hero.copy();
-        if (hero.speciality!="TANK" && hero.speciality!="KILLER" && hero.speciality!="MAGICIAN"){
-            HeroConfigurationException.notSupportedSpeciality(hero.speciality);
-        }
-        if(hero.speciality == Speciality.TANK.label){
+        if(hero.speciality.equals(Speciality.TANK.label)){
             newHero.setCaracteristics(1000, 100, 20);
-            //TODO • Puissance supplémentaires contre mages : 20
         }
-        else if(hero.speciality == Speciality.KILLER.label){
+        else if(hero.speciality.equals(Speciality.KILLER.label)){
             newHero.setCaracteristics(800, 200, 5);
-            //TODO • Puissance supplémentaires contre tanks : 30
         }
-        else if(hero.speciality == Speciality.MAGICIAN.label){
+        else if(hero.speciality.equals(Speciality.MAGICIAN.label)){
             newHero.setCaracteristics(700, 150, 10);
-            //TODO • Puissance supplémentaires contre KILLER : 25
+        }
+        else{
+            throw HeroConfigurationException.notSupportedSpeciality(hero.speciality);
         }
         return newHero;
     }
 
     public static Hero enhaceCaracteriticsByRarety(Hero hero){
         Hero newHero = hero.copy();
-        if(hero.rarety == Rarety.COMMON.label){
+        if(hero.rarety.equals(Rarety.COMMON.label)){
             newHero.enhaceCaracteriticsByPerCent(0);
         }
-        else if(hero.rarety == Rarety.RARE.label){
+        else if(hero.rarety.equals(Rarety.RARE.label)){
             newHero.enhaceCaracteriticsByPerCent(0.1);
         }
-        else if(hero.rarety == Rarety.LEGENDARY.label){
+        else if(hero.rarety.equals(Rarety.LEGENDARY.label)){
             newHero.enhaceCaracteriticsByPerCent(0.2);
+        }
+        else{
+            throw HeroConfigurationException.notSupportedRarety(hero.rarety);
         }
         return newHero;
     }

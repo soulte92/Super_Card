@@ -76,8 +76,8 @@ public class Hero {
     }
 
     public void enhaceCaracteriticsByPerCent(double perCent){
-        if (perCent<0){
-            HeroException.enhaceCaracteriticsByPerCentException(perCent);
+        if ((0>perCent) || (perCent>1)){
+            throw HeroException.enhaceCaracteriticsByPerCentException(perCent);
         }
         this.hp += this.hp * perCent;
         this.power += this.power * perCent;
