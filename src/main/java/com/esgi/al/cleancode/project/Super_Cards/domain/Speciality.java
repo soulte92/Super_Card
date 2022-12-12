@@ -1,4 +1,6 @@
-package com.esgi.al.cleancode.project.Super_Cards;
+package com.esgi.al.cleancode.project.Super_Cards.domain;
+
+import java.awt.*;
 
 public enum Speciality {
     TANK("TANK"),

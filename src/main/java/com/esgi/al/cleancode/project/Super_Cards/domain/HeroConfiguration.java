@@ -1,8 +1,8 @@
-package com.esgi.al.cleancode.project.Super_Cards;
+package com.esgi.al.cleancode.project.Super_Cards.domain;
 
 import java.util.HashMap;
 
-public class HeroCaracteritics {
+public class HeroConfiguration {
     public static HashMap<String, HashMap<String, Integer>> configSpecialPowerMap(){
         HashMap<String, HashMap<String, Integer>> specialPowerMap = new HashMap<String, HashMap<String, Integer>>();
 
@@ -28,42 +28,23 @@ public class HeroCaracteritics {
 
     public static Hero initCarateristicsBySpeciality(Hero hero){
         Hero newHero = hero.copy();
-        if(hero.speciality == Speciality.TANK){
+        if (hero.speciality!="TANK" && hero.speciality!="KILLER" && hero.speciality!="MAGICIAN"){
+            HeroConfigurationException.notSupportedSpeciality(hero.speciality);
+        }
+        if(hero.speciality == Speciality.TANK.label){
             newHero.setCaracteristics(1000, 100, 20);
             //TODO • Puissance supplémentaires contre mages : 20
         }
-        else if(hero.speciality == Speciality.KILLER){
+        else if(hero.speciality == Speciality.KILLER.label){
             newHero.setCaracteristics(800, 200, 5);
             //TODO • Puissance supplémentaires contre tanks : 30
         }
-        else if(hero.speciality == Speciality.MAGICIAN){
+        else if(hero.speciality == Speciality.MAGICIAN.label){
             newHero.setCaracteristics(700, 150, 10);
             //TODO • Puissance supplémentaires contre KILLER : 25
         }
         return newHero;
     }
-
-    /*
-    specialPowerMap = {
-        tank: {
-            mages: 20,
-            tanks: 0,
-            killer: 0
-        },
-        mages: {
-            mages: 20,
-            tanks: 0,
-            killer: 0
-        },
-        killer: {
-            mages: 20,
-            tanks: 0,
-            killer: 0
-        }
-    }
-
-
-    * */
 
     public static Hero enhaceCaracteriticsByRarety(Hero hero){
         Hero newHero = hero.copy();

@@ -1,13 +1,13 @@
-package com.esgi.al.cleancode.project.Super_Cards;
+package com.esgi.al.cleancode.project.Super_Cards.domain;
 
 public class Main {
 
     public static void main(String[] args) {
-        Hero hero1 = new Hero("toto", Speciality.MAGICIAN, RaretyGenerator.generateDiamondCardRarety());
+        Hero hero1 = new Hero("toto", Speciality.MAGICIAN.label, RaretyGenerator.generateDiamondCardRarety());
 
-        HeroCaracteritics.initCarateristicsBySpeciality(hero1);
+        HeroConfiguration.initCarateristicsBySpeciality(hero1);
         System.out.println(hero1);
-        HeroCaracteritics.enhaceCaracteriticsByRarety(hero1);
+        HeroConfiguration.enhaceCaracteriticsByRarety(hero1);
         System.out.println(hero1);
 
         //TODO  Will serve for the card pack creation

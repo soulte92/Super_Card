@@ -1,4 +1,4 @@
-package com.esgi.al.cleancode.project.Super_Cards;
+package com.esgi.al.cleancode.project.Super_Cards.domain;
 
 public enum Rarety {
     COMMON("COMMON"),

@@ -1,4 +1,4 @@
-package com.esgi.al.cleancode.project.Super_Cards;
+package com.esgi.al.cleancode.project.Super_Cards.domain;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -9,12 +9,12 @@ public class Hero {
     protected int xp;
     protected int power;
     protected int armor;
-    protected Speciality speciality;
+    protected String speciality;
     protected String rarety;
     protected int level;
     protected HashMap<String, HashMap<String, Integer>> specialPowerMap;
 
-    public Hero(String name, int hp, int xp, int power, int armor, Speciality speciality, String rarety, int level) {
+    public Hero(String name, int hp, int xp, int power, int armor, String speciality, String rarety, int level) {
         this.name = name;
         this.hp = hp;
         this.xp = xp;
@@ -23,23 +23,23 @@ public class Hero {
         this.speciality = speciality;
         this.rarety = rarety;
         this.level = level;
-        this.specialPowerMap = HeroCaracteritics.configSpecialPowerMap();
+        this.specialPowerMap = HeroConfiguration.configSpecialPowerMap();
     }
-    public Hero(String name, Speciality speciality) {
+    public Hero(String name, String speciality) {
         this.name = name;
         this.xp = 0;
         this.speciality = speciality;
         this.level = 1;
-        this.specialPowerMap = HeroCaracteritics.configSpecialPowerMap();
+        this.specialPowerMap = HeroConfiguration.configSpecialPowerMap();
     }
 
-    public Hero(String name, Speciality speciality, String rarety) {
+    public Hero(String name, String speciality, String rarety) {
         this.name = name;
         this.xp = 0;
         this.speciality = speciality;
         this.rarety = rarety;
         this.level = 1;
-        this.specialPowerMap = HeroCaracteritics.configSpecialPowerMap();
+        this.specialPowerMap = HeroConfiguration.configSpecialPowerMap();
     }
 
     public Hero attack(Hero heroDefender){
@@ -47,7 +47,7 @@ public class Hero {
         if(heroDefender.isDead()) return heroDefender.copy();
 
         // Decrease heroDefencer hp
-        int hpToRetrieve = (this.power + this.specialPowerMap.get(this.speciality.label).get(heroDefender.speciality.label)) - heroDefender.armor;
+        int hpToRetrieve = (this.power + this.specialPowerMap.get(this.speciality).get(heroDefender.speciality)) - heroDefender.armor;
         heroDefender.retrieveHpFromHero(hpToRetrieve);
 
         // Increase heroFighter xp and update caracteristics
@@ -76,17 +76,20 @@ public class Hero {
     }
 
     public void enhaceCaracteriticsByPerCent(double perCent){
+        if (perCent<0){
+            HeroException.enhaceCaracteriticsByPerCentException(perCent);
+        }
         this.hp += this.hp * perCent;
         this.power += this.power * perCent;
         this.armor += this.armor * perCent;
     }
 
     public void retrieveHpFromHero(int hpToRetrieve){
-        this.hp -= hpToRetrieve;
+        this.hp = hpToRetrieve < this.hp ? this.hp - hpToRetrieve : 0;
     }
 
     public void increaseXpToHero(int xpToIncrease){
-        this.xp += xpToIncrease;
+        this.xp = xpToIncrease > 0 ? this.xp + xpToIncrease : this.xp;
     }
 
     public void updateHeroLevel(){
@@ -101,7 +104,6 @@ public class Hero {
     public boolean isDead(){
         return this.hp <= 0;
     }
-
     @Override
     public String toString() {
         return "Hero{" +

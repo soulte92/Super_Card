@@ -1,17 +1,17 @@
-package com.esgi.al.cleancode.project.Super_Cards;
+package com.esgi.al.cleancode.project.Super_Cards.kernel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-class ProbalityDistribution<T>{
+public class ProbalityDistribution<T>{
     List<Double> probs = new ArrayList<>();
     List<T> events = new ArrayList<>();
     double sumProb;
     Random rand = new Random();
 
-    ProbalityDistribution(Map<T,Double> probs){
+    public ProbalityDistribution(Map<T, Double> probs){
         for(T event : probs.keySet()){
             sumProb += probs.get(event);
             events.add(event);

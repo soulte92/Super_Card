@@ -1,4 +1,6 @@
-package com.esgi.al.cleancode.project.Super_Cards;
+package com.esgi.al.cleancode.project.Super_Cards.domain;
+
+import com.esgi.al.cleancode.project.Super_Cards.kernel.ProbalityDistribution;
 
 import java.util.HashMap;
 
