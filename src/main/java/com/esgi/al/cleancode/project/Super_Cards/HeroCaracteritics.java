@@ -67,13 +67,13 @@ public class HeroCaracteritics {
 
     public static Hero enhaceCaracteriticsByRarety(Hero hero){
         Hero newHero = hero.copy();
-        if(hero.rarety == Rarety.COMMON){
+        if(hero.rarety == Rarety.COMMON.label){
             newHero.enhaceCaracteriticsByPerCent(0);
         }
-        else if(hero.rarety == Rarety.RARE){
+        else if(hero.rarety == Rarety.RARE.label){
             newHero.enhaceCaracteriticsByPerCent(0.1);
         }
-        else if(hero.rarety == Rarety.LEGENDARY){
+        else if(hero.rarety == Rarety.LEGENDARY.label){
             newHero.enhaceCaracteriticsByPerCent(0.2);
         }
         return newHero;

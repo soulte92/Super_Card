@@ -10,11 +10,11 @@ public class Hero {
     protected int power;
     protected int armor;
     protected Speciality speciality;
-    protected Rarety rarety;
+    protected String rarety;
     protected int level;
     protected HashMap<String, HashMap<String, Integer>> specialPowerMap;
 
-    public Hero(String name, int hp, int xp, int power, int armor, Speciality speciality, Rarety rarety, int level) {
+    public Hero(String name, int hp, int xp, int power, int armor, Speciality speciality, String rarety, int level) {
         this.name = name;
         this.hp = hp;
         this.xp = xp;
@@ -25,7 +25,15 @@ public class Hero {
         this.level = level;
         this.specialPowerMap = HeroCaracteritics.configSpecialPowerMap();
     }
-    public Hero(String name, Speciality speciality, Rarety rarety) {
+    public Hero(String name, Speciality speciality) {
+        this.name = name;
+        this.xp = 0;
+        this.speciality = speciality;
+        this.level = 1;
+        this.specialPowerMap = HeroCaracteritics.configSpecialPowerMap();
+    }
+
+    public Hero(String name, Speciality speciality, String rarety) {
         this.name = name;
         this.xp = 0;
         this.speciality = speciality;

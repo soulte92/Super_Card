@@ -8,8 +8,8 @@ class HeroTest {
 
     @Test
     void attackWithDeadHeroDefender() {
-        Hero hero1 = new Hero("super-boy", 100, 30, 40, 5, Speciality.TANK, Rarety.COMMON, 6);
-        Hero hero2 = new Hero("super-girl", 0, 30, 20, 10, Speciality.TANK, Rarety.COMMON, 6);
+        Hero hero1 = new Hero("super-boy", 100, 30, 40, 5, Speciality.TANK, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero("super-girl", 0, 30, 20, 10, Speciality.TANK, Rarety.COMMON.label, 6);
 
         Hero newHero2 = hero1.attack(hero2);
         assertEquals(hero2, newHero2);
@@ -17,9 +17,9 @@ class HeroTest {
 
     @Test
     void attackWithNormalHeroDefenderWithoutWinning() {
-        Hero hero1 = new Hero("super-boy", 100, 30, 40, 5, Speciality.TANK, Rarety.COMMON, 6);
-        Hero hero2 = new Hero("super-girl", 100, 30, 20, 10, Speciality.TANK, Rarety.COMMON, 6);
-        Hero hero3 = new Hero("super-dog", 100, 30, 20, 10, Speciality.MAGICIAN, Rarety.COMMON, 6);
+        Hero hero1 = new Hero("super-boy", 100, 30, 40, 5, Speciality.TANK, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero("super-girl", 100, 30, 20, 10, Speciality.TANK, Rarety.COMMON.label, 6);
+        Hero hero3 = new Hero("super-dog", 100, 30, 20, 10, Speciality.MAGICIAN, Rarety.COMMON.label, 6);
 
         hero2 = hero1.attack(hero2);
         assertEquals(hero2.hp, 70);
@@ -30,8 +30,8 @@ class HeroTest {
 
     @Test
     void attackWithNormalHeroDefenderWithWinning() {
-        Hero hero1 = new Hero("super-boy", 100, 30, 40, 5, Speciality.TANK, Rarety.COMMON, 6);
-        Hero hero2 = new Hero("super-girl", 100, 30, 20, 10, Speciality.TANK, Rarety.COMMON, 6);
+        Hero hero1 = new Hero("super-boy", 100, 30, 40, 5, Speciality.TANK, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero("super-girl", 100, 30, 20, 10, Speciality.TANK, Rarety.COMMON.label, 6);
 
         hero2 = hero1.attack(hero2);
         hero2 = hero1.attack(hero2);
@@ -57,7 +57,7 @@ class HeroTest {
 
     @Test
     void enhaceCaracteriticsByPerCent() {
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK, Rarety.COMMON, 6);
+        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK, Rarety.COMMON.label, 6);
         hero2.enhaceCaracteriticsByPerCent(0.5);
 
         assertEquals(hero2.hp, 150);
@@ -67,7 +67,7 @@ class HeroTest {
 
     @Test
     void retrieveHp() {
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK, Rarety.COMMON, 6);
+        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK, Rarety.COMMON.label, 6);
         hero2.retrieveHpFromHero(30);
 
         assertEquals(hero2.hp, 70);
@@ -75,7 +75,7 @@ class HeroTest {
 
     @Test
     void increaseXp() {
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK, Rarety.COMMON, 6);
+        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK, Rarety.COMMON.label, 6);
         // Before increase XP
         assertEquals(hero2.xp, 30);
 
@@ -86,7 +86,7 @@ class HeroTest {
 
     @Test
     void updateLevel() {
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK, Rarety.COMMON, 6);
+        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK, Rarety.COMMON.label, 6);
         // Before updating the level
         assertEquals(hero2.level, 6);
 
@@ -98,7 +98,7 @@ class HeroTest {
 
     @Test
     void copy() {
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK, Rarety.COMMON, 6);
+        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK, Rarety.COMMON.label, 6);
         Hero newHero = hero2.copy();
 
         assertEquals(newHero.name, hero2.name);
@@ -113,19 +113,19 @@ class HeroTest {
 
     @Test
     void isDead() {
-        Hero hero2 = new Hero("super-boy", 0, 30, 20, 5, Speciality.TANK, Rarety.COMMON, 6);
+        Hero hero2 = new Hero("super-boy", 0, 30, 20, 5, Speciality.TANK, Rarety.COMMON.label, 6);
         assertTrue(hero2.isDead());
     }
 
     @Test
     void isNotDead() {
-        Hero hero2 = new Hero("super-boy", 1, 30, 20, 5, Speciality.TANK, Rarety.COMMON, 6);
+        Hero hero2 = new Hero("super-boy", 1, 30, 20, 5, Speciality.TANK, Rarety.COMMON.label, 6);
         assertFalse(hero2.isDead());
     }
 
     @Test
     void Equals() {
-        Hero hero2 = new Hero("super-boy", 1, 30, 20, 5, Speciality.TANK, Rarety.COMMON, 6);
+        Hero hero2 = new Hero("super-boy", 1, 30, 20, 5, Speciality.TANK, Rarety.COMMON.label, 6);
         Hero newHero = hero2.copy();
 
         assertTrue(hero2.equals(newHero));

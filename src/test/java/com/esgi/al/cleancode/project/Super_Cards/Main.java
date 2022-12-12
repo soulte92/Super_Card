@@ -3,7 +3,7 @@ package com.esgi.al.cleancode.project.Super_Cards;
 public class Main {
 
     public static void main(String[] args) {
-        Hero hero1 = new Hero("toto", Speciality.MAGICIAN, Rarety.LEGENDARY);
+        Hero hero1 = new Hero("toto", Speciality.MAGICIAN, RaretyGenerator.generateDiamondCardRarety());
 
         HeroCaracteritics.initCarateristicsBySpeciality(hero1);
         System.out.println(hero1);

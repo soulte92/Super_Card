@@ -8,7 +8,7 @@ class HeroCaracteriticsTest {
 
     @Test
     void initCarateristicsBySpeciality() {
-        Hero hero1 = new Hero("toto", Speciality.TANK, Rarety.COMMON);
+        Hero hero1 = new Hero("toto", Speciality.TANK, Rarety.COMMON.label);
         Hero newHero = HeroCaracteritics.initCarateristicsBySpeciality(hero1);
          assertEquals(newHero.hp, 1000);
          assertEquals(newHero.power, 100);
@@ -31,20 +31,20 @@ class HeroCaracteriticsTest {
 
     @Test
     void enhaceCaracteriticsByRarety() {
-        Hero hero1 = new Hero("toto", Speciality.TANK, Rarety.COMMON);
+        Hero hero1 = new Hero("toto", Speciality.TANK, Rarety.COMMON.label);
         Hero newHero = HeroCaracteritics.initCarateristicsBySpeciality(hero1);
         assertEquals(newHero.hp, 1000);
         assertEquals(newHero.power, 100);
         assertEquals(newHero.armor, 20);
 
-        newHero.rarety = Rarety.RARE;
+        newHero.rarety = Rarety.RARE.label;
         newHero = HeroCaracteritics.initCarateristicsBySpeciality(newHero);
         newHero = HeroCaracteritics.enhaceCaracteriticsByRarety(newHero);
         assertEquals(newHero.hp, 1100);
         assertEquals(newHero.power, 110);
         assertEquals(newHero.armor, 22);
 
-        newHero.rarety = Rarety.LEGENDARY;
+        newHero.rarety = Rarety.LEGENDARY.label;
         newHero = HeroCaracteritics.initCarateristicsBySpeciality(newHero);
         newHero = HeroCaracteritics.enhaceCaracteriticsByRarety(newHero);
         assertEquals(newHero.hp, 1200);
