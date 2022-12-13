@@ -1,9 +1,11 @@
 package com.esgi.al.cleancode.project.Super_Cards.domain;
 
+import java.util.UUID;
+
 public class Main {
 
     public static void main(String[] args) {
-        Hero hero1 = new Hero("toto", Speciality.MAGICIAN.label, RaretyGenerator.generateDiamondCardRarety());
+        Hero hero1 = new Hero(HeroId.of(UUID.randomUUID()), "toto", Speciality.MAGICIAN.label, RaretyGenerator.generateDiamondCardRarety());
 
         HeroConfiguration.initCarateristicsBySpeciality(hero1);
         System.out.println(hero1);

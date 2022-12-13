@@ -3,14 +3,16 @@ package com.esgi.al.cleancode.project.Super_Cards.domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HeroTest {
 
     @Test
     void should_not_attack_dead_hero() {
-        Hero hero1 = new Hero("super-boy", 100, 30, 40, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
-        Hero hero2 = new Hero("super-girl", 0, 30, 20, 10, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero1 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 40, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-girl", 0, 30, 20, 10, Speciality.TANK.label, Rarety.COMMON.label, 6);
 
         Hero newHero2 = hero1.attack(hero2);
         assertEquals(hero2, newHero2);
@@ -18,9 +20,9 @@ class HeroTest {
 
     @Test
     void should_not_win_when_attack_hero() {
-        Hero hero1 = new Hero("super-boy", 100, 30, 40, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
-        Hero hero2 = new Hero("super-girl", 100, 30, 20, 10, Speciality.TANK.label, Rarety.COMMON.label, 6);
-        Hero hero3 = new Hero("super-dog", 100, 30, 20, 10, Speciality.MAGICIAN.label, Rarety.COMMON.label, 6);
+        Hero hero1 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 40, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-girl", 100, 30, 20, 10, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero3 = new Hero(HeroId.of(UUID.randomUUID()), "super-dog", 100, 30, 20, 10, Speciality.MAGICIAN.label, Rarety.COMMON.label, 6);
 
         hero2 = hero1.attack(hero2);
         assertEquals(hero2.hp, 70);
@@ -31,8 +33,8 @@ class HeroTest {
 
     @Test
     void should_win_when_attack_hero() {
-        Hero hero1 = new Hero("super-boy", 100, 30, 40, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
-        Hero hero2 = new Hero("super-girl", 100, 30, 20, 10, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero1 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 40, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-girl", 100, 30, 20, 10, Speciality.TANK.label, Rarety.COMMON.label, 6);
 
         hero2 = hero1.attack(hero2);
         hero2 = hero1.attack(hero2);
@@ -57,7 +59,7 @@ class HeroTest {
 
     @Test
     void should_enhace_hero_caracteritics_by_perCent() {
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         hero2.enhaceCaracteriticsByPerCent(0.5);
 
         assertEquals(hero2.hp, 150);
@@ -67,7 +69,7 @@ class HeroTest {
 
     @Test
     void should_not_enhace_hero_caracteritics_by_perCent(){
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         hero2.enhaceCaracteriticsByPerCent(0.);
 
         assertEquals(hero2.hp, 100);
@@ -77,7 +79,7 @@ class HeroTest {
 
     @Test
     void should_throw_when_enhace_hero_caracteritics_with_negative_perCent(){
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         hero2 = HeroConfiguration.initCarateristicsBySpeciality(hero2);
         Hero finalHero = hero2;
 
@@ -92,21 +94,21 @@ class HeroTest {
 
     @Test
     void should_retrieve_hero_hp() {
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         hero2.retrieveHpFromHero(30);
         assertEquals(hero2.hp, 70);
     }
 
     @Test
     void should_not_retrieve_more_than_hero_hp(){
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         hero2.retrieveHpFromHero(120);
         assertEquals(hero2.hp, 0);
     }
 
     @Test
     void should_increase_hero_experience() {
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         // Before increase XP
         assertEquals(hero2.xp, 30);
 
@@ -117,7 +119,7 @@ class HeroTest {
 
     @Test
     void should_not_increase_hero_experience_with_negative_experience(){
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         // Before increase XP
         assertEquals(hero2.xp, 30);
 
@@ -128,7 +130,7 @@ class HeroTest {
 
     @Test
     void should_update_hero_level() {
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         // Before updating the level
         assertEquals(hero2.level, 6);
 
@@ -140,7 +142,7 @@ class HeroTest {
 
     @Test
     void should_not_update_hero_level(){
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         // Before updating the level
         assertEquals(hero2.level, 6);
 
@@ -151,7 +153,7 @@ class HeroTest {
 
     @Test
     void should_copy_hero() {
-        Hero hero2 = new Hero("super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 100, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         Hero newHero = hero2.copy();
 
         assertEquals(newHero.name, hero2.name);
@@ -166,19 +168,19 @@ class HeroTest {
 
     @Test
     void should_return_dead_hero() {
-        Hero hero2 = new Hero("super-boy", 0, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 0, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         assertTrue(hero2.isDead());
     }
 
     @Test
     void should_not_return_dead_hero() {
-        Hero hero2 = new Hero("super-boy", 1, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 1, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         assertFalse(hero2.isDead());
     }
 
     @Test
     void Equals() {
-        Hero hero2 = new Hero("super-boy", 1, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
+        Hero hero2 = new Hero(HeroId.of(UUID.randomUUID()), "super-boy", 1, 30, 20, 5, Speciality.TANK.label, Rarety.COMMON.label, 6);
         Hero newHero = hero2.copy();
 
         assertTrue(hero2.equals(newHero));

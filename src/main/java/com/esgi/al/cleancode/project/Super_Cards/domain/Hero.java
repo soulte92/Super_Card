@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Hero {
+    protected HeroId heroId;
     protected String name;
     protected int hp;
     protected int xp;
@@ -14,7 +15,8 @@ public class Hero {
     protected int level;
     protected HashMap<String, HashMap<String, Integer>> specialPowerMap;
 
-    public Hero(String name, int hp, int xp, int power, int armor, String speciality, String rarety, int level) {
+    public Hero(HeroId heroId, String name, int hp, int xp, int power, int armor, String speciality, String rarety, int level) {
+        this.heroId = heroId;
         this.name = name;
         this.hp = hp;
         this.xp = xp;
@@ -25,7 +27,8 @@ public class Hero {
         this.level = level;
         this.specialPowerMap = HeroConfiguration.configSpecialPowerMap();
     }
-    public Hero(String name, String speciality) {
+    public Hero(HeroId heroId, String name, String speciality) {
+        this.heroId = heroId;
         this.name = name;
         this.xp = 0;
         this.speciality = speciality;
@@ -33,7 +36,8 @@ public class Hero {
         this.specialPowerMap = HeroConfiguration.configSpecialPowerMap();
     }
 
-    public Hero(String name, String speciality, String rarety) {
+    public Hero(HeroId heroId, String name, String speciality, String rarety) {
+        this.heroId = heroId;
         this.name = name;
         this.xp = 0;
         this.speciality = speciality;
@@ -97,7 +101,7 @@ public class Hero {
     }
 
     public Hero copy(){
-        Hero newHero = new Hero(this.name, this.hp, this.xp, this.power, this.armor, this.speciality, this.rarety, this.level);
+        Hero newHero = new Hero(this.heroId, this.name, this.hp, this.xp, this.power, this.armor, this.speciality, this.rarety, this.level);
         return newHero;
     }
 

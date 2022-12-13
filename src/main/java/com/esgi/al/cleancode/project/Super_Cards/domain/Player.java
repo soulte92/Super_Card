@@ -1,17 +1,16 @@
 package com.esgi.al.cleancode.project.Super_Cards.domain;
 
+import java.util.UUID;
+
 public class Player {
+    private PlayerId playerId;
+    private DeckId deckId;
     private String pseudo;
     private int nbToken;
-    private Deck deck;
 
-    public Player(String pseudo) {
+    public Player(PlayerId playerId, DeckId deckId, String pseudo) {
         this.pseudo = pseudo;
         this.nbToken = 4;
-        this.deck = Deck.create();
+        this.deckId = deckId;
     }
-
-    //TODO Ouverture d’un pack de cartes using ProbalityDistribution class
-
-    // TODO Inscription joueur
 }
