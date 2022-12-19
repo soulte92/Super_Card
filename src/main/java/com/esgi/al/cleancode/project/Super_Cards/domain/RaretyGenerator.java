@@ -22,7 +22,7 @@ Probabilité de rareté :
 	 	 Commune : 50%
     */
 
-    static String generateSilverCardRarety(){
+    public static String generateSilverCardRarety(){
         HashMap<String, Double> raretyProbabilities = new HashMap<String, Double>();
         raretyProbabilities.put(Rarety.COMMON.label, 0.75);
         raretyProbabilities.put(Rarety.RARE.label, 0.2);

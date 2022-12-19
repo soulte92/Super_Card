@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Hero {
-    protected HeroId heroId;
-    protected String name;
-    protected int hp;
-    protected int xp;
-    protected int power;
-    protected int armor;
-    protected String speciality;
-    protected String rarety;
-    protected int level;
-    protected HashMap<String, HashMap<String, Integer>> specialPowerMap;
+    public HeroId heroId;
+    public String name;
+    public int hp;
+    public int xp;
+    public int power;
+    public int armor;
+    public String speciality;
+    public String rarety;
+    public int level;
+    public HashMap<String, HashMap<String, Integer>> specialPowerMap;
 
     public Hero(HeroId heroId, String name, int hp, int xp, int power, int armor, String speciality, String rarety, int level) {
         this.heroId = heroId;
