@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public interface HeroRepository {
     Hero findById(HeroId heroId);
 
-    ArrayList<Hero> findAll();
+    ArrayList<HeroId> findAllAlive();
 
     HeroId nextId();
 

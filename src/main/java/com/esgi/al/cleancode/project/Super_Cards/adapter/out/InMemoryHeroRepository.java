@@ -1,5 +1,6 @@
 package com.esgi.al.cleancode.project.Super_Cards.adapter.out;
 
+import com.esgi.al.cleancode.project.Super_Cards.adapter.in.HeroController;
 import com.esgi.al.cleancode.project.Super_Cards.application.port.out.HeroRepository;
 import com.esgi.al.cleancode.project.Super_Cards.domain.Hero;
 import com.esgi.al.cleancode.project.Super_Cards.domain.HeroException;
@@ -23,8 +24,14 @@ public final class InMemoryHeroRepository implements HeroRepository {
     }
 
     @Override
-    public ArrayList<Hero> findAll() {
-        return null;
+    public ArrayList<HeroId> findAllAlive() {
+        ArrayList<HeroId> heroIdArrayList = new ArrayList<>();
+        for (Map.Entry<HeroId, Hero> set : registry.entrySet()){
+            if (!set.getValue().isDead()){
+                heroIdArrayList.add(set.getKey());
+            }
+        }
+        return heroIdArrayList;
     }
 
     @Override

@@ -10,5 +10,7 @@ public interface DeckRepository {
 
     ArrayList<Deck> findAll();
 
+    DeckId nextId();
+
     void save(Deck deck);
 }

@@ -18,6 +18,6 @@ public class HeroException extends RuntimeException {
     }
 
     public static HeroException notFoundHero(HeroId heroId) {
-        return new HeroException(String.format("Hero with Id = %s not found !" + heroId));
+        return new HeroException(String.format("Hero with Id = %s not found !" + heroId.value()));
     }
 }

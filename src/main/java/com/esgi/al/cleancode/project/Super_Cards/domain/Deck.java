@@ -4,38 +4,32 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Deck {
-    DeckId deckId;
-    ArrayList<Hero> heroArrayList;
+    public DeckId deckId;
+    public ArrayList<HeroId> heroIdArrayList;
 
     private Deck(DeckId deckId){
-        this.heroArrayList = new ArrayList<>();
+        this.deckId = deckId;
+        this.heroIdArrayList = new ArrayList<>();
     }
 
     public static Deck create(DeckId deckId){
-        return new Deck(DeckId.of(UUID.randomUUID()));
+        return new Deck(deckId);
     }
 
-    public static Deck of(DeckId deckId, ArrayList<Hero> heroArrayListToUse){
-        Deck newDeck = new Deck(deckId);
-        newDeck = newDeck.addHeros(deckId, heroArrayListToUse);
-        return newDeck;
-    }
-
-    public Deck addHeros(DeckId deckId, ArrayList<Hero> heroArrayListToUse){
-        Deck newDeck = new Deck(deckId);
-        newDeck.heroArrayList = this.heroArrayList;
-        newDeck.heroArrayList.addAll(heroArrayListToUse);
-        return newDeck;
-    }
-
-    public Deck retrieveHeroByIndex(DeckId deckId, int heroIndex){
-        Deck newDeck = new Deck(deckId);
-        newDeck.heroArrayList = this.heroArrayList;
-        newDeck.heroArrayList.remove(heroIndex);
-        return newDeck;
-    }
-
-    public Hero getHeroByIndex(int heroIndex){
-        return this.heroArrayList.get(heroIndex);
-    }
+//    public static Deck of(DeckId deckId, ArrayList<HeroId> heroIdArrayListToUse){
+//        Deck newDeck = new Deck(deckId);
+//        newDeck = newDeck.addHeros(deckId, heroIdArrayListToUse);
+//        return newDeck;
+//    }
+//
+//    public Deck retrieveHeroByIndex(DeckId deckId, int heroIndex){
+//        Deck newDeck = new Deck(deckId);
+//        newDeck.heroIdArrayList = this.heroIdArrayList;
+//        newDeck.heroIdArrayList.remove(heroIndex);
+//        return newDeck;
+//    }
+//
+//    public HeroId getHeroByIndex(int heroIndex){
+//        return this.heroIdArrayList.get(heroIndex);
+//    }
 }
