@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DeckServiceTest {
 
     @Test
-    void createDeck() {
+    void should_create_deck() {
         InMemoryDeckRepository inMemoryDeckRepository = new InMemoryDeckRepository();
         InMemoryHeroRepository inMemoryHeroRepository = new InMemoryHeroRepository();
         HeroConfiguration heroConfiguration = new HeroConfiguration();
@@ -28,7 +28,7 @@ class DeckServiceTest {
     }
 
     @Test
-    void getHeros() {
+    void should_get_all_deck_heros() {
         InMemoryDeckRepository inMemoryDeckRepository = new InMemoryDeckRepository();
         InMemoryHeroRepository inMemoryHeroRepository = new InMemoryHeroRepository();
         HeroConfiguration heroConfiguration = new HeroConfiguration();
@@ -46,11 +46,11 @@ class DeckServiceTest {
         var heroId2 = heroService.createHero("tata", speciality, rarety);
 
         // Add Heroes in deck
-        deckService.addHero(deckId, heroId1);
-        deckService.addHero(deckId, heroId2);
+        deckService.addHeroInDeck(deckId, heroId1);
+        deckService.addHeroInDeck(deckId, heroId2);
 
         // Get heroes from deck
-        ArrayList<Hero> heroArrayList = (ArrayList<Hero>) deckService.getHeros(deckId);
+        ArrayList<Hero> heroArrayList = (ArrayList<Hero>) deckService.getHerosFromDeck(deckId);
 
         // Check that there is 2 heroes in th deck
         Assertions.assertEquals(heroArrayList.size(), 2);
@@ -69,7 +69,7 @@ class DeckServiceTest {
     }
 
     @Test
-    void addHero() {
+    void should_add_hero_in_deck() {
         InMemoryDeckRepository inMemoryDeckRepository = new InMemoryDeckRepository();
         InMemoryHeroRepository inMemoryHeroRepository = new InMemoryHeroRepository();
         HeroConfiguration heroConfiguration = new HeroConfiguration();
@@ -87,9 +87,8 @@ class DeckServiceTest {
         var heroId2 = heroService.createHero("tata", speciality, rarety);
 
         // Add Heroes in deck
-        deckService.addHero(deckId, heroId1);
-        deckService.addHero(deckId, heroId2);
-
+        deckService.addHeroInDeck(deckId, heroId1);
+        deckService.addHeroInDeck(deckId, heroId2);
 
         // Get  added Deck from DB
         Deck deck = inMemoryDeckRepository.findById(deckId);

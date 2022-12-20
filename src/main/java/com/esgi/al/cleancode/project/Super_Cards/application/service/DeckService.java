@@ -27,7 +27,7 @@ public class DeckService {
         return deckId;
     }
 
-    public List<Hero> getHeros(DeckId deckId){
+    public List<Hero> getHerosFromDeck(DeckId deckId){
         Deck deck = deckRepository.findById(deckId);
         ArrayList<Hero> heroes = new ArrayList<>();
 
@@ -43,7 +43,7 @@ public class DeckService {
 //        newDeck.heroIdArrayList.addAll(heroIdArrayListToUse);
 //        return newDeck;
 //    }
-    public DeckId addHero(DeckId deckId, HeroId heroId){
+    public DeckId addHeroInDeck(DeckId deckId, HeroId heroId){
         Deck newDeck = deckRepository.findById(deckId);
 
         //Verify that hero exists

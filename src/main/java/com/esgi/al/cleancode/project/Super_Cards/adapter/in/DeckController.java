@@ -21,6 +21,6 @@ public class DeckController {
     }
 
     public List<Hero> getHeroes(DeckId deckId){
-        return deckService.getHeros(deckId);
+        return deckService.getHerosFromDeck(deckId);
     }
 }
