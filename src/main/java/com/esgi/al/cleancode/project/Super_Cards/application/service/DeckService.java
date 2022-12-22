@@ -22,7 +22,6 @@ public class DeckService {
     public DeckId createDeck(){
         DeckId deckId = deckRepository.nextId();
         Deck deck = Deck.create(deckId);
-        System.out.println(deck.deckId);
         deckRepository.save(deck);
         return deckId;
     }

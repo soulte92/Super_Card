@@ -1,5 +1,6 @@
 package com.esgi.al.cleancode.project.Super_Cards.application.port.out;
 
+import com.esgi.al.cleancode.project.Super_Cards.domain.HeroId;
 import com.esgi.al.cleancode.project.Super_Cards.domain.Player;
 import com.esgi.al.cleancode.project.Super_Cards.domain.PlayerId;
 
@@ -9,6 +10,8 @@ public interface PlayerRepository {
     ArrayList<Player> findAll();
 
     Player findById(PlayerId playerId);
+
+    PlayerId nextId();
 
     void save(Player player);
 }
