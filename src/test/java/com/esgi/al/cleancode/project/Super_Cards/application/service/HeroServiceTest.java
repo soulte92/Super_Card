@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class HeroServiceTest {
 
@@ -32,11 +33,11 @@ public class HeroServiceTest {
         InMemoryHeroRepository inMemoryHeroRepository = new InMemoryHeroRepository();
         HeroConfiguration heroConfiguration = new HeroConfiguration();
         HeroService heroService = new HeroService(inMemoryHeroRepository, heroConfiguration);
-
+        HeroGenerator heroGenerator = new HeroGenerator();
         // Create 2 alive heroes and 1 dead hero
-        Hero hero1 = HeroGenerator.generateRandomHeroWithSilverPack();
-        Hero hero2 = HeroGenerator.generateRandomHeroWithSilverPack();
-        Hero hero3 = HeroGenerator.generateRandomHeroWithSilverPack();
+        Hero hero1 = heroGenerator.generateRandomHeroWithSilverPack(HeroId.of(UUID.randomUUID()), "TOTO");
+        Hero hero2 = heroGenerator.generateRandomHeroWithSilverPack(HeroId.of(UUID.randomUUID()), "TOTO");
+        Hero hero3 = heroGenerator.generateRandomHeroWithSilverPack(HeroId.of(UUID.randomUUID()), "TOTO");
         hero3.hp = 0;
 
         // Save heroes in DB
@@ -62,9 +63,10 @@ public class HeroServiceTest {
         InMemoryHeroRepository inMemoryHeroRepository = new InMemoryHeroRepository();
         HeroConfiguration heroConfiguration = new HeroConfiguration();
         HeroService heroService = new HeroService(inMemoryHeroRepository, heroConfiguration);
+        HeroGenerator heroGenerator = new HeroGenerator();
 
         // Create 1 dead hero
-        Hero hero = HeroGenerator.generateRandomHeroWithSilverPack();
+        Hero hero = heroGenerator.generateRandomHeroWithSilverPack(HeroId.of(UUID.randomUUID()), "TOTO");
         hero.hp = 0;
 
         // Save heroes in DB

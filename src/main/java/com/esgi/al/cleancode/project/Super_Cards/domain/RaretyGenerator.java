@@ -33,7 +33,7 @@ Probabilité de rareté :
         return (String) distribution.sample();
     }
 
-    static String generateDiamondCardRarety(){
+    public static String generateDiamondCardRarety(){
         HashMap<String, Double> raretyProbabilities = new HashMap<String, Double>();
         raretyProbabilities.put(Rarety.LEGENDARY.label, 0.15);
         raretyProbabilities.put(Rarety.RARE.label, 0.35);

@@ -23,4 +23,8 @@ public class DeckController {
     public List<Hero> getHeroes(DeckId deckId){
         return deckService.getHerosFromDeck(deckId);
     }
+
+    public Deck getDeck(DeckId deckId){
+        return deckService.getDeck(deckId);
+    }
 }

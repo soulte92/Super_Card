@@ -26,6 +26,10 @@ public class DeckService {
         return deckId;
     }
 
+    public Deck getDeck(DeckId deckId){
+        return deckRepository.findById(deckId);
+    }
+
     public List<Hero> getHerosFromDeck(DeckId deckId){
         Deck deck = deckRepository.findById(deckId);
         ArrayList<Hero> heroes = new ArrayList<>();

@@ -4,6 +4,8 @@ import com.esgi.al.cleancode.project.Super_Cards.application.service.DeckService
 import com.esgi.al.cleancode.project.Super_Cards.application.service.PlayerService;
 import com.esgi.al.cleancode.project.Super_Cards.domain.*;
 
+import java.util.ArrayList;
+
 public class PlayerController {
     private final PlayerService playerService;
 
@@ -21,5 +23,9 @@ public class PlayerController {
 
     public Player getPlayer(PlayerId playerId){
         return playerService.getPlayer(playerId);
+    }
+
+    public ArrayList<Player> getPlayers(){
+        return playerService.getPlayers();
     }
 }

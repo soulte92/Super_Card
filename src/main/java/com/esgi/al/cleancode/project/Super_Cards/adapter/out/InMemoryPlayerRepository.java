@@ -1,9 +1,7 @@
 package com.esgi.al.cleancode.project.Super_Cards.adapter.out;
 
 import com.esgi.al.cleancode.project.Super_Cards.application.port.out.PlayerRepository;
-import com.esgi.al.cleancode.project.Super_Cards.domain.Player;
-import com.esgi.al.cleancode.project.Super_Cards.domain.PlayerException;
-import com.esgi.al.cleancode.project.Super_Cards.domain.PlayerId;
+import com.esgi.al.cleancode.project.Super_Cards.domain.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +13,11 @@ public class InMemoryPlayerRepository implements PlayerRepository {
 
     @Override
     public ArrayList<Player> findAll() {
-        return null;
+        ArrayList<Player> playerArrayList = new ArrayList<>();
+        for (Map.Entry<PlayerId, Player> set : registry.entrySet()){
+            playerArrayList.add(set.getValue());
+        }
+        return playerArrayList;
     }
 
     public Player findById(PlayerId playerId) {

@@ -7,10 +7,18 @@ public class HeroGenerator {
         String rarety = RaretyGenerator.generateSilverCardRarety();
         return new Hero(HeroId.of(UUID.randomUUID()), "SUPER_TOTO", speciality, rarety);
     }
-    public static Hero generateRandomHeroWithSilverPack(){
+    public Hero generateRandomHeroWithSilverPack(HeroId heroId, String heroName){
         String speciality = SpecialityGenerator.generateRandomSpeciality();
         String rarety = RaretyGenerator.generateSilverCardRarety();
-        Hero hero = new Hero(HeroId.of(UUID.randomUUID()), "SUPER_TOTO", speciality, rarety);
+        Hero hero = new Hero(heroId, heroName, speciality, rarety);
+        hero = HeroConfiguration.initCarateristicsBySpeciality(hero);
+        return hero;
+    }
+
+    public Hero generateRandomHeroWithDiamondPack(HeroId heroId, String heroName){
+        String speciality = SpecialityGenerator.generateRandomSpeciality();
+        String rarety = RaretyGenerator.generateDiamondCardRarety();
+        Hero hero = new Hero(heroId, heroName, speciality, rarety);
         hero = HeroConfiguration.initCarateristicsBySpeciality(hero);
         return hero;
     }
