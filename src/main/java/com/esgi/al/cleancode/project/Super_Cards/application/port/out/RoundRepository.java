@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public interface RoundRepository {
     ArrayList<Round> findAll();
 
-    Round findByHeroId(HeroId heroId);
+    ArrayList<Round> findByFirstHeroId(HeroId heroId);
 
     Round findById(RoundId roundId);
 

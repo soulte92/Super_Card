@@ -40,12 +40,6 @@ public class DeckService {
         return heroes;
     }
 
-//    public Deck addHeros(DeckId deckId, ArrayList<HeroId> heroIdArrayListToUse){
-//        Deck newDeck = new Deck(deckId);
-//        newDeck.heroIdArrayList = this.heroIdArrayList;
-//        newDeck.heroIdArrayList.addAll(heroIdArrayListToUse);
-//        return newDeck;
-//    }
     public DeckId addHeroInDeck(DeckId deckId, HeroId heroId){
         Deck newDeck = deckRepository.findById(deckId);
 
@@ -56,6 +50,4 @@ public class DeckService {
         deckRepository.save(newDeck);
         return deckId;
     }
-
-
 }

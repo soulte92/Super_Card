@@ -1,15 +1,15 @@
 package com.esgi.al.cleancode.project.Super_Cards.domain;
 
 public class Round {
-    private RoundId roundId;
-    private SessionId sessionId;
-    private PlayerId firstPlayerId;
-    private PlayerId secondPlayerId;
-    private HeroId firstPlayerHeroId;
-    private HeroId secondPlayerHeroId;
-    private String winner;
-    private int firstPlayerHeroNbHit;
-    private int secondPlayerHeroNbHit;
+    public RoundId roundId;
+    public SessionId sessionId;
+    public PlayerId firstPlayerId;
+    public PlayerId secondPlayerId;
+    public HeroId firstPlayerHeroId;
+    public HeroId secondPlayerHeroId;
+    public String winner;
+    public int firstPlayerHeroNbHit;
+    public int secondPlayerHeroNbHit;
 
     private Round(RoundId roundId, SessionId sessionId, PlayerId firstPlayerId, PlayerId secondPlayerId,
                  HeroId firstPlayerHeroId, HeroId secondPlayerHeroId, String winner, int firstPlayerHeroNbHit,
