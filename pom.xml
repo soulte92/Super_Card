@@ -13,7 +13,7 @@
     <groupId>fr.carbon-it.tech</groupId>
     <artifactId>hexagonal-architecture</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Hexagonal Architecture</name>
+    <name>Super Card</name>
     <packaging>pom</packaging>
 
     <modules>
