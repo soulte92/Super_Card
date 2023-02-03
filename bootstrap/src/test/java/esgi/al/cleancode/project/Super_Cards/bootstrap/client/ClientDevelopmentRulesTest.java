@@ -1,0 +1,33 @@
+package esgi.al.cleancode.project.Super_Cards.bootstrap.client;
+
+import com.tngtech.archunit.core.importer.ImportOption.DoNotIncludeTests;
+import com.tngtech.archunit.junit.AnalyzeClasses;
+import com.tngtech.archunit.junit.ArchTest;
+import com.tngtech.archunit.lang.ArchRule;
+import esgi.al.cleancode.project.Super_Cards.bootstrap.PackagesAndLayers;
+
+import static com.tngtech.archunit.junit.CacheMode.FOREVER;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+
+@AnalyzeClasses(
+    packages = "esgi.al.cleancode.project.Super_Cards.client",
+    cacheMode = FOREVER,
+    importOptions = {DoNotIncludeTests.class})
+public class ClientDevelopmentRulesTest {
+
+  @ArchTest
+  public static final ArchRule CLIENT_DEVELOPMENT_RULE =
+      classes()
+          .that()
+          .resideInAPackage(PackagesAndLayers.CLIENT_PACKAGE)
+          .should()
+          .onlyHaveDependentClassesThat()
+          .resideInAnyPackage(PackagesAndLayers.CLIENT_PACKAGE, PackagesAndLayers.BOOTSTRAP_PACKAGE)
+          .andShould()
+          .onlyBeAccessed()
+          .byClassesThat()
+          .resideInAnyPackage(PackagesAndLayers.BOOTSTRAP_PACKAGE, PackagesAndLayers.CLIENT_PACKAGE)
+          .andShould()
+          .onlyHaveDependentClassesThat()
+          .resideInAnyPackage(PackagesAndLayers.BOOTSTRAP_PACKAGE, PackagesAndLayers.CLIENT_PACKAGE);
+}
