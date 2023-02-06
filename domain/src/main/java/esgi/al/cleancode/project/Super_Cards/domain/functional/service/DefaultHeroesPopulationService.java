@@ -1,0 +1,96 @@
+package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
+
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
+import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarety;
+import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
+import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DefaultHeroesPopulationApi;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DefaultHeroPersistenceSpi;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+public class DefaultHeroesPopulationService implements DefaultHeroesPopulationApi {
+
+    private final DefaultHeroPersistenceSpi heroPersistenceSpi;
+
+    @Override
+    public void createAndSaveHeroes() {
+        createAndSaveHero("Le Guerrier Intrépide", Speciality.TANK.label, Rarety.COMMON.label);
+        createAndSaveHero("La Magicienne Suprême", Speciality.MAGICIAN.label, Rarety.COMMON.label);
+        createAndSaveHero("L'Archange du Destin", Speciality.KILLER.label, Rarety.COMMON.label);
+
+        createAndSaveHero("Gardien de l'Espoir", Speciality.TANK.label, Rarety.RARE.label);
+        createAndSaveHero("La Déesse de la Guerre", Speciality.MAGICIAN.label, Rarety.RARE.label);
+        createAndSaveHero("Le Roi des Ombres", Speciality.KILLER.label, Rarety.RARE.label);
+
+        createAndSaveHero("Légendaire Lumière", Speciality.TANK.label, Rarety.LEGENDARY.label);
+        createAndSaveHero("Briseur de Chaînes", Speciality.MAGICIAN.label, Rarety.LEGENDARY.label);
+        createAndSaveHero("La Reine des Éléments", Speciality.KILLER.label, Rarety.LEGENDARY.label);
+    }
+
+    public void createAndSaveHero(String name, String speciality, String rarety){
+        Hero hero = initCharacteristicsBySpeciality(name, speciality, rarety);
+        hero = enhaceCharacteriticsByRarety(hero);
+        heroPersistenceSpi.save(hero);
+    }
+
+    public Hero initCharacteristicsBySpeciality(String name, String speciality, String rarety){
+        Hero newHero;
+        if(speciality.equals(Speciality.TANK.label)){
+            newHero = Hero.builder()
+                    .name(name)
+                    .speciality(speciality)
+                    .rarety(rarety).hp(1000).power(100).armor(20).build();
+        }
+        else if(speciality.equals(Speciality.KILLER.label)){
+            newHero = Hero.builder()
+                    .name(name)
+                    .speciality(speciality)
+                    .rarety(rarety).hp(800).power(200).armor(5).build();
+        }
+        else if(speciality.equals(Speciality.MAGICIAN.label)){
+            newHero = Hero.builder()
+                    .name(name)
+                    .speciality(speciality)
+                    .rarety(rarety).hp(700).power(150).armor(10).build();
+        }
+        else{
+            throw HeroException.notSupportedSpeciality(speciality);
+        }
+        return newHero;
+    }
+
+    public Hero enhaceCharacteriticsByRarety(Hero hero){
+        Hero newHero;
+        if(hero.rarety.equals(Rarety.COMMON.label)){
+            newHero = enhanceCharacteristicsByPerCent( hero, 0);
+        }
+        else if(hero.rarety.equals(Rarety.RARE.label)){
+            newHero = enhanceCharacteristicsByPerCent( hero, 0.1);
+        }
+        else if(hero.rarety.equals(Rarety.LEGENDARY.label)){
+            newHero = enhanceCharacteristicsByPerCent( hero, 0.2);
+        }
+        else{
+            throw HeroException.notSupportedRarety(hero.rarety);
+        }
+        return newHero;
+    }
+
+    public Hero enhanceCharacteristicsByPerCent(Hero hero, double perCent){
+        if ((0>perCent) || (perCent>1)){
+            throw HeroException.enhaceCaracteriticsByPerCentException(perCent);
+        }
+        return Hero.builder().id(hero.getId())
+                .name(hero.name)
+                .xp(hero.xp)
+                .level(hero.level)
+                .speciality(hero.speciality)
+                .rarety(hero.rarety)
+                .hp((int) (hero.hp + (hero.hp * perCent)))
+                .power((int) (hero.power + (hero.power * perCent)))
+                .armor((int) (hero.armor + (hero.armor * perCent))).build();
+    }
+}
