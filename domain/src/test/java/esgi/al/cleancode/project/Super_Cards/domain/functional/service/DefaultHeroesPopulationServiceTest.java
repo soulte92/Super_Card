@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 
@@ -28,8 +28,10 @@ class DefaultHeroesPopulationServiceTest {
     private DefaultHeroPersistenceSpi spi;
 
     @Test
-    void createAndSaveHeroes() {
-
+    void should_create_and_save_heroes_in_db() {
+        DefaultHeroesPopulationService defaultHeroesPopulationServiceMock = mock(DefaultHeroesPopulationService.class);
+        defaultHeroesPopulationServiceMock.createAndSaveHeroes();
+        verify(defaultHeroesPopulationServiceMock,times(9)).createAndSaveHero(anyString(),anyString(),anyString());
     }
 
     // TODO : should correct this test
