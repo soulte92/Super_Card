@@ -1,6 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.domain.exceptions;
 
-import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarety;
+import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarity;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
 
 import java.util.UUID;
@@ -28,7 +28,7 @@ public class HeroException extends RuntimeException {
     }
     public static HeroException notSupportedRarety(String speciality){
         return new HeroException(String.format("Rarety '%s' is not supported. Choose a rarety in {%s, %s, %s}",
-                speciality, Rarety.COMMON.label, Rarety.RARE.label, Rarety.LEGENDARY.label));
+                speciality, Rarity.COMMON.label, Rarity.RARE.label, Rarity.LEGENDARY.label));
     }
 
     public static HeroException notFoundHero(UUID id) {

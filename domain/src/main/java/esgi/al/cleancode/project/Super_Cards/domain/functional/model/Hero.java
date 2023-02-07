@@ -16,12 +16,12 @@ public class Hero {
     @Builder.Default
     UUID id = UUID.randomUUID();
     public String name;
-    public int hp;
+    public double hp;
     @With
     @Builder.Default
     public int xp = 0;
-    public int power;
-    public int armor;
+    public double power;
+    public double armor;
     public String speciality;
     public String rarety;
     @With
