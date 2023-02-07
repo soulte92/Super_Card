@@ -37,7 +37,37 @@ class DefaultHeroesPopulationServiceTest {
     }
 
     @Test
-    void initCharacteristicsBySpeciality() {
+    void should_initialize_hero_carateristics_by_speciality() {
+        String givenName = "super-boy";
+        String givenRarity = Rarity.COMMON.label;
+
+        String givenTankSpeciality = Speciality.TANK.label;
+        Hero actualTankHero = service.initCharacteristicsBySpeciality(givenName, givenTankSpeciality, givenRarity);
+        assertEquals(actualTankHero.hp, 1000);
+        assertEquals(actualTankHero.power, 100);
+        assertEquals(actualTankHero.armor, 20);
+
+        String givenKillerSpeciality = Speciality.KILLER.label;
+        Hero actualKillerHero = service.initCharacteristicsBySpeciality(givenName, givenKillerSpeciality, givenRarity);
+        assertEquals(actualKillerHero.hp, 800);
+        assertEquals(actualKillerHero.power, 200);
+        assertEquals(actualKillerHero.armor, 5);
+
+        String givenMagicianSpeciality = Speciality.MAGICIAN.label;
+        Hero actualMagicianHero = service.initCharacteristicsBySpeciality(givenName, givenMagicianSpeciality, givenRarity);
+        assertEquals(actualMagicianHero.hp, 700);
+        assertEquals(actualMagicianHero.power, 150);
+        assertEquals(actualMagicianHero.armor, 10);
+    }
+
+    @Test
+    void should_not_initialize_hero_carateristics_by_speciality(){
+        String givenName = "super-boy";
+        String givenRarity = Rarity.COMMON.label;
+        String givenSpeciality = "lune";
+        Assertions.assertThrows(HeroException.class, () -> {
+            service.initCharacteristicsBySpeciality(givenName, givenRarity, givenSpeciality);
+        });
     }
 
     @Test
