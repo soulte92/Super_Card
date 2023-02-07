@@ -23,7 +23,7 @@ public class Hero {
     public double power;
     public double armor;
     public String speciality;
-    public String rarety;
+    public String rarity;
     @With
     @Builder.Default
     public int level = 1;

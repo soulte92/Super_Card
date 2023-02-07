@@ -5,6 +5,7 @@ import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarity;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DefaultHeroPersistenceSpi;
+import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,8 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
-import static org.assertj.vavr.api.VavrAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 
@@ -31,9 +32,18 @@ class DefaultHeroesPopulationServiceTest {
 
     }
 
+    // TODO : should correct this test
     @Test
-    void createAndSaveHero() {
+    public void should_create_and_save_hero_in_db(){
+        String givenName = "super-boy";
+        String givenRarity = Rarity.COMMON.label;
+        String givenSpeciality = Speciality.TANK.label;
+        Hero givenHero = service.initCharacteristicsBySpeciality(givenName, givenSpeciality, givenRarity);
+        givenHero = service.enhaceCharacteriticsByRarity(givenHero);
+        when(spi.save(givenHero)).thenReturn(givenHero);
 
+        Hero actualHero = service.createAndSaveHero(givenName, givenRarity, givenSpeciality);
+        Assertions.assertSame(actualHero,givenHero);
     }
 
     @Test
@@ -71,7 +81,7 @@ class DefaultHeroesPopulationServiceTest {
     }
 
     @Test
-    void should_enhace_hero_caracteritics_by_rarety() {
+    void should_enhace_hero_caracteritics_by_rarity() {
         Hero givenCommonHero = Hero.builder()
                 .name("super-boy")
                 .hp(30)
@@ -80,7 +90,7 @@ class DefaultHeroesPopulationServiceTest {
                 .armor(5)
                 .level(6)
                 .speciality(Speciality.TANK.label)
-                .rarety(Rarity.COMMON.label).build();
+                .rarity(Rarity.COMMON.label).build();
         Hero actualCommonHero = service.enhaceCharacteriticsByRarity(givenCommonHero);
         assertEquals(actualCommonHero.hp, 30.0);
         assertEquals(actualCommonHero.power, 20.0);
@@ -94,7 +104,7 @@ class DefaultHeroesPopulationServiceTest {
                 .armor(5)
                 .level(6)
                 .speciality(Speciality.TANK.label)
-                .rarety(Rarity.RARE.label).build();
+                .rarity(Rarity.RARE.label).build();
         Hero actualRareHero = service.enhaceCharacteriticsByRarity(givenRareHero);
         assertEquals(actualRareHero.hp, 33.0);
         assertEquals(actualRareHero.power, 22.0);
@@ -108,7 +118,7 @@ class DefaultHeroesPopulationServiceTest {
                 .armor(5)
                 .level(6)
                 .speciality(Speciality.TANK.label)
-                .rarety(Rarity.LEGENDARY.label).build();
+                .rarity(Rarity.LEGENDARY.label).build();
         Hero actualLegendaryHero = service.enhaceCharacteriticsByRarity(givenLegendaryHero);
         assertEquals(actualLegendaryHero.hp, 36.0);
         assertEquals(actualLegendaryHero.power, 24.0);
@@ -116,7 +126,7 @@ class DefaultHeroesPopulationServiceTest {
     }
 
     @Test
-    void should_not_enhace_hero_caracteritics_by_not_supported_rarety(){
+    void should_not_enhace_hero_caracteritics_by_not_supported_rarity(){
         Hero givenHero = Hero.builder()
                 .name("super-boy")
                 .hp(30)
@@ -125,7 +135,7 @@ class DefaultHeroesPopulationServiceTest {
                 .armor(5)
                 .level(6)
                 .speciality(Speciality.TANK.label)
-                .rarety("BIGBOSS").build();
+                .rarity("BIGBOSS").build();
         Assertions.assertThrows(HeroException.class, () -> {
             service.enhaceCharacteriticsByRarity(givenHero);
         });
@@ -141,7 +151,7 @@ class DefaultHeroesPopulationServiceTest {
                 .armor(5)
                 .level(6)
                 .speciality(Speciality.TANK.label)
-                .rarety(Rarity.COMMON.label).build();
+                .rarity(Rarity.COMMON.label).build();
 
         double perCent = 0.5;
         Hero actualHero = service.enhanceCharacteristicsByPerCent(givenHero, perCent);
@@ -161,7 +171,7 @@ class DefaultHeroesPopulationServiceTest {
                 .armor(5)
                 .level(6)
                 .speciality(Speciality.TANK.label)
-                .rarety(Rarity.COMMON.label).build();
+                .rarity(Rarity.COMMON.label).build();
 
         double perCent = 0.0;
         Hero actualHero = service.enhanceCharacteristicsByPerCent(givenHero, perCent);
@@ -181,7 +191,7 @@ class DefaultHeroesPopulationServiceTest {
                 .armor(5)
                 .level(6)
                 .speciality(Speciality.TANK.label)
-                .rarety(Rarity.COMMON.label).build();
+                .rarity(Rarity.COMMON.label).build();
 
         // Should throw exception when percent is not in ]0,1[
         Assertions.assertThrows(HeroException.class, () -> {

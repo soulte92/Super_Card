@@ -30,31 +30,31 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
         createAndSaveHero("La Reine des Éléments", Speciality.KILLER.label, Rarity.LEGENDARY.label);
     }
 
-    public void createAndSaveHero(String name, String speciality, String rarety){
-        Hero hero = initCharacteristicsBySpeciality(name, speciality, rarety);
+    public Hero createAndSaveHero(String name, String speciality, String rarity){
+        Hero hero = initCharacteristicsBySpeciality(name, speciality, rarity);
         hero = enhaceCharacteriticsByRarity(hero);
-        heroPersistenceSpi.save(hero);
+        return heroPersistenceSpi.save(hero);
     }
 
-    public Hero initCharacteristicsBySpeciality(String name, String speciality, String rarety){
+    public Hero initCharacteristicsBySpeciality(String name, String speciality, String rarity){
         Hero newHero;
         if(speciality.equals(Speciality.TANK.label)){
             newHero = Hero.builder()
                     .name(name)
                     .speciality(speciality)
-                    .rarety(rarety).hp(1000.).power(100.).armor(20.).build();
+                    .rarity(rarity).hp(1000.).power(100.).armor(20.).build();
         }
         else if(speciality.equals(Speciality.KILLER.label)){
             newHero = Hero.builder()
                     .name(name)
                     .speciality(speciality)
-                    .rarety(rarety).hp(800.).power(200.).armor(5.).build();
+                    .rarity(rarity).hp(800.).power(200.).armor(5.).build();
         }
         else if(speciality.equals(Speciality.MAGICIAN.label)){
             newHero = Hero.builder()
                     .name(name)
                     .speciality(speciality)
-                    .rarety(rarety).hp(700.).power(150.).armor(10.).build();
+                    .rarity(rarity).hp(700.).power(150.).armor(10.).build();
         }
         else{
             throw HeroException.notSupportedSpeciality(speciality);
@@ -64,17 +64,17 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
 
     public Hero enhaceCharacteriticsByRarity(Hero hero){
         Hero newHero;
-        if(hero.rarety.equals(Rarity.COMMON.label)){
+        if(hero.rarity.equals(Rarity.COMMON.label)){
             newHero = enhanceCharacteristicsByPerCent( hero, 0.);
         }
-        else if(hero.rarety.equals(Rarity.RARE.label)){
+        else if(hero.rarity.equals(Rarity.RARE.label)){
             newHero = enhanceCharacteristicsByPerCent( hero, 0.1);
         }
-        else if(hero.rarety.equals(Rarity.LEGENDARY.label)){
+        else if(hero.rarity.equals(Rarity.LEGENDARY.label)){
             newHero = enhanceCharacteristicsByPerCent( hero, 0.2);
         }
         else{
-            throw HeroException.notSupportedRarety(hero.rarety);
+            throw HeroException.notSupportedRarety(hero.rarity);
         }
         return newHero;
     }
@@ -88,7 +88,7 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
                 .xp(hero.xp)
                 .level(hero.level)
                 .speciality(hero.speciality)
-                .rarety(hero.rarety)
+                .rarity(hero.rarity)
                 .hp(hero.hp + (hero.hp * perCent))
                 .power(hero.power + (hero.power * perCent))
                 .armor(hero.armor + (hero.armor * perCent)).build();
