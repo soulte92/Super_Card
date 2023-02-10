@@ -5,7 +5,7 @@ import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarity;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DefaultHeroesPopulationApi;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DefaultHeroPersistenceSpi;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.server.HeroPersistenceSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class DefaultHeroesPopulationService implements DefaultHeroesPopulationApi {
 
-    private final DefaultHeroPersistenceSpi heroPersistenceSpi;
+    private final HeroPersistenceSpi heroPersistenceSpi;
 
     @Override
     public void createAndSaveHeroes() {
