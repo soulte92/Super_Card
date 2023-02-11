@@ -10,7 +10,7 @@ public class HeroException extends RuntimeException {
     private HeroException() {
     }
 
-    private HeroException(String message) {
+    public HeroException(String message) {
         super(message);
     }
 

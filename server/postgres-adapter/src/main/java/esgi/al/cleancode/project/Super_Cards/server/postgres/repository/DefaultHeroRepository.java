@@ -15,6 +15,6 @@ import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 @Transactional(propagation = MANDATORY)
 public interface DefaultHeroRepository extends JpaRepository<DefaultHeroEntity, UUID> {
 
-    @EntityGraph(attributePaths = "offences")
+    @EntityGraph(attributePaths = "heroes")
     Optional<DefaultHeroEntity> findDefaultHeroEntityById(UUID id);
 }

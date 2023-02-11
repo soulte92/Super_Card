@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -26,9 +28,9 @@ class DefaultHeroesPopulationServiceTest {
 
     @Test
     void should_create_and_save_heroes_in_db() {
-        DefaultHeroesPopulationService defaultHeroesPopulationServiceMock = mock(DefaultHeroesPopulationService.class);
-        defaultHeroesPopulationServiceMock.createAndSaveHeroes();
-        verify(defaultHeroesPopulationServiceMock,times(9)).createAndSaveHero(anyString(),anyString(),anyString());
+        List<Hero> heroes = service.createAndSaveHeroes();
+        Assertions.assertEquals(heroes.size(), 9);
+        //TODO add test
     }
 
     // TODO : should correct this test

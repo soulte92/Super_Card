@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "default_heroes")
+@Table(name = "default_hero")
 public class DefaultHeroEntity {
 
     @Id

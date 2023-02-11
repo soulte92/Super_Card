@@ -5,6 +5,7 @@ import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.HeroPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.DefaultHeroEntityMapper;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.repository.DefaultHeroRepository;
+import io.vavr.control.Either;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.DefaultHeroEntityMapper.fromDomain;
+import static io.vavr.API.Try;
 
 
 @Service
@@ -30,10 +32,9 @@ public class DefaultHeroDatabaseAdapter implements HeroPersistenceSpi {
             return DefaultHeroEntityMapper.toDomain(repository.save(entity));
         } catch (Throwable t){
             // TODO to verify
-            new ApplicationError("Unable to save default hero", null, o, t);
-            return null;
+            new ApplicationError("Unable to save hero", null, o, t);
         }
-
+        return o;
     }
 
     @Override

@@ -1,18 +1,17 @@
 version: '3.7'
 services:
   postgres:
-    # TODO to configure ours
-    container_name: postgres-prez-carbon-archi-hexa
+    container_name: postgres-super-cards
     image: postgres:latest
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: prez-archi-hexa
+      POSTGRES_DB: super_cards
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - prez-archi-hexa:/applis/docker-compose/prez/data
+      - super-cards-volume:/applis/docker-compose/super_cards/data
 volumes:
-  prez-archi-hexa:
+  super-cards-volume:
     external: true
