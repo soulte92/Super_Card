@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
     private final HeroPersistenceSpi heroPersistenceSpi;
 
     @Override
-    public List<Hero> createAndSaveHeroes() {
+    public Optional<List<Hero>> createAndSaveDefaultHeroes() {
         List<Hero> heroes = new ArrayList<>();
         heroes.add(createAndSaveHero("Le Guerrier Intrépide", Speciality.TANK.label, Rarity.COMMON.label));
         heroes.add(createAndSaveHero("La Magicienne Suprême", Speciality.MAGICIAN.label, Rarity.COMMON.label));
@@ -32,7 +34,25 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
         heroes.add(createAndSaveHero("Légendaire Lumière", Speciality.TANK.label, Rarity.LEGENDARY.label));
         heroes.add(createAndSaveHero("Briseur de Chaînes", Speciality.MAGICIAN.label, Rarity.LEGENDARY.label));
         heroes.add(createAndSaveHero("La Reine des Éléments", Speciality.KILLER.label, Rarity.LEGENDARY.label));
-        return heroes;
+        return Optional.of(heroes);
+    }
+
+    @Override
+    public Optional<List<Hero>> getDefaultHeroes() {
+        return Optional.ofNullable(heroPersistenceSpi.findAll());
+    }
+
+    @Override
+    public Optional<Hero> createAndSaveOneHero() {
+        String speciality = Speciality.TANK.label;
+        String rarity = Rarity.RARE.label;
+        String name = Rarity.RARE.label;
+        Hero hero = initCharacteristicsBySpeciality(name, speciality, rarity);
+        hero = enhaceCharacteriticsByRarity(hero);
+        if (hero != null){
+            return Optional.ofNullable(heroPersistenceSpi.save(hero));
+        }
+        return Optional.empty();
     }
 
     public Hero createAndSaveHero(String name, String speciality, String rarity){
@@ -88,7 +108,7 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
         if ((0>perCent) || (perCent>1)){
             throw HeroException.enhaceCaracteriticsByPerCentException(perCent);
         }
-        return Hero.builder().id(hero.getId())
+        return Hero.builder().heroId(hero.getHeroId())
                 .name(hero.name)
                 .xp(hero.xp)
                 .level(hero.level)

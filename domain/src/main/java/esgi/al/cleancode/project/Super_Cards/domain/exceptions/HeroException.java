@@ -34,4 +34,8 @@ public class HeroException extends RuntimeException {
     public static HeroException notFoundHero(UUID id) {
         return new HeroException(String.format("Hero with Id = " + id.toString() +" not found !"));
     }
+
+    public static HeroException notFoundHeroBySpecialityAndRarity(String speciality, String rarity) {
+        return new HeroException(String.format("Hero with Speciality = {}  and Rarity = {} not found !", speciality, rarity));
+    }
 }

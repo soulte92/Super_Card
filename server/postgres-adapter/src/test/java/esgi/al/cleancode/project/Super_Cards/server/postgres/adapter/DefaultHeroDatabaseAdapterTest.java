@@ -80,7 +80,7 @@ class DefaultHeroDatabaseAdapterTest {
       val entity = DefaultHeroEntity.builder().build();
       val domain = DefaultHeroEntityMapper.toDomain(entity);
 
-      when(repository.findDefaultHeroEntityById(id)).thenReturn(Optional.of(entity));
+      when(repository.findDefaultHeroEntityByHeroId(id)).thenReturn(Optional.of(entity));
 
       val actual = adapter.findById(id);
 
@@ -94,7 +94,7 @@ class DefaultHeroDatabaseAdapterTest {
     void should_not_find() {
       val id = UUID.randomUUID();
 
-      when(repository.findDefaultHeroEntityById(id)).thenReturn(Optional.empty());
+      when(repository.findDefaultHeroEntityByHeroId(id)).thenReturn(Optional.empty());
 
       val actual = adapter.findById(id);
 

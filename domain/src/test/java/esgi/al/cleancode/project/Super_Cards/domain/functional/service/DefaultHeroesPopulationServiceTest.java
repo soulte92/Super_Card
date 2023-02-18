@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -28,51 +29,29 @@ class DefaultHeroesPopulationServiceTest {
 
     @Test
     void should_create_and_save_heroes_in_db() {
-        List<Hero> heroes = service.createAndSaveHeroes();
-        Assertions.assertEquals(heroes.size(), 9);
+        Optional<List<Hero>> heroes = service.createAndSaveDefaultHeroes();
+        if (heroes.isPresent()){
+            Assertions.assertEquals(heroes.get().size(), 9);
+        } else {
+            Assertions.fail();
+        }
         //TODO add test
     }
 
     // TODO : should correct this test
     @Test
     public void should_create_and_save_hero_in_db(){
+        Hero givenHero = Hero.builder().build();
         String givenName = "super-boy";
         String givenRarity = Rarity.COMMON.label;
-        String givenSpeciality = Speciality.TANK.label;
+        String givenTankSpeciality = Speciality.TANK.label;
 
-//        Hero givenHero = service.initCharacteristicsBySpeciality(givenName, givenSpeciality, givenRarity);
 //        when(spi.save(givenHero)).thenReturn(givenHero);
+//        when(service.initCharacteristicsBySpeciality(givenName, givenTankSpeciality, givenRarity)).thenReturn(givenHero);
+//        when(service.enhaceCharacteriticsByRarity(givenHero)).thenReturn(givenHero);
 //
-//        when(actualHero.getId()).thenReturn(givenHero.getId());
-//
-//        Assertions.assertSame(actualHero,givenHero);
-
 //        Hero actualHero = service.createAndSaveHero(anyString(), anyString(), anyString());
-
-//        // Define the behavior of the mock database
-//        Hero stubHero = service.initCharacteristicsBySpeciality(givenName, givenSpeciality, givenRarity);
-//        when(service.createAndSaveHero(anyString(), anyString(), anyString())).thenReturn(stubHero);
-//
-//        // Create the object that you want to test
-//        DefaultHeroesPopulationService defaultHeroesPopulationService = new DefaultHeroesPopulationService(spi);
-////        CreateHero createHero = new CreateHero(mockDatabase);
-//
-//        // Call the create method and get the returned hero
-//        Hero returnedHero = defaultHeroesPopulationService.createAndSaveHero("heroName", Rarity.RARE.label, Speciality.KILLER.label);
-
-        // Define the behavior of the mock database
-//        Hero givenHero = service.initCharacteristicsBySpeciality(givenName, givenSpeciality, givenRarity);
-//        when(spi.save(givenHero)).thenReturn(givenHero);
-//        when(service.createAndSaveHero(anyString(), anyString(), anyString())).thenReturn(givenHero);
-//
-//        // Create the object that you want to test
-//        DefaultHeroesPopulationService defaultHeroesPopulationService = new DefaultHeroesPopulationService(spi);
-//
-//        // Call the create method and get the returned hero
-////        Hero returnedHero = defaultHeroesPopulationService.createAndSaveHero("heroName", Rarity.RARE.label, Speciality.KILLER.label);
-//
-//        // Verify that the correct hero is returned
-//        assertEquals(service.createAndSaveHero(anyString(), anyString(), anyString()), givenHero);
+//        Assertions.assertSame(actualHero,givenHero);
     }
 
     @Test

@@ -1,12 +1,13 @@
 package esgi.al.cleancode.project.Super_Cards.client.rest.mapper;
 
 import esgi.al.cleancode.project.Super_Cards.client.rest.dto.DefaultHeroDto;
+import esgi.al.cleancode.project.Super_Cards.client.rest.dto.PlayerHeroDto;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 
-public interface DefaultHeroDtoMapper {
+public interface PlayerHeroDtoMapper {
 
-  static DefaultHeroDto toDto(Hero hero) {
-    return new DefaultHeroDto(hero.getHeroId(),
+  static PlayerHeroDto toDto(Hero hero) {
+    return new PlayerHeroDto(hero.getHeroId(),
             hero.getName(),
             hero.getHp(),
             hero.getXp(),

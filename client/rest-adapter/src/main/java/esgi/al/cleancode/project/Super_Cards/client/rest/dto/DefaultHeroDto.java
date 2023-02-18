@@ -11,7 +11,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 
 @JsonAutoDetect(fieldVisibility = ANY)
 public record DefaultHeroDto(
-    UUID id,
+    UUID heroId,
     String name,
     double hp,
     int xp,

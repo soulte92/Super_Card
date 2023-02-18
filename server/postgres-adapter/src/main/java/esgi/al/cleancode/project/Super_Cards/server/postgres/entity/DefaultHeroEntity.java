@@ -2,6 +2,7 @@ package esgi.al.cleancode.project.Super_Cards.server.postgres.entity;
 
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import lombok.*;
+import lombok.EqualsAndHashCode.Include;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,13 +15,12 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "default_hero")
 public class DefaultHeroEntity {
 
     @Id
-    @EqualsAndHashCode.Include
-    private UUID id;
+    @Include
+    private UUID heroId;
 
     private String name;
 

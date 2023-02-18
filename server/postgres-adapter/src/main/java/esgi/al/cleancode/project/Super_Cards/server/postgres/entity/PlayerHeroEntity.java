@@ -19,7 +19,7 @@ public class PlayerHeroEntity {
 
     @Id
     @EqualsAndHashCode.Include
-    private UUID id;
+    private UUID heroId;
 
     private String name;
 

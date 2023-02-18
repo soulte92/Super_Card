@@ -82,7 +82,7 @@ class PlayerHeroDatabaseAdapterTest {
       val entity = PlayerHeroEntity.builder().build();
       val domain = PlayerHeroEntityMapper.toDomain(entity);
 
-      when(repository.findPlayerHeroEntityById(id)).thenReturn(Optional.of(entity));
+      when(repository.findPlayerHeroEntityByHeroId(id)).thenReturn(Optional.of(entity));
 
       val actual = adapter.findById(id);
 
@@ -96,7 +96,7 @@ class PlayerHeroDatabaseAdapterTest {
     void should_not_find() {
       val id = UUID.randomUUID();
 
-      when(repository.findPlayerHeroEntityById(id)).thenReturn(Optional.empty());
+      when(repository.findPlayerHeroEntityByHeroId(id)).thenReturn(Optional.empty());
 
       val actual = adapter.findById(id);
 

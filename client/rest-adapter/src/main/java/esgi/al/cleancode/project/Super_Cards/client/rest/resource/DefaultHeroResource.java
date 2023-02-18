@@ -1,17 +1,18 @@
 package esgi.al.cleancode.project.Super_Cards.client.rest.resource;
 
+import esgi.al.cleancode.project.Super_Cards.client.rest.dto.DefaultHeroDto;
+import esgi.al.cleancode.project.Super_Cards.client.rest.mapper.DefaultHeroDtoMapper;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DefaultHeroesPopulationApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,11 +23,23 @@ public class DefaultHeroResource {
 
   @PostMapping("/populate_heroes")
   public ResponseEntity<Object> createHero() {
-    try {
-      List<Hero> createdHeroes = defaultHeroesPopulationApi.createAndSaveHeroes();
-      return ResponseEntity.ok().body(createdHeroes);
-    } catch (Exception ex) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
+      Optional<List<Hero>> defaultCreatedHeroes = defaultHeroesPopulationApi.createAndSaveDefaultHeroes();
+    return defaultCreatedHeroes.<ResponseEntity<Object>>map(heroes -> ResponseEntity.ok().body(heroes.stream()
+            .map(DefaultHeroDtoMapper::toDto).toList())).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+  }
+  @PostMapping("/populate_one-hero")
+  public ResponseEntity<Object> createOneHero() {
+    // TODO maybe to remove
+    Optional<Hero> hero = defaultHeroesPopulationApi.createAndSaveOneHero();
+    return hero.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+  }
+
+  @GetMapping("")
+  public ResponseEntity<Object> getDefaultHeroes() {
+    Optional<List<Hero>> defaultHeroes = defaultHeroesPopulationApi.getDefaultHeroes();
+    return defaultHeroes.<ResponseEntity<Object>>map(heroes -> ResponseEntity.ok().body(heroes.stream()
+            .map(DefaultHeroDtoMapper::toDto).toList()))
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
   }
 }

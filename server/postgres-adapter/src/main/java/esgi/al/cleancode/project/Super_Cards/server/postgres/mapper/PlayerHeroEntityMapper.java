@@ -6,7 +6,7 @@ import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.PlayerHeroEn
 public interface PlayerHeroEntityMapper {
 
     static Hero toDomain(PlayerHeroEntity entity) {
-        return Hero.builder().id(entity.getId())
+        return Hero.builder().heroId(entity.getHeroId())
                 .name(entity.getName())
                 .xp(entity.getXp())
                 .level(entity.getLevel())
@@ -18,7 +18,7 @@ public interface PlayerHeroEntityMapper {
     }
 
     static PlayerHeroEntity fromDomain(Hero domain) {
-        return PlayerHeroEntity.builder().id(domain.getId())
+        return PlayerHeroEntity.builder().heroId(domain.getHeroId())
                 .name(domain.getName())
                 .xp(domain.getXp())
                 .level(domain.getLevel())

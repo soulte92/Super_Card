@@ -6,7 +6,7 @@ import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.DefaultHeroE
 public interface DefaultHeroEntityMapper {
 
     static Hero toDomain(DefaultHeroEntity entity) {
-        return Hero.builder().id(entity.getId())
+        return Hero.builder().heroId(entity.getHeroId())
                 .name(entity.getName())
                 .xp(entity.getXp())
                 .level(entity.getLevel())
@@ -18,7 +18,7 @@ public interface DefaultHeroEntityMapper {
     }
 
     static DefaultHeroEntity fromDomain(Hero domain) {
-        return DefaultHeroEntity.builder().id(domain.getId())
+        return DefaultHeroEntity.builder().heroId(domain.getHeroId())
                 .name(domain.getName())
                 .xp(domain.getXp())
                 .level(domain.getLevel())
