@@ -11,10 +11,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.transaction.annotation.Propagation.MANDATORY;
+import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 @Repository
 @Transactional(propagation = MANDATORY)
 public interface DefaultHeroRepository extends JpaRepository<DefaultHeroEntity, UUID> {
+    @Transactional(propagation = REQUIRED)
     @Query("select d from DefaultHeroEntity d where d.speciality = ?1 and d.rarity = ?2")
     DefaultHeroEntity findBySpecialityAndRarity(String speciality, String rarity);
 

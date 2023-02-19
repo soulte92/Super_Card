@@ -4,7 +4,7 @@ import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarity;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.server.HeroPersistenceSpi;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DefaultHeroPersistenceSpi;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 
@@ -25,7 +24,7 @@ class DefaultHeroesPopulationServiceTest {
     @InjectMocks
     private DefaultHeroesPopulationService service;
     @Mock
-    private HeroPersistenceSpi spi;
+    private DefaultHeroPersistenceSpi spi;
 
     @Test
     void should_create_and_save_heroes_in_db() {

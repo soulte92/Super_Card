@@ -1,15 +1,7 @@
 package esgi.al.cleancode.project.Super_Cards.bootstrap.config.domain;
-import esgi.al.cleancode.project.Super_Cards.domain.functional.service.DeckCreatorService;
-import esgi.al.cleancode.project.Super_Cards.domain.functional.service.DefaultHeroesPopulationService;
-import esgi.al.cleancode.project.Super_Cards.domain.functional.service.PlayerCreatorService;
-import esgi.al.cleancode.project.Super_Cards.domain.functional.service.PlayerHeroCreatorService;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DeckCreatorApi;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DefaultHeroesPopulationApi;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.client.PlayerCreatorApi;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.client.PlayerHeroCreatorApi;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DeckPersistenceSpi;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.server.HeroPersistenceSpi;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.server.PlayerPersistenceSpi;
+import esgi.al.cleancode.project.Super_Cards.domain.functional.service.*;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.client.*;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.server.*;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.DefaultHeroEntity;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.PlayerHeroEntity;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.repository.DefaultHeroRepository;
@@ -30,12 +22,13 @@ import java.util.UUID;
 public class DomainConfiguration {
 
   @Bean
-  public DefaultHeroesPopulationApi defaultHeroService(@Qualifier("defaultHeroDatabaseAdapter") HeroPersistenceSpi spi) {
-    return new DefaultHeroesPopulationService(spi);
+  public DefaultHeroesPopulationApi defaultHeroService(@Qualifier("defaultHeroDatabaseAdapter") DefaultHeroPersistenceSpi defaultHeroPersistenceSpi) {
+    return new DefaultHeroesPopulationService(defaultHeroPersistenceSpi);
   }
   @Bean
-  public PlayerHeroCreatorApi playerHeroService(@Qualifier("playerHeroDatabaseAdapter") HeroPersistenceSpi spi) {
-    return new PlayerHeroCreatorService(spi);
+  public PlayerHeroCreatorApi playerHeroService(@Qualifier("defaultHeroDatabaseAdapter") DefaultHeroPersistenceSpi defaultHeroPersistenceSpi,
+                                                @Qualifier("playerHeroDatabaseAdapter") PlayerHeroPersistenceSpi playerHeroPersistenceSpi) {
+    return new PlayerHeroCreatorService(defaultHeroPersistenceSpi, playerHeroPersistenceSpi);
   }
   @Bean
   public PlayerCreatorApi playerService(@Qualifier("playerDatabaseAdapter") PlayerPersistenceSpi playerPersistenceSpi, DeckPersistenceSpi deckPersistenceSpi) {
@@ -44,6 +37,13 @@ public class DomainConfiguration {
   @Bean
   public DeckCreatorApi deckService(@Qualifier("deckDatabaseAdapter") DeckPersistenceSpi spi) {
     return new DeckCreatorService(spi);
+  }
+  @Bean
+  public PlayerHeroAppenderInDeckApi playerHeroAppenderService(@Qualifier("playerDatabaseAdapter")PlayerPersistenceSpi playerPersistenceSpi,
+                                                               @Qualifier("deckDatabaseAdapter") DeckPersistenceSpi deckPersistenceSpi,
+                                                               @Qualifier("defaultHeroDatabaseAdapter") DefaultHeroPersistenceSpi defaultHeroPersistenceSpi,
+                                                               @Qualifier("playerHeroDatabaseAdapter") PlayerHeroPersistenceSpi playerHeroPersistenceSpi) {
+    return new PlayerHeroAppenderInDeck(playerPersistenceSpi, deckPersistenceSpi, new PlayerHeroCreatorService(defaultHeroPersistenceSpi, playerHeroPersistenceSpi));
   }
 
 }

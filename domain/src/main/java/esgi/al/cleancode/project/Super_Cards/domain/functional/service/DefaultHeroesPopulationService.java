@@ -5,20 +5,19 @@ import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarity;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DefaultHeroesPopulationApi;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.server.HeroPersistenceSpi;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DefaultHeroPersistenceSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
 public class DefaultHeroesPopulationService implements DefaultHeroesPopulationApi {
 
-    private final HeroPersistenceSpi heroPersistenceSpi;
+    private final DefaultHeroPersistenceSpi defaultHeroPersistenceSpi;
 
     @Override
     public Optional<List<Hero>> createAndSaveDefaultHeroes() {
@@ -39,7 +38,7 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
 
     @Override
     public Optional<List<Hero>> getDefaultHeroes() {
-        return Optional.ofNullable(heroPersistenceSpi.findAll());
+        return Optional.ofNullable(defaultHeroPersistenceSpi.findAll());
     }
 
     @Override
@@ -50,7 +49,7 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
         Hero hero = initCharacteristicsBySpeciality(name, speciality, rarity);
         hero = enhaceCharacteriticsByRarity(hero);
         if (hero != null){
-            return Optional.ofNullable(heroPersistenceSpi.save(hero));
+            return Optional.ofNullable(defaultHeroPersistenceSpi.save(hero));
         }
         return Optional.empty();
     }
@@ -58,7 +57,7 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
     public Hero createAndSaveHero(String name, String speciality, String rarity){
         Hero hero = initCharacteristicsBySpeciality(name, speciality, rarity);
         hero = enhaceCharacteriticsByRarity(hero);
-        return heroPersistenceSpi.save(hero);
+        return defaultHeroPersistenceSpi.save(hero);
     }
 
     public Hero initCharacteristicsBySpeciality(String name, String speciality, String rarity){

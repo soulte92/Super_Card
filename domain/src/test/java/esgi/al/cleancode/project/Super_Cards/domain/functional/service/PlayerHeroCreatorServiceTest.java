@@ -2,7 +2,7 @@ package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
 import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.server.HeroPersistenceSpi;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DefaultHeroPersistenceSpi;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +21,7 @@ class PlayerHeroCreatorServiceTest {
     @InjectMocks
     private PlayerHeroCreatorService service;
     @Mock
-    private HeroPersistenceSpi spi;
+    private DefaultHeroPersistenceSpi spi;
 
     @Test
     void createAndSavePlayerHeroFromDefaultHero() {

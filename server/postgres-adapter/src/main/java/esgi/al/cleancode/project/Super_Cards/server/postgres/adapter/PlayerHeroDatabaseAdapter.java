@@ -2,7 +2,7 @@ package esgi.al.cleancode.project.Super_Cards.server.postgres.adapter;
 
 import esgi.al.cleancode.project.Super_Cards.domain.ApplicationError;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.server.HeroPersistenceSpi;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.server.PlayerHeroPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.PlayerHeroEntity;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.PlayerHeroEntityMapper;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.repository.PlayerHeroRepository;
@@ -20,7 +20,7 @@ import static esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.Playe
 
 @Service
 @RequiredArgsConstructor
-public class PlayerHeroDatabaseAdapter implements HeroPersistenceSpi {
+public class PlayerHeroDatabaseAdapter implements PlayerHeroPersistenceSpi {
 
     private final PlayerHeroRepository playerHeroRepository;
 
@@ -42,11 +42,6 @@ public class PlayerHeroDatabaseAdapter implements HeroPersistenceSpi {
     @Transactional(readOnly = true)
     public Optional<Hero> findById(UUID id) {
         return playerHeroRepository.findPlayerHeroEntityByHeroId(id).map(PlayerHeroEntityMapper::toDomain);
-    }
-
-    @Override
-    public Optional<Hero> findBySpecialityAndRarity(String speciality, String rarity) {
-        return Optional.empty();
     }
 
     @Override

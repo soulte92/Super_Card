@@ -2,12 +2,10 @@ package esgi.al.cleancode.project.Super_Cards.server.postgres.adapter;
 
 import esgi.al.cleancode.project.Super_Cards.domain.ApplicationError;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.server.HeroPersistenceSpi;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DefaultHeroPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.DefaultHeroEntity;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.DefaultHeroEntityMapper;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.repository.DefaultHeroRepository;
-import esgi.al.cleancode.project.Super_Cards.server.postgres.repository.PlayerHeroRepository;
-import io.vavr.control.Either;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
@@ -18,12 +16,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.DefaultHeroEntityMapper.fromDomain;
-import static io.vavr.API.Try;
 
 
 @Service
 @RequiredArgsConstructor
-public class DefaultHeroDatabaseAdapter implements HeroPersistenceSpi {
+public class DefaultHeroDatabaseAdapter implements DefaultHeroPersistenceSpi {
 
     private final DefaultHeroRepository repository;
 
@@ -55,10 +52,5 @@ public class DefaultHeroDatabaseAdapter implements HeroPersistenceSpi {
     @Override
     public List<Hero> findAll() {
         return repository.findAll().stream().map(DefaultHeroEntityMapper::toDomain).toList();
-    }
-
-    @Override
-    public Optional<List<Hero>> findAliveHeroes() {
-        return Optional.empty();
     }
 }

@@ -36,6 +36,6 @@ public class HeroException extends RuntimeException {
     }
 
     public static HeroException notFoundHeroBySpecialityAndRarity(String speciality, String rarity) {
-        return new HeroException(String.format("Hero with Speciality = {}  and Rarity = {} not found !", speciality, rarity));
+        return new HeroException(String.format("Hero with Speciality = %s  and Rarity = %s not found !", speciality, rarity));
     }
 }
