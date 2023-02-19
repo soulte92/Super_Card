@@ -1,9 +1,12 @@
 package esgi.al.cleancode.project.Super_Cards.bootstrap.config.domain;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.service.DefaultHeroesPopulationService;
+import esgi.al.cleancode.project.Super_Cards.domain.functional.service.PlayerCreatorService;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.service.PlayerHeroCreatorService;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DefaultHeroesPopulationApi;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.client.PlayerCreatorApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.PlayerHeroCreatorApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.HeroPersistenceSpi;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.server.PlayerPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.DefaultHeroEntity;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.PlayerHeroEntity;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.repository.DefaultHeroRepository;
@@ -30,6 +33,10 @@ public class DomainConfiguration {
   @Bean
   public PlayerHeroCreatorApi playerHeroService(@Qualifier("playerHeroDatabaseAdapter") HeroPersistenceSpi spi) {
     return new PlayerHeroCreatorService(spi);
+  }
+  @Bean
+  public PlayerCreatorApi playerService(@Qualifier("playerDatabaseAdapter") PlayerPersistenceSpi spi) {
+    return new PlayerCreatorService(spi);
   }
 
 }
