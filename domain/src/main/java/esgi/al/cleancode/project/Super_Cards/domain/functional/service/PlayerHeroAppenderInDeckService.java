@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
-public class PlayerHeroAppenderInDeck implements PlayerHeroAppenderInDeckApi {
+public class PlayerHeroAppenderInDeckService implements PlayerHeroAppenderInDeckApi {
     private final PlayerPersistenceSpi playerPersistenceSpi;
     private final DeckPersistenceSpi deckPersistenceSpi;
     private final PlayerHeroCreatorService playerHeroCreatorService;
