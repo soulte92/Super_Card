@@ -2,6 +2,7 @@ package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Deck;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DeckCreatorApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.PlayerCreatorApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DeckPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.PlayerPersistenceSpi;
@@ -13,20 +14,13 @@ import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
-public class PlayerCreatorService implements PlayerCreatorApi {
-    private final PlayerPersistenceSpi playerPersistenceSpi;
-    private final DeckCreatorService deckCreatorService;
+public class DeckCreatorService implements DeckCreatorApi {
+    private final DeckPersistenceSpi deckPersistenceSpi;
 
     @Override
-    public Optional<Player> create(String pseudo) {
-        Optional<Deck> deck = deckCreatorService.create();
-        if (deck.isPresent()){
-            UUID deckId = deck.get().deckId;
-            Player player = Player.builder().pseudo(pseudo).deckId(deckId).build();
-            return Optional.ofNullable(playerPersistenceSpi.save(player));
-        } else {
-            return Optional.empty();
-        }
+    public Optional<Deck> create() {
+        Deck deck = Deck.builder().build();
+        return Optional.ofNullable(deckPersistenceSpi.save(deck));
     }
 
 }

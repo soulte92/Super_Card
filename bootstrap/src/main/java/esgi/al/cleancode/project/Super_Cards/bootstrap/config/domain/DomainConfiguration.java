@@ -1,10 +1,13 @@
 package esgi.al.cleancode.project.Super_Cards.bootstrap.config.domain;
+import esgi.al.cleancode.project.Super_Cards.domain.functional.service.DeckCreatorService;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.service.DefaultHeroesPopulationService;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.service.PlayerCreatorService;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.service.PlayerHeroCreatorService;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DeckCreatorApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DefaultHeroesPopulationApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.PlayerCreatorApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.PlayerHeroCreatorApi;
+import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DeckPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.HeroPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.PlayerPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.DefaultHeroEntity;
@@ -35,8 +38,12 @@ public class DomainConfiguration {
     return new PlayerHeroCreatorService(spi);
   }
   @Bean
-  public PlayerCreatorApi playerService(@Qualifier("playerDatabaseAdapter") PlayerPersistenceSpi spi) {
-    return new PlayerCreatorService(spi);
+  public PlayerCreatorApi playerService(@Qualifier("playerDatabaseAdapter") PlayerPersistenceSpi playerPersistenceSpi, DeckPersistenceSpi deckPersistenceSpi) {
+    return new PlayerCreatorService(playerPersistenceSpi, new DeckCreatorService(deckPersistenceSpi));
+  }
+  @Bean
+  public DeckCreatorApi deckService(@Qualifier("deckDatabaseAdapter") DeckPersistenceSpi spi) {
+    return new DeckCreatorService(spi);
   }
 
 }
