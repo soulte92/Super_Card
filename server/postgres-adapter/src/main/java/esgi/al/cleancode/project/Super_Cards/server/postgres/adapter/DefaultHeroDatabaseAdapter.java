@@ -40,7 +40,7 @@ public class DefaultHeroDatabaseAdapter implements DefaultHeroPersistenceSpi {
     @Override
     @Transactional(readOnly = true)
     public Optional<Hero> findById(UUID id) {
-        return repository.findDefaultHeroEntityByHeroId(id).map(DefaultHeroEntityMapper::toDomain);
+        return repository.findById(id).map(DefaultHeroEntityMapper::toDomain);
     }
 
     @Override

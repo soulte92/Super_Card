@@ -41,7 +41,7 @@ public class PlayerHeroDatabaseAdapter implements PlayerHeroPersistenceSpi {
     @Override
     @Transactional(readOnly = true)
     public Optional<Hero> findById(UUID id) {
-        return playerHeroRepository.findPlayerHeroEntityByHeroId(id).map(PlayerHeroEntityMapper::toDomain);
+        return playerHeroRepository.findById(id).map(PlayerHeroEntityMapper::toDomain);
     }
 
     @Override

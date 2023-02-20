@@ -38,8 +38,13 @@ public class DomainConfiguration {
                                                                  @Qualifier("deckDatabaseAdapter") DeckPersistenceSpi deckPersistenceSpi,
                                                                  @Qualifier("defaultHeroDatabaseAdapter") DefaultHeroPersistenceSpi defaultHeroPersistenceSpi,
                                                                  @Qualifier("playerHeroDatabaseAdapter") PlayerHeroPersistenceSpi playerHeroPersistenceSpi) {
-    return new PlayerHeroPackAppenderService(playerPersistenceSpi, new PlayerHeroAppenderInDeckService(playerPersistenceSpi,
+    return new PlayerHeroPackAppenderService(playerPersistenceSpi, playerHeroPersistenceSpi, new PlayerHeroAppenderInDeckService(playerPersistenceSpi,
             deckPersistenceSpi, new PlayerHeroCreatorService(defaultHeroPersistenceSpi, playerHeroPersistenceSpi)));
   }
-
+  @Bean
+  public PlayerDeckDisplayerApi PlayerDeckDisplayerService(@Qualifier("playerDatabaseAdapter")PlayerPersistenceSpi playerPersistenceSpi,
+                                                               @Qualifier("deckDatabaseAdapter") DeckPersistenceSpi deckPersistenceSpi,
+                                                               @Qualifier("playerHeroDatabaseAdapter") PlayerHeroPersistenceSpi playerHeroPersistenceSpi) {
+    return new PlayerDeckDisplayerService(playerPersistenceSpi, deckPersistenceSpi, playerHeroPersistenceSpi);
+  }
 }

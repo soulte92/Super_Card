@@ -6,6 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface PlayerHeroPackAppenderApi {
-    Optional<List<Hero>> createAndAppendPack(UUID playerId, String packType);
+public interface PlayerDeckDisplayerApi {
+    Optional<List<Hero>> displayDeckContent(UUID playerId);
 }
