@@ -26,7 +26,7 @@ public class PlayerResource {
   private final PlayerHeroPackAppenderApi playerHeroPackAppenderApi;
 
   @PostMapping("")
-  public ResponseEntity<Object> createAndSavePlayerHeroFromDefaultHero(
+  public ResponseEntity<Object> createAndSavePlayer(
          @RequestBody PlayerCreatorDto dto) {
 
     Optional<Player> player = playerCreatorApi.create(dto.pseudo());

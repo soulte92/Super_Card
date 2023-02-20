@@ -3,11 +3,8 @@ package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.PackType;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.RarityGenerator;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.SpecialityGenerator;
-import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Deck;
-import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.PlayerHeroPackAppenderApi;
-import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DeckPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.PlayerPersistenceSpi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,12 +41,12 @@ public class PlayerHeroPackAppenderService implements PlayerHeroPackAppenderApi 
                     .deckId(player.get().getDeckId())
                     .nbToken(player.get().getNbToken() - 1)
                     .build();
-            result.addAll(playerHeroAppenderInDeckService.appendHero(playerId,
-                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateSilverCardRarity()).get());
-            result.addAll(playerHeroAppenderInDeckService.appendHero(playerId,
-                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateSilverCardRarity()).get());
-            result.addAll(playerHeroAppenderInDeckService.appendHero(playerId,
-                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateSilverCardRarity()).get());
+            playerHeroAppenderInDeckService.appendHero(playerId,
+                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateSilverCardRarity()).get();
+            playerHeroAppenderInDeckService.appendHero(playerId,
+                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateSilverCardRarity()).get();
+            result = playerHeroAppenderInDeckService.appendHero(playerId,
+                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateSilverCardRarity()).get();
         }
         else{
             newPlayer = Player.builder()
@@ -58,18 +55,21 @@ public class PlayerHeroPackAppenderService implements PlayerHeroPackAppenderApi 
                     .deckId(player.get().getDeckId())
                     .nbToken(player.get().getNbToken() - 2)
                     .build();
-            result.addAll(playerHeroAppenderInDeckService.appendHero(playerId,
-                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateDiamondCardRarity()).get());
-            result.addAll(playerHeroAppenderInDeckService.appendHero(playerId,
-                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateDiamondCardRarity()).get());
-            result.addAll(playerHeroAppenderInDeckService.appendHero(playerId,
-                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateDiamondCardRarity()).get());
-            result.addAll(playerHeroAppenderInDeckService.appendHero(playerId,
-                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateDiamondCardRarity()).get());
-            result.addAll(playerHeroAppenderInDeckService.appendHero(playerId,
-                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateDiamondCardRarity()).get());
+            playerHeroAppenderInDeckService.appendHero(playerId,
+                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateDiamondCardRarity()).get();
+            playerHeroAppenderInDeckService.appendHero(playerId,
+                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateDiamondCardRarity()).get();
+            playerHeroAppenderInDeckService.appendHero(playerId,
+                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateDiamondCardRarity()).get();
+            playerHeroAppenderInDeckService.appendHero(playerId,
+                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateDiamondCardRarity()).get();
+            result = playerHeroAppenderInDeckService.appendHero(playerId,
+                    SpecialityGenerator.generateRandomSpeciality(), RarityGenerator.generateDiamondCardRarity()).get();
         }
-        playerPersistenceSpi.save(newPlayer);
+        Player result_player = playerPersistenceSpi.save(newPlayer);
+        if (result_player == null){
+            return Optional.empty();
+        }
 
         return Optional.of(result);
     }
