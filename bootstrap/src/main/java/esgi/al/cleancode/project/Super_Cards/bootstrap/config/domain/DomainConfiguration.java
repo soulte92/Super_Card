@@ -47,4 +47,12 @@ public class DomainConfiguration {
                                                                @Qualifier("playerHeroDatabaseAdapter") PlayerHeroPersistenceSpi playerHeroPersistenceSpi) {
     return new PlayerDeckDisplayerService(playerPersistenceSpi, deckPersistenceSpi, playerHeroPersistenceSpi);
   }
+  @Bean
+  public SessionCreatorApi sessionCreatorService(@Qualifier("sessionDatabaseAdapter") SessionPersistenceSpi sessionPersistenceSpi) {
+    return new SessionCreatorService(sessionPersistenceSpi);
+  }
+  @Bean
+  public RoundCreatorApi roundCreatorService(@Qualifier("roundDatabaseAdapter") RoundPersistenceSpi roundPersistenceSpi) {
+    return new RoundCreatorService(roundPersistenceSpi);
+  }
 }
