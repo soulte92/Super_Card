@@ -60,4 +60,8 @@ public class DomainConfiguration {
                                  @Qualifier("playerHeroDatabaseAdapter") PlayerHeroPersistenceSpi playerHeroPersistenceSpi) {
     return new BattleService(new RoundCreatorService(roundPersistenceSpi), playerHeroPersistenceSpi, roundPersistenceSpi);
   }
+  @Bean
+  public PlayerHeroRoundFinderApi playerHeroRoundFinderService(@Qualifier("roundDatabaseAdapter") RoundPersistenceSpi roundPersistenceSpi) {
+    return new PlayerHeroRoundFinderService(roundPersistenceSpi);
+  }
 }
