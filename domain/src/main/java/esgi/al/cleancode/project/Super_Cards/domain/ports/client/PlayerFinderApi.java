@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface PlayerFinderApi {
     Optional<Player> findPlayer(UUID playerId);
+    Optional<Player> findByPlayerUsername(String playerUsername);
 }

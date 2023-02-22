@@ -18,4 +18,8 @@ public class PlayerFinderService implements PlayerFinderApi {
     public Optional<Player> findPlayer(UUID playerId) {
         return playerPersistenceSpi.findById(playerId);
     }
+    @Override
+    public Optional<Player> findByPlayerUsername(String playerUsername) {
+        return playerPersistenceSpi.findByPlayerUsername(playerUsername);
+    }
 }

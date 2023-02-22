@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface PlayerPersistenceSpi extends PersistenceSpi<Player, UUID> {
     @Override
     Optional<Player> findById(UUID uuid);
+
+    Optional<Player> findByPlayerUsername(String playerUsername);
 }

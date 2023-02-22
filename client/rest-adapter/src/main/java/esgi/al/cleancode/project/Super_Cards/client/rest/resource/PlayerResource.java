@@ -68,4 +68,11 @@ public class PlayerResource {
     return player.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
             .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
   }
+  @GetMapping("/findPlayerByUsername")
+  public ResponseEntity<Object> findPlayerByUsername(
+          @RequestBody PlayerCreatorDto dto) {
+    Optional<Player> player = playerFinderApi.findByPlayerUsername(dto.pseudo());
+    return player.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+  }
 }

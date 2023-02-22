@@ -40,4 +40,11 @@ public class PlayerDatabaseAdapter implements PlayerPersistenceSpi {
     public Optional<Player> findById(UUID id) {
         return repository.findById(id).map(PlayerEntityMapper::toDomain);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Player> findByPlayerUsername(String playerUsername) {
+        return Optional.ofNullable(PlayerEntityMapper.toDomain(repository.findByPseudo(playerUsername)));
+    }
+
 }
