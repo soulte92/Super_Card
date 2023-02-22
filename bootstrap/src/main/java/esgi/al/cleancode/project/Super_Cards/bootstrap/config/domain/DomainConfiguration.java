@@ -64,4 +64,8 @@ public class DomainConfiguration {
   public PlayerHeroRoundFinderApi playerHeroRoundFinderService(@Qualifier("roundDatabaseAdapter") RoundPersistenceSpi roundPersistenceSpi) {
     return new PlayerHeroRoundFinderService(roundPersistenceSpi);
   }
+  @Bean
+  public PlayerFinderApi playerFinderService(@Qualifier("playerDatabaseAdapter") PlayerPersistenceSpi playerPersistenceSpi) {
+    return new PlayerFinderService(playerPersistenceSpi);
+  }
 }
