@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static esgi.al.cleancode.project.Super_Cards.domain.functional.service.HeroUtils.enhaceCharacteriticsByRarity;
+import static esgi.al.cleancode.project.Super_Cards.domain.functional.service.HeroUtils.initCharacteristicsBySpeciality;
+
 @Slf4j
 @RequiredArgsConstructor
 public class DefaultHeroesPopulationService implements DefaultHeroesPopulationApi {
@@ -60,61 +63,4 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
         return defaultHeroPersistenceSpi.save(hero);
     }
 
-    public Hero initCharacteristicsBySpeciality(String name, String speciality, String rarity){
-        Hero newHero;
-        if(speciality.equals(Speciality.TANK.label)){
-            newHero = Hero.builder()
-                    .name(name)
-                    .speciality(speciality)
-                    .rarity(rarity).hp(1000.).power(100.).armor(20.).build();
-        }
-        else if(speciality.equals(Speciality.KILLER.label)){
-            newHero = Hero.builder()
-                    .name(name)
-                    .speciality(speciality)
-                    .rarity(rarity).hp(800.).power(200.).armor(5.).build();
-        }
-        else if(speciality.equals(Speciality.MAGICIAN.label)){
-            newHero = Hero.builder()
-                    .name(name)
-                    .speciality(speciality)
-                    .rarity(rarity).hp(700.).power(150.).armor(10.).build();
-        }
-        else{
-            throw HeroException.notSupportedSpeciality(speciality);
-        }
-        return newHero;
-    }
-
-    public Hero enhaceCharacteriticsByRarity(Hero hero){
-        Hero newHero;
-        if(hero.rarity.equals(Rarity.COMMON.label)){
-            newHero = enhanceCharacteristicsByPerCent( hero, 0.);
-        }
-        else if(hero.rarity.equals(Rarity.RARE.label)){
-            newHero = enhanceCharacteristicsByPerCent( hero, 0.1);
-        }
-        else if(hero.rarity.equals(Rarity.LEGENDARY.label)){
-            newHero = enhanceCharacteristicsByPerCent( hero, 0.2);
-        }
-        else{
-            throw HeroException.notSupportedRarety(hero.rarity);
-        }
-        return newHero;
-    }
-
-    public Hero enhanceCharacteristicsByPerCent(Hero hero, double perCent){
-        if ((0>perCent) || (perCent>1)){
-            throw HeroException.enhaceCaracteriticsByPerCentException(perCent);
-        }
-        return Hero.builder().heroId(hero.getHeroId())
-                .name(hero.name)
-                .xp(hero.xp)
-                .level(hero.level)
-                .speciality(hero.speciality)
-                .rarity(hero.rarity)
-                .hp(hero.hp + (hero.hp * perCent))
-                .power(hero.power + (hero.power * perCent))
-                .armor(hero.armor + (hero.armor * perCent)).build();
-    }
 }

@@ -55,4 +55,9 @@ public class DomainConfiguration {
   public RoundCreatorApi roundCreatorService(@Qualifier("roundDatabaseAdapter") RoundPersistenceSpi roundPersistenceSpi) {
     return new RoundCreatorService(roundPersistenceSpi);
   }
+  @Bean
+  public BattleApi BattleService(@Qualifier("roundDatabaseAdapter") RoundPersistenceSpi roundPersistenceSpi,
+                                 @Qualifier("playerHeroDatabaseAdapter") PlayerHeroPersistenceSpi playerHeroPersistenceSpi) {
+    return new BattleService(new RoundCreatorService(roundPersistenceSpi), playerHeroPersistenceSpi, roundPersistenceSpi);
+  }
 }
