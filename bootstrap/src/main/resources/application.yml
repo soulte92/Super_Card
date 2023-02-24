@@ -12,13 +12,13 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/superCardDB
+    url: jdbc:postgresql://localhost:5433/super_cards
     username: postgres
-    password: 0766
+    password: postgres
     hikari:
       connection-timeout: 30000
       minimum-idle: 1
       maximum-pool-size: 5
       idle-timeout: 60000
       max-lifetime: 1800000
-      pool-name: prez-archi-hexa-hikari-pool
+      pool-name: super-cards-pool
