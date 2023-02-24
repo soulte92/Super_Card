@@ -8,10 +8,11 @@ import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import java.util.HashMap;
 
 public class HeroUtils {
-    public static boolean isHeroDead(Hero hero){
+    public static boolean isHeroDead(Hero hero) {
         return hero.getHp() <= 0;
     }
-    public static Hero retrieveHeroHp(Hero hero, double hpToRetrieve){
+
+    public static Hero retrieveHeroHp(Hero hero, double hpToRetrieve) {
         return Hero.builder().heroId(hero.getHeroId())
                 .name(hero.getName())
                 .xp(hero.getXp())
@@ -22,7 +23,8 @@ public class HeroUtils {
                 .power(hero.getPower())
                 .armor(hero.getArmor()).build();
     }
-    public static Hero increaseHeroXp(Hero hero, int xpToIncrease){
+
+    public static Hero increaseHeroXp(Hero hero, int xpToIncrease) {
         return Hero.builder().heroId(hero.getHeroId())
                 .name(hero.getName())
                 .xp(hero.getXp() + xpToIncrease)
@@ -33,7 +35,8 @@ public class HeroUtils {
                 .power(hero.getPower())
                 .armor(hero.getArmor()).build();
     }
-    public static Hero updateHeroLevel(Hero hero){
+
+    public static Hero updateHeroLevel(Hero hero) {
         return Hero.builder().heroId(hero.getHeroId())
                 .name(hero.getName())
                 .xp(hero.getXp())
@@ -45,7 +48,7 @@ public class HeroUtils {
                 .armor(hero.getArmor()).build();
     }
 
-    public static HashMap<String, HashMap<String, Integer>> configSpecialPowerMap(){
+    public static HashMap<String, HashMap<String, Integer>> configSpecialPowerMap() {
         HashMap<String, HashMap<String, Integer>> specialPowerMap = new HashMap<String, HashMap<String, Integer>>();
 
         HashMap<String, Integer> tank = new HashMap<String, Integer>();
@@ -68,51 +71,45 @@ public class HeroUtils {
         return specialPowerMap;
     }
 
-    public static Hero initCharacteristicsBySpeciality(String name, String speciality, String rarity){
+    public static Hero initCharacteristicsBySpeciality(String name, String speciality, String rarity) {
         Hero newHero;
-        if(speciality.equals(Speciality.TANK.label)){
+        if (speciality.equals(Speciality.TANK.label)) {
             newHero = Hero.builder()
                     .name(name)
                     .speciality(speciality)
                     .rarity(rarity).hp(1000.).power(100.).armor(20.).build();
-        }
-        else if(speciality.equals(Speciality.KILLER.label)){
+        } else if (speciality.equals(Speciality.KILLER.label)) {
             newHero = Hero.builder()
                     .name(name)
                     .speciality(speciality)
                     .rarity(rarity).hp(800.).power(200.).armor(5.).build();
-        }
-        else if(speciality.equals(Speciality.MAGICIAN.label)){
+        } else if (speciality.equals(Speciality.MAGICIAN.label)) {
             newHero = Hero.builder()
                     .name(name)
                     .speciality(speciality)
                     .rarity(rarity).hp(700.).power(150.).armor(10.).build();
-        }
-        else{
+        } else {
             throw HeroException.notSupportedSpeciality(speciality);
         }
         return newHero;
     }
 
-    public static Hero enhaceCharacteriticsByRarity(Hero hero){
+    public static Hero enhaceCharacteriticsByRarity(Hero hero) {
         Hero newHero;
-        if(hero.rarity.equals(Rarity.COMMON.label)){
-            newHero = enhanceCharacteristicsByPerCent( hero, 0.);
-        }
-        else if(hero.rarity.equals(Rarity.RARE.label)){
-            newHero = enhanceCharacteristicsByPerCent( hero, 0.1);
-        }
-        else if(hero.rarity.equals(Rarity.LEGENDARY.label)){
-            newHero = enhanceCharacteristicsByPerCent( hero, 0.2);
-        }
-        else{
+        if (hero.rarity.equals(Rarity.COMMON.label)) {
+            newHero = enhanceCharacteristicsByPerCent(hero, 0.);
+        } else if (hero.rarity.equals(Rarity.RARE.label)) {
+            newHero = enhanceCharacteristicsByPerCent(hero, 0.1);
+        } else if (hero.rarity.equals(Rarity.LEGENDARY.label)) {
+            newHero = enhanceCharacteristicsByPerCent(hero, 0.2);
+        } else {
             throw HeroException.notSupportedRarety(hero.rarity);
         }
         return newHero;
     }
 
-    public static Hero enhanceCharacteristicsByPerCent(Hero hero, double perCent){
-        if ((0>perCent) || (perCent>1)){
+    public static Hero enhanceCharacteristicsByPerCent(Hero hero, double perCent) {
+        if ((0 > perCent) || (perCent > 1)) {
             throw HeroException.enhaceCaracteriticsByPerCentException(perCent);
         }
         return Hero.builder().heroId(hero.getHeroId())

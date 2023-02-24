@@ -19,7 +19,7 @@ public class PlayerHeroCreatorService implements PlayerHeroCreatorApi {
     private final PlayerHeroPersistenceSpi playerHeroPersistenceSpi;
 
     @Override
-    public Hero pickHeroFromDefaultHero(String speciality, String rarity){
+    public Hero pickHeroFromDefaultHero(String speciality, String rarity) {
         Optional<Hero> hero = findDefaultHero(speciality, rarity);
         return hero.map(this::savePlayerHero).orElse(null);
     }
@@ -29,10 +29,10 @@ public class PlayerHeroCreatorService implements PlayerHeroCreatorApi {
         return playerHeroPersistenceSpi.findAliveHeroes();
     }
 
-    public Optional<Hero> findDefaultHero(String speciality, String rarity){
+    public Optional<Hero> findDefaultHero(String speciality, String rarity) {
         // TODO Add speciality and rarity validators
         Optional<Hero> hero = defaultHeroPersistenceSpi.findBySpecialityAndRarity(speciality, rarity);
-        if (hero.isEmpty()){
+        if (hero.isEmpty()) {
             throw HeroException.notFoundHeroBySpecialityAndRarity(speciality, rarity);
         }
         return hero;
@@ -40,17 +40,17 @@ public class PlayerHeroCreatorService implements PlayerHeroCreatorApi {
 
     public Hero savePlayerHero(Hero newHero) {
         try {
-        Hero hero = Hero.builder()
-                .name(newHero.getName())
-                .xp(newHero.getXp())
-                .level(newHero.getLevel())
-                .speciality(newHero.getSpeciality())
-                .rarity(newHero.getRarity())
-                .hp(newHero.getHp())
-                .power(newHero.getPower())
-                .armor(newHero.getArmor()).build();
-        return playerHeroPersistenceSpi.save(hero);
-        } catch (HeroException e){
+            Hero hero = Hero.builder()
+                    .name(newHero.getName())
+                    .xp(newHero.getXp())
+                    .level(newHero.getLevel())
+                    .speciality(newHero.getSpeciality())
+                    .rarity(newHero.getRarity())
+                    .hp(newHero.getHp())
+                    .power(newHero.getPower())
+                    .armor(newHero.getArmor()).build();
+            return playerHeroPersistenceSpi.save(hero);
+        } catch (HeroException e) {
             throw new HeroException("Player Hero creation error !");
         }
     }

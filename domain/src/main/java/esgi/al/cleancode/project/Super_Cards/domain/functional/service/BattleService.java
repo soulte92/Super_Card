@@ -19,13 +19,14 @@ public class BattleService implements BattleApi {
     private final RoundCreatorService roundCreatorService;
     private final PlayerHeroPersistenceSpi playerHeroPersistenceSpi;
     private final RoundPersistenceSpi roundPersistenceSpi;
+
     @Override
     public Optional<Round> attack(UUID sessionId, UUID firstPlayerId, UUID secondPlayerId, UUID firstPlayerHeroId, UUID secondPlayerHeroId) {
         Optional<Hero> firstPlayerHero = playerHeroPersistenceSpi.findById(firstPlayerHeroId);
         Optional<Hero> secondPlayerHero = playerHeroPersistenceSpi.findById(secondPlayerHeroId);
 
         // Check Heroes existence
-        if (firstPlayerHero.isEmpty() || secondPlayerHero.isEmpty()){
+        if (firstPlayerHero.isEmpty() || secondPlayerHero.isEmpty()) {
             return Optional.empty();
         }
         // Get Heroes
@@ -34,7 +35,7 @@ public class BattleService implements BattleApi {
 
         // Create a new round
         Optional<Round> round = roundCreatorService.create(sessionId, firstPlayerId, secondPlayerId, firstPlayerHeroId, secondPlayerHeroId);
-        if (round.isEmpty()){
+        if (round.isEmpty()) {
             return Optional.empty();
         }
 
@@ -45,7 +46,7 @@ public class BattleService implements BattleApi {
         return Optional.of(roundPersistenceSpi.save(roundResult));
     }
 
-    public Round attackHeroesEachOther(Round round, Hero heroFighter, Hero heroDefender){
+    public Round attackHeroesEachOther(Round round, Hero heroFighter, Hero heroDefender) {
         // Initialize stats variables
         String winner = "";
         int firstPlayerHeroNbHit = 0;
@@ -54,9 +55,9 @@ public class BattleService implements BattleApi {
         boolean switchState = false;
         boolean deadHero = false;
         // Attack heroes each others until we have a dead hero
-        while (!deadHero){
+        while (!deadHero) {
             // The hero Fighter attacks the hero Defender
-            if (switchState){
+            if (switchState) {
                 ArrayList<Hero> result = this.attack(heroFighter, heroDefender);
                 heroFighter = playerHeroPersistenceSpi.save(result.get(0));
                 heroDefender = playerHeroPersistenceSpi.save(result.get(1));
@@ -65,7 +66,7 @@ public class BattleService implements BattleApi {
                 switchState = false;
             }
             // The hero Defender attacks the hero Fighter
-            else{
+            else {
                 ArrayList<Hero> result = this.attack(heroDefender, heroFighter);
                 heroDefender = playerHeroPersistenceSpi.save(result.get(0));
                 heroFighter = playerHeroPersistenceSpi.save(result.get(1));
@@ -74,7 +75,7 @@ public class BattleService implements BattleApi {
                 switchState = true;
             }
             // Change the status to break the loop
-            if (winner != null){
+            if (winner != null) {
                 deadHero = true;
             }
         }
@@ -94,21 +95,22 @@ public class BattleService implements BattleApi {
                 .build();
     }
 
-    public ArrayList<Hero> attack(Hero heroFighter, Hero heroDefender){
+    public ArrayList<Hero> attack(Hero heroFighter, Hero heroDefender) {
         // heroFighter don't attack if heroDefender is dead
-        if(HeroUtils.isHeroDead(heroDefender)) {
+        if (HeroUtils.isHeroDead(heroDefender)) {
             ArrayList<Hero> result = new ArrayList<>();
             result.add(heroFighter);
             result.add(heroDefender);
             return result;
-        };
+        }
+        ;
 
         // Decrease heroDefender hp
         int hpToRetrieve = (int) ((heroFighter.power + HeroUtils.configSpecialPowerMap().get(heroFighter.speciality).get(heroDefender.speciality)) - heroDefender.armor);
         heroDefender = HeroUtils.retrieveHeroHp(heroDefender, hpToRetrieve);
 
         // Increase heroFighter xp and update characteristics
-        if(HeroUtils.isHeroDead(heroDefender)){
+        if (HeroUtils.isHeroDead(heroDefender)) {
 
             // Increase xp
             int xpToIncrease = 1;

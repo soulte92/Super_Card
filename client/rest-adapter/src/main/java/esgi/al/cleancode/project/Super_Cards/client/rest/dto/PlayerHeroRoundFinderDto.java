@@ -8,4 +8,5 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 @JsonAutoDetect(fieldVisibility = ANY)
 public record PlayerHeroRoundFinderDto(
         @JsonProperty("playerHeroId") String playerHeroId
-) {}
+) {
+}

@@ -1,7 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.server.postgres.adapter;
 
 import esgi.al.cleancode.project.Super_Cards.domain.ApplicationError;
-import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Round;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.RoundPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.RoundEntityMapper;
@@ -29,7 +28,7 @@ public class RoundDatabaseAdapter implements RoundPersistenceSpi {
         val entity = fromDomain(o);
         try {
             return RoundEntityMapper.toDomain(repository.save(entity));
-        } catch (Throwable t){
+        } catch (Throwable t) {
             // TODO to verify
             new ApplicationError("Unable to save Round", null, o, t);
         }

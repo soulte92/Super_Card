@@ -12,4 +12,5 @@ public record RoundCreatorDto(
         @JsonProperty("secondPlayerId") String secondPlayerId,
         @JsonProperty("firstPlayerHeroId") String firstPlayerHeroId,
         @JsonProperty("secondPlayerHeroId") String secondPlayerHeroId
-) {}
+) {
+}

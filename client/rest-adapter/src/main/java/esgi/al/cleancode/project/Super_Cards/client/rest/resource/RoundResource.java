@@ -19,30 +19,30 @@ import java.util.UUID;
 @RequestMapping(path = "/round")
 public class RoundResource {
 
-  private final RoundCreatorApi roundCreatorApi;
-  private final PlayerHeroRoundFinderApi playerHeroRoundFinderApi;
+    private final RoundCreatorApi roundCreatorApi;
+    private final PlayerHeroRoundFinderApi playerHeroRoundFinderApi;
 
-  @PostMapping("")
-  public ResponseEntity<Object> createRound(
-          @RequestBody RoundCreatorDto roundCreatorDto
-          ) {
+    @PostMapping("")
+    public ResponseEntity<Object> createRound(
+            @RequestBody RoundCreatorDto roundCreatorDto
+    ) {
 
-    Optional<Round> round = roundCreatorApi.create(UUID.fromString(roundCreatorDto.sessionId()),
-            UUID.fromString(roundCreatorDto.firstPlayerId()),
-            UUID.fromString(roundCreatorDto.secondPlayerId()),
-            UUID.fromString(roundCreatorDto.firstPlayerHeroId()),
-            UUID.fromString(roundCreatorDto.secondPlayerHeroId()));
-    return round.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
-            .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-  }
+        Optional<Round> round = roundCreatorApi.create(UUID.fromString(roundCreatorDto.sessionId()),
+                UUID.fromString(roundCreatorDto.firstPlayerId()),
+                UUID.fromString(roundCreatorDto.secondPlayerId()),
+                UUID.fromString(roundCreatorDto.firstPlayerHeroId()),
+                UUID.fromString(roundCreatorDto.secondPlayerHeroId()));
+        return round.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
 
-  @GetMapping("findHeroRounds")
-  public ResponseEntity<Object> createRound(
-          @RequestBody PlayerHeroRoundFinderDto dto
-          ) {
+    @GetMapping("findHeroRounds")
+    public ResponseEntity<Object> createRound(
+            @RequestBody PlayerHeroRoundFinderDto dto
+    ) {
 
-    Optional<List<Round>> rounds = playerHeroRoundFinderApi.findPlayerHeroRounds(UUID.fromString(dto.playerHeroId()));
-    return rounds.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
-            .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-  }
+        Optional<List<Round>> rounds = playerHeroRoundFinderApi.findPlayerHeroRounds(UUID.fromString(dto.playerHeroId()));
+        return rounds.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
 }

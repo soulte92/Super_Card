@@ -1,6 +1,5 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
-import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarity;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
@@ -51,13 +50,13 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
         String name = Rarity.RARE.label;
         Hero hero = initCharacteristicsBySpeciality(name, speciality, rarity);
         hero = enhaceCharacteriticsByRarity(hero);
-        if (hero != null){
+        if (hero != null) {
             return Optional.ofNullable(defaultHeroPersistenceSpi.save(hero));
         }
         return Optional.empty();
     }
 
-    public Hero createAndSaveHero(String name, String speciality, String rarity){
+    public Hero createAndSaveHero(String name, String speciality, String rarity) {
         Hero hero = initCharacteristicsBySpeciality(name, speciality, rarity);
         hero = enhaceCharacteriticsByRarity(hero);
         return defaultHeroPersistenceSpi.save(hero);

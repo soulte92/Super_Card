@@ -26,18 +26,18 @@ public class PlayerDeckDisplayerService implements PlayerDeckDisplayerApi {
     @Override
     public Optional<List<Hero>> displayDeckContent(UUID playerId) {
         Optional<Player> player = playerPersistenceSpi.findById(playerId);
-        if(player.isEmpty()){
+        if (player.isEmpty()) {
             return Optional.empty();
         }
         Optional<Deck> deck = deckPersistenceSpi.findById(player.get().getDeckId());
-        if(deck.isEmpty()){
+        if (deck.isEmpty()) {
             return Optional.empty();
         }
         List<Hero> heroList = new ArrayList<>();
 
-        for(UUID heroId : deck.get().heroIds){
+        for (UUID heroId : deck.get().heroIds) {
             Optional<Hero> hero = playerHeroPersistenceSpi.findById(heroId);
-            if(hero.isEmpty()){
+            if (hero.isEmpty()) {
                 return Optional.empty();
             }
             heroList.add(hero.get());

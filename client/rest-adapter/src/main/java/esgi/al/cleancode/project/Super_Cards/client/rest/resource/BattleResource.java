@@ -19,19 +19,19 @@ import java.util.UUID;
 @RequestMapping(path = "/battle")
 public class BattleResource {
 
-  private final BattleApi battleApi ;
+    private final BattleApi battleApi;
 
-  @PostMapping("/attack")
-  public ResponseEntity<Object> createBattle(
-          @RequestBody RoundCreatorDto roundCreatorDto
-          ) {
+    @PostMapping("/attack")
+    public ResponseEntity<Object> createBattle(
+            @RequestBody RoundCreatorDto roundCreatorDto
+    ) {
 
-    Optional<Round> round = battleApi.attack(UUID.fromString(roundCreatorDto.sessionId()),
-            UUID.fromString(roundCreatorDto.firstPlayerId()),
-            UUID.fromString(roundCreatorDto.secondPlayerId()),
-            UUID.fromString(roundCreatorDto.firstPlayerHeroId()),
-            UUID.fromString(roundCreatorDto.secondPlayerHeroId()));
-    return round.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
-            .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-  }
+        Optional<Round> round = battleApi.attack(UUID.fromString(roundCreatorDto.sessionId()),
+                UUID.fromString(roundCreatorDto.firstPlayerId()),
+                UUID.fromString(roundCreatorDto.secondPlayerId()),
+                UUID.fromString(roundCreatorDto.firstPlayerHeroId()),
+                UUID.fromString(roundCreatorDto.secondPlayerHeroId()));
+        return round.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+    }
 }

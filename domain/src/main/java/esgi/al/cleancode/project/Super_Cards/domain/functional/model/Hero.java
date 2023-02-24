@@ -6,6 +6,7 @@ import lombok.Value;
 import lombok.With;
 
 import java.util.UUID;
+
 @Value
 @Builder
 public class Hero {
