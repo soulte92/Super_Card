@@ -1,9 +1,10 @@
 package esgi.al.cleancode.project.Super_Cards.server.postgres.adapter;
 
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
-import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.PlayerHeroEntity;
-import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.PlayerHeroEntityMapper;
-import esgi.al.cleancode.project.Super_Cards.server.postgres.repository.PlayerHeroRepository;
+import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Session;
+import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.SessionEntity;
+import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.SessionEntityMapper;
+import esgi.al.cleancode.project.Super_Cards.server.postgres.repository.SessionRepository;
 import lombok.val;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,57 +23,49 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerHeroDatabaseAdapterTest {
+class SessionDatabaseAdapterTest {
 
     @InjectMocks
-    private PlayerHeroDatabaseAdapter adapter;
+    private SessionDatabaseAdapter adapter;
 
     @Mock
-    private PlayerHeroRepository repository;
+    private SessionRepository repository;
 
     @Nested
     class Save {
 
         @Captor
-        private ArgumentCaptor<PlayerHeroEntity> entityCaptor;
+        private ArgumentCaptor<SessionEntity> entityCaptor;
 
         @Test
         void should_save() {
-            val hero = Hero.builder().build();
-            val entity = PlayerHeroEntityMapper.fromDomain(hero);
+            val session = Session.builder().build();
+            val entity = SessionEntityMapper.fromDomain(session);
 
-            when(repository.save(any(PlayerHeroEntity.class))).thenReturn(entity);
+            when(repository.save(any(SessionEntity.class))).thenReturn(entity);
 
-            val actual = adapter.save(hero);
+            val actual = adapter.save(session);
 
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);
 
             assertThat(actual).isInstanceOf(Hero.class);
-            assertThat(actual).usingRecursiveComparison().isEqualTo(hero);
+            assertThat(actual).usingRecursiveComparison().isEqualTo(session);
             assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
         }
 
         @Test
         void should_not_save_if_repository_throw_exception() {
-            val hero = Hero.builder().build();
-            val entity = PlayerHeroEntityMapper.fromDomain(hero);
+            val session = Session.builder().build();
+            val entity = SessionEntityMapper.fromDomain(session);
             val throwable = new IllegalArgumentException();
 
-            doThrow(throwable).when(repository).save(any(PlayerHeroEntity.class));
+            doThrow(throwable).when(repository).save(any(SessionEntity.class));
 
-            val actual = adapter.save(hero);
+            val actual = adapter.save(session);
 
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);
-
-            //TODO to correct
-
-//      assertThat(actual).isInstanceOf(ApplicationError.class);
-//      assertThat(actual)
-//          .usingRecursiveComparison()
-//          .isEqualTo(new ApplicationError("Unable to save default hero", null, hero, throwable));
-//      assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
         }
     }
 
@@ -81,10 +74,10 @@ class PlayerHeroDatabaseAdapterTest {
         @Test
         void should_find() {
             val id = UUID.randomUUID();
-            val entity = PlayerHeroEntity.builder().build();
-            val domain = PlayerHeroEntityMapper.toDomain(entity);
+            val entity = SessionEntity.builder().build();
+            val domain = SessionEntityMapper.toDomain(entity);
 
-            when(repository.findPlayerHeroEntityByHeroId(id)).thenReturn(Optional.of(entity));
+            when(repository.findById(id)).thenReturn(Optional.of(entity));
 
             val actual = adapter.findById(id);
 
@@ -98,7 +91,7 @@ class PlayerHeroDatabaseAdapterTest {
         void should_not_find() {
             val id = UUID.randomUUID();
 
-            when(repository.findPlayerHeroEntityByHeroId(id)).thenReturn(Optional.empty());
+            when(repository.findById(id)).thenReturn(Optional.empty());
 
             val actual = adapter.findById(id);
 

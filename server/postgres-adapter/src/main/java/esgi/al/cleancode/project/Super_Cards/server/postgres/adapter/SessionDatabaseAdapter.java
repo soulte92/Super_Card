@@ -28,7 +28,6 @@ public class SessionDatabaseAdapter implements SessionPersistenceSpi {
         try {
             return SessionEntityMapper.toDomain(repository.save(entity));
         } catch (Throwable t) {
-            // TODO to verify
             new ApplicationError("Unable to save Session", null, o, t);
         }
         return o;
