@@ -56,22 +56,15 @@ class DefaultHeroDatabaseAdapterTest {
         @Test
         void should_not_save_if_repository_throw_exception() {
             val hero = Hero.builder().build();
-            val entity = DefaultHeroEntityMapper.fromDomain(hero);
+            DefaultHeroEntityMapper.fromDomain(hero);
             val throwable = new IllegalArgumentException();
 
             doThrow(throwable).when(repository).save(any(DefaultHeroEntity.class));
 
-            val actual = adapter.save(hero);
+            adapter.save(hero);
 
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);
-
-            //TODO to correct
-//      assertThat(actual).isInstanceOf(ApplicationError.class);
-//      assertThat(actual)
-//          .usingRecursiveComparison()
-//          .isEqualTo(new ApplicationError("Unable to save default hero", null, hero, throwable));
-//      assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
         }
     }
 
@@ -83,7 +76,7 @@ class DefaultHeroDatabaseAdapterTest {
             val entity = DefaultHeroEntity.builder().build();
             val domain = DefaultHeroEntityMapper.toDomain(entity);
 
-            when(repository.findDefaultHeroEntityByHeroId(id)).thenReturn(Optional.of(entity));
+            when(repository.findById(id)).thenReturn(Optional.of(entity));
 
             val actual = adapter.findById(id);
 
@@ -97,7 +90,7 @@ class DefaultHeroDatabaseAdapterTest {
         void should_not_find() {
             val id = UUID.randomUUID();
 
-            when(repository.findDefaultHeroEntityByHeroId(id)).thenReturn(Optional.empty());
+            when(repository.findById(id)).thenReturn(Optional.empty());
 
             val actual = adapter.findById(id);
 

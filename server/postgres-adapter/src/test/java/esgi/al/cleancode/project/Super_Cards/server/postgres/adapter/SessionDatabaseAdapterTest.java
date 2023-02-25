@@ -1,6 +1,5 @@
 package esgi.al.cleancode.project.Super_Cards.server.postgres.adapter;
 
-import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Session;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.SessionEntity;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.SessionEntityMapper;
@@ -49,7 +48,7 @@ class SessionDatabaseAdapterTest {
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);
 
-            assertThat(actual).isInstanceOf(Hero.class);
+            assertThat(actual).isInstanceOf(Session.class);
             assertThat(actual).usingRecursiveComparison().isEqualTo(session);
             assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
         }
@@ -57,12 +56,12 @@ class SessionDatabaseAdapterTest {
         @Test
         void should_not_save_if_repository_throw_exception() {
             val session = Session.builder().build();
-            val entity = SessionEntityMapper.fromDomain(session);
+            SessionEntityMapper.fromDomain(session);
             val throwable = new IllegalArgumentException();
 
             doThrow(throwable).when(repository).save(any(SessionEntity.class));
 
-            val actual = adapter.save(session);
+            adapter.save(session);
 
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);

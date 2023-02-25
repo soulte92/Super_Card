@@ -1,7 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.server.postgres.adapter;
 
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Deck;
-import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.DeckEntity;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.DeckEntityMapper;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.repository.DeckRepository;
@@ -49,7 +48,7 @@ class DeckDatabaseAdapterTest {
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);
 
-            assertThat(actual).isInstanceOf(Hero.class);
+            assertThat(actual).isInstanceOf(Deck.class);
             assertThat(actual).usingRecursiveComparison().isEqualTo(deck);
             assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
         }
@@ -57,12 +56,12 @@ class DeckDatabaseAdapterTest {
         @Test
         void should_not_save_if_repository_throw_exception() {
             val deck = Deck.builder().build();
-            val entity = DeckEntityMapper.fromDomain(deck);
+            DeckEntityMapper.fromDomain(deck);
             val throwable = new IllegalArgumentException();
 
             doThrow(throwable).when(repository).save(any(DeckEntity.class));
 
-            val actual = adapter.save(deck);
+            adapter.save(deck);
 
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);

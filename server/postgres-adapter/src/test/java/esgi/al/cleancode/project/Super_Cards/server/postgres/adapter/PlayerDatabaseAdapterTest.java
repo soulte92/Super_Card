@@ -1,6 +1,5 @@
 package esgi.al.cleancode.project.Super_Cards.server.postgres.adapter;
 
-import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.PlayerEntity;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.PlayerEntityMapper;
@@ -49,7 +48,7 @@ class PlayerDatabaseAdapterTest {
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);
 
-            assertThat(actual).isInstanceOf(Hero.class);
+            assertThat(actual).isInstanceOf(Player.class);
             assertThat(actual).usingRecursiveComparison().isEqualTo(player);
             assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
         }
@@ -57,12 +56,12 @@ class PlayerDatabaseAdapterTest {
         @Test
         void should_not_save_if_repository_throw_exception() {
             val player = Player.builder().build();
-            val entity = PlayerEntityMapper.fromDomain(player);
+            PlayerEntityMapper.fromDomain(player);
             val throwable = new IllegalArgumentException();
 
             doThrow(throwable).when(repository).save(any(PlayerEntity.class));
 
-            val actual = adapter.save(player);
+            adapter.save(player);
 
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);

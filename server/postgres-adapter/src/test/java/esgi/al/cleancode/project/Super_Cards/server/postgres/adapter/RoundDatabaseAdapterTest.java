@@ -1,6 +1,5 @@
 package esgi.al.cleancode.project.Super_Cards.server.postgres.adapter;
 
-import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Round;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.RoundEntity;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.RoundEntityMapper;
@@ -49,7 +48,7 @@ class RoundDatabaseAdapterTest {
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);
 
-            assertThat(actual).isInstanceOf(Hero.class);
+            assertThat(actual).isInstanceOf(Round.class);
             assertThat(actual).usingRecursiveComparison().isEqualTo(round);
             assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
         }
@@ -57,12 +56,12 @@ class RoundDatabaseAdapterTest {
         @Test
         void should_not_save_if_repository_throw_exception() {
             val round = Round.builder().build();
-            val entity = RoundEntityMapper.fromDomain(round);
+            RoundEntityMapper.fromDomain(round);
             val throwable = new IllegalArgumentException();
 
             doThrow(throwable).when(repository).save(any(RoundEntity.class));
 
-            val actual = adapter.save(round);
+            adapter.save(round);
 
             verify(repository).save(entityCaptor.capture());
             verifyNoMoreInteractions(repository);
