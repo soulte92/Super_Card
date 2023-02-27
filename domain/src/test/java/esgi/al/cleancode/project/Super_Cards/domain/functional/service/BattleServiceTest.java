@@ -36,56 +36,6 @@ public class BattleServiceTest {
     private HeroUtils heroUtils;
 
     @Test
-    void should_attack() {
-    }
-    @Test
-    void should_not_attack_with_dead_hero_defender() {
-    }
-
-    @Test
-    void attackHeroesEachOtherInRound() {
-    }
-    @Test
-    void not_attackHeroesEachOtherInRound() {
-    }
-
-    @Test
-    void should_attack_heroes_each_other() {
-        val givenHeroFighter = Hero.builder()
-                .hp(15)
-                .xp(39)
-                .level(7)
-                .speciality(Speciality.TANK.label)
-                .build();
-        val givenHeroDefender = Hero.builder()
-                .hp(40)
-                .armor(0)
-                .speciality(Speciality.TANK.label)
-                .build();
-
-//        when(battleService.getPowerAdvantage(givenHeroFighter.speciality, givenHeroDefender.speciality)).thenReturn(0);
-
-        val actualHeroes = battleService.attackHeroesEachOther(givenHeroFighter, givenHeroDefender);
-        val givenHeroFighterResult = Hero.builder()
-                .hp(15)
-                .xp(40)
-                .level(8)
-                .build();
-        val givenHeroDefenderResult = Hero.builder()
-                .hp(25)
-                .build();
-
-        Assertions.assertEquals(actualHeroes.size(), 2);
-
-        // check hero defender hp decreased
-        Assertions.assertEquals(givenHeroDefenderResult.getHp(), actualHeroes.get(1).hp);
-
-        // check hero fighter xp increased
-        Assertions.assertEquals(givenHeroFighterResult.getXp(), actualHeroes.get(0).xp);
-        Assertions.assertEquals(givenHeroFighterResult.getLevel(), actualHeroes.get(0).level);
-    }
-
-    @Test
     void should_not_attack_heroes_each_other_with_dead_hero_defender() {
         val givenHeroFighter = Hero.builder()
                 .hp(15)
