@@ -16,7 +16,7 @@ public class RoundCreatorService implements RoundCreatorApi {
     private final RoundPersistenceSpi roundPersistenceSpi;
 
     @Override
-    public Optional<Round> create(UUID sessionId, UUID firstPlayerId, UUID secondPlayerId, UUID firstPlayerHeroId, UUID secondPlayerHeroId) {
+    public Round create(UUID sessionId, UUID firstPlayerId, UUID secondPlayerId, UUID firstPlayerHeroId, UUID secondPlayerHeroId) {
         Round round = Round.builder()
                 .sessionId(sessionId)
                 .firstPlayerId(firstPlayerId)
@@ -24,6 +24,6 @@ public class RoundCreatorService implements RoundCreatorApi {
                 .firstPlayerHeroId(firstPlayerHeroId)
                 .secondPlayerHeroId(secondPlayerHeroId)
                 .build();
-        return Optional.of(roundPersistenceSpi.save(round));
+        return roundPersistenceSpi.save(round);
     }
 }

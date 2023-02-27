@@ -13,6 +13,17 @@ public class HeroUtils {
     }
 
     public static Hero retrieveHeroHp(Hero hero, double hpToRetrieve) {
+        if (hero.getHp()<=0){
+            return Hero.builder().heroId(hero.getHeroId())
+                    .name(hero.getName())
+                    .xp(hero.getXp())
+                    .level(hero.getLevel())
+                    .speciality(hero.getSpeciality())
+                    .rarity(hero.getRarity())
+                    .hp(hero.getHp())
+                    .power(hero.getPower())
+                    .armor(hero.getArmor()).build();
+        }
         return Hero.builder().heroId(hero.getHeroId())
                 .name(hero.getName())
                 .xp(hero.getXp())
@@ -94,7 +105,7 @@ public class HeroUtils {
         return newHero;
     }
 
-    public static Hero enhaceCharacteriticsByRarity(Hero hero) {
+    public static Hero enhanceCharacteristicsByRarity(Hero hero) {
         Hero newHero;
         if (hero.rarity.equals(Rarity.COMMON.label)) {
             newHero = enhanceCharacteristicsByPerCent(hero, 0.);

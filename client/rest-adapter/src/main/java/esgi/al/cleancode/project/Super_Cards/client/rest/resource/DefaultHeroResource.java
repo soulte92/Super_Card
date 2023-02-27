@@ -27,20 +27,4 @@ public class DefaultHeroResource {
         return defaultCreatedHeroes.<ResponseEntity<Object>>map(heroes -> ResponseEntity.ok().body(heroes.stream()
                 .map(DefaultHeroDtoMapper::toDto).toList())).orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
-
-    @PostMapping("/populate_one-hero")
-    public ResponseEntity<Object> createOneHero() {
-        // TODO maybe to remove
-        Optional<Hero> hero = defaultHeroesPopulationApi.createAndSaveOneHero();
-        return hero.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-    }
-
-    @GetMapping("")
-    public ResponseEntity<Object> getDefaultHeroes() {
-        Optional<List<Hero>> defaultHeroes = defaultHeroesPopulationApi.getDefaultHeroes();
-        return defaultHeroes.<ResponseEntity<Object>>map(heroes -> ResponseEntity.ok().body(heroes.stream()
-                        .map(DefaultHeroDtoMapper::toDto).toList()))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-    }
 }

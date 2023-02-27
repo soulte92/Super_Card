@@ -1,5 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.DeckException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Deck;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.DeckCreatorApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DeckPersistenceSpi;
@@ -14,9 +15,9 @@ public class DeckCreatorService implements DeckCreatorApi {
     private final DeckPersistenceSpi deckPersistenceSpi;
 
     @Override
-    public Optional<Deck> create() {
+    public Deck create() {
         Deck deck = Deck.builder().build();
-        return Optional.ofNullable(deckPersistenceSpi.save(deck));
+        return deckPersistenceSpi.save(deck);
     }
 
 }

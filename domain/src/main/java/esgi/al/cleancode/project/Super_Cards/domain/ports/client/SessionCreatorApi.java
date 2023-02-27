@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface SessionCreatorApi {
-    Optional<Session> create(List<UUID> playerIds);
+    Session create(List<UUID> playerIds);
 }

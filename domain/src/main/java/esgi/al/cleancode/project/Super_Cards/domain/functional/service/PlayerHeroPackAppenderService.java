@@ -25,8 +25,6 @@ public class PlayerHeroPackAppenderService implements PlayerHeroPackAppenderApi 
 
     @Override
     public Optional<List<Hero>> createAndAppendPack(UUID playerId, String packType) {
-
-
         Optional<Player> player = playerPersistenceSpi.findById(playerId);
         if (player.isEmpty()) {
             return Optional.empty();

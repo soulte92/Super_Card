@@ -6,5 +6,5 @@ import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
 import java.util.Optional;
 
 public interface DeckCreatorApi {
-    Optional<Deck> create();
+    Deck create();
 }

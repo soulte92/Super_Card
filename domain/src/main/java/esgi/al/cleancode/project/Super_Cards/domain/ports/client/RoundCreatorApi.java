@@ -8,6 +8,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface RoundCreatorApi {
-    Optional<Round> create(UUID sessionId, UUID firstPlayerId, UUID secondPlayerId,
+    Round create(UUID sessionId, UUID firstPlayerId, UUID secondPlayerId,
                            UUID firstPlayerHeroId, UUID secondPlayerHeroId);
 }

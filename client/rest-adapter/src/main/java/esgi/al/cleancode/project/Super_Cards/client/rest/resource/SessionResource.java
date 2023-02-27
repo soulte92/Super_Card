@@ -27,8 +27,11 @@ public class SessionResource {
             @RequestBody SessionCreatorDto sessionCreatorDto
     ) {
 
-        Optional<Session> session = sessionCreatorApi.create(sessionCreatorDto.playerIds().stream().map(UUID::fromString).collect(Collectors.toList()));
-        return session.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+        Session session = sessionCreatorApi.create(sessionCreatorDto.playerIds().stream().map(UUID::fromString).collect(Collectors.toList()));
+        if (session!=null){
+            return ResponseEntity.ok().body(session);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }

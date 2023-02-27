@@ -1,5 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.ApplicationError;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Session;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.SessionCreatorApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.SessionPersistenceSpi;
@@ -17,8 +18,8 @@ public class SessionCreatorService implements SessionCreatorApi {
     private final SessionPersistenceSpi sessionPersistenceSpi;
 
     @Override
-    public Optional<Session> create(List<UUID> playerIds) {
+    public Session create(List<UUID> playerIds) {
         Session session = Session.builder().playerIds(playerIds).build();
-        return Optional.of(sessionPersistenceSpi.save(session));
+        return sessionPersistenceSpi.save(session);
     }
 }

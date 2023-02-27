@@ -17,15 +17,14 @@ public class PlayerCreatorService implements PlayerCreatorApi {
     private final DeckCreatorService deckCreatorService;
 
     @Override
-    public Optional<Player> create(String pseudo) {
-        Optional<Deck> deck = deckCreatorService.create();
-        if (deck.isPresent()) {
-            UUID deckId = deck.get().deckId;
-            Player player = Player.builder().pseudo(pseudo).deckId(deckId).build();
-            return Optional.ofNullable(playerPersistenceSpi.save(player));
-        } else {
-            return Optional.empty();
+    public Player create(String pseudo) {
+        Deck deck = deckCreatorService.create();
+        if (deck == null){
+            return null;
         }
+        UUID deckId = deck.deckId;
+        Player player = Player.builder().pseudo(pseudo).deckId(deckId).build();
+        return playerPersistenceSpi.save(player);
     }
 
 }
