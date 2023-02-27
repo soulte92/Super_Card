@@ -26,14 +26,16 @@ public class RoundResource {
     public ResponseEntity<Object> createRound(
             @RequestBody RoundCreatorDto roundCreatorDto
     ) {
-
-        Optional<Round> round = roundCreatorApi.create(UUID.fromString(roundCreatorDto.sessionId()),
+        Round round = roundCreatorApi.create(UUID.fromString(roundCreatorDto.sessionId()),
                 UUID.fromString(roundCreatorDto.firstPlayerId()),
                 UUID.fromString(roundCreatorDto.secondPlayerId()),
                 UUID.fromString(roundCreatorDto.firstPlayerHeroId()),
                 UUID.fromString(roundCreatorDto.secondPlayerHeroId()));
-        return round.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+        if (round != null) {
+            return ResponseEntity.ok().body(round);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @GetMapping("findHeroRounds")

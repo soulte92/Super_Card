@@ -21,8 +21,11 @@ public class DeckResource {
     @PostMapping("")
     public ResponseEntity<Object> createAndSavePlayerHeroFromDefaultHero() {
 
-        Optional<Deck> deck = deckCreatorApi.create();
-        return deck.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+        Deck deck = deckCreatorApi.create();
+        if (deck != null) {
+            return ResponseEntity.ok().body(deck);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }

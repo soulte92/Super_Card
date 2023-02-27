@@ -35,26 +35,23 @@ public class PlayerDeckDisplayerServiceTest {
     void should_display_deck_content() {
         val givenPlayer = Player.builder()
                 .deckId(UUID.randomUUID())
-                .pseudo("toto")
                 .build();
         val givenPlayerId = givenPlayer.getPlayerId();
         val givenDeck = Deck.builder().heroIds(new ArrayList<>()).build();
         val heroUuid = UUID.randomUUID();
         givenDeck.heroIds.add(heroUuid);
         val givenHero = Hero.builder().build();
+        val givenHeroes = new ArrayList<>();
+        givenHeroes.add(givenHero);
 
         when(playerPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenPlayer));
         when(deckPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenDeck));
         when(playerHeroPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenHero));
 
         val actualHeroIds = service.displayDeckContent(givenPlayerId);
-        assertThat(actualHeroIds).isPresent();
         Assertions.assertThat(actualHeroIds)
                 .usingRecursiveComparison()
-                .isEqualTo(Optional.of(givenPlayer));
-
-//        val actualResult = service.displayDeckContent(givenPlayerId);
-//        assertThat(actualResult).contains(Collections.singletonList(givenHero));
+                .isEqualTo(Optional.of(givenHeroes));
 
         verifyNoMoreInteractions(playerPersistenceSpi);
         verifyNoMoreInteractions(deckPersistenceSpi);
@@ -72,28 +69,48 @@ public class PlayerDeckDisplayerServiceTest {
         assertThat(result).isEmpty();
         verifyNoMoreInteractions(playerPersistenceSpi);
     }
+
     @Test
     void should_not_display_deck_content_with_not_found_deck() {
-        val playerId = UUID.randomUUID();
+        val givenPlayer = Player.builder()
+                .deckId(UUID.randomUUID())
+                .build();
+        val givenPlayerId = givenPlayer.getPlayerId();
         val givenDeck = Deck.builder().heroIds(new ArrayList<>()).build();
         val heroUuid = UUID.randomUUID();
         givenDeck.heroIds.add(heroUuid);
 
-        when(deckPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenDeck));
+        when(playerPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenPlayer));
+        when(deckPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        val result = service.displayDeckContent(playerId);
-        assertThat(result).isEmpty();
+        val resultHeroes = service.displayDeckContent(givenPlayerId);
+        Assertions.assertThat(resultHeroes)
+                .usingRecursiveComparison()
+                .isEqualTo(Optional.empty());
+        verifyNoMoreInteractions(playerPersistenceSpi);
         verifyNoMoreInteractions(deckPersistenceSpi);
     }
     @Test
     void should_not_display_deck_content_with_not_found_hero() {
-        val givenPlayer = Player.builder().build();
-        val playerId = givenPlayer.getPlayerId();
+        val givenPlayer = Player.builder()
+                .deckId(UUID.randomUUID())
+                .build();
+        val givenPlayerId = givenPlayer.getPlayerId();
+        val givenDeck = Deck.builder().heroIds(new ArrayList<>()).build();
+        val heroUuid = UUID.randomUUID();
+        givenDeck.heroIds.add(heroUuid);
 
+        when(playerPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenPlayer));
+        when(deckPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenDeck));
         when(playerHeroPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        val result = service.displayDeckContent(playerId);
-        assertThat(result).isEmpty();
+        val actualHeroIds = service.displayDeckContent(givenPlayerId);
+        Assertions.assertThat(actualHeroIds)
+                .usingRecursiveComparison()
+                .isEqualTo(Optional.empty());
+
         verifyNoMoreInteractions(playerPersistenceSpi);
+        verifyNoMoreInteractions(deckPersistenceSpi);
+        verifyNoMoreInteractions(playerHeroPersistenceSpi);
     }
 }

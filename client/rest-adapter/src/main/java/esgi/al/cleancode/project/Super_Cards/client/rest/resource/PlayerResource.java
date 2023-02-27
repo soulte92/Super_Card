@@ -31,9 +31,12 @@ public class PlayerResource {
     public ResponseEntity<Object> createAndSavePlayer(
             @RequestBody PlayerCreatorDto dto) {
 
-        Optional<Player> player = playerCreatorApi.create(dto.pseudo());
-        return player.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+        Player player = playerCreatorApi.create(dto.pseudo());
+        if (player != null) {
+            return ResponseEntity.ok().body(player);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @PostMapping("/appendHero")

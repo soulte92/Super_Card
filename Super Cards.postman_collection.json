@@ -1,0 +1,414 @@
+{
+	"info": {
+		"_postman_id": "6fe10aba-ad9e-415f-9be4-a8b5570f3f67",
+		"name": "Super Cards",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21314180"
+	},
+	"item": [
+		{
+			"name": "Demo",
+			"item": [
+				{
+					"name": "Player",
+					"item": [
+						{
+							"name": "Create Player",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"pseudo\": \"omar\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/player",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"player"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Append PAck to Player Deck",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"playerId\": \"{{playerId2}}\",\n    \"packType\": \"SILVER\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/player/appendHeroPack",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"player",
+										"appendHeroPack"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Display player deck content",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"playerId\": \"{{playerId2}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/player/displayDeck",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"player",
+										"displayDeck"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find Player Username",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"pseudo\": \"omar\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/player/findPlayerByUsername",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"player",
+										"findPlayerByUsername"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find Player",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"playerId\": \"{{playerId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/player/findPlayer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"player",
+										"findPlayer"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Battle",
+					"item": [
+						{
+							"name": "Get Alive Heroes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:8080/player_hero/alive_heroes",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "8080",
+									"path": [
+										"player_hero",
+										"alive_heroes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find Player Hero Rounds",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"playerHeroId\": \"ae4405a3-a8b7-43a9-bc5d-8281dcff5192\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/round/findHeroRounds",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"round",
+										"findHeroRounds"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Attack heroes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"sessionId\": \"{{session}}\",\n    \"firstPlayerId\": \"{{playerId}}\",\n    \"secondPlayerId\": \"{{playerId2}}\", \n    \"firstPlayerHeroId\": \"{{hero}}\",\n    \"secondPlayerHeroId\": \"{{hero2}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/battle/attack",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"battle",
+										"attack"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Default DB",
+					"item": [
+						{
+							"name": "Populate default heroes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/default_hero/populate_heroes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"default_hero",
+										"populate_heroes"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create Session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"playerIds\": [ \"{{playerId}}\", \n    \"{{playerId2}}\" ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/session",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Utils",
+			"item": [
+				{
+					"name": "Create Deck",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/deck",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"deck"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Round",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sessionId\": \"9fd79491-9d9e-4505-b775-16224a51d0ae\",\n    \"firstPlayerId\": \"dda7cc41-5476-4695-8038-02de646909ab\",\n    \"secondPlayerId\": \"442d7aba-3341-40ee-88af-df6d9ce46269\", \n    \"firstPlayerHeroId\": \"ae4405a3-a8b7-43a9-bc5d-8281dcff5192\",\n    \"secondPlayerHeroId\": \"9deb7cc8-0c35-464a-aec2-f04d535a3afa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/round",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"round"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Append Hero to Player Deck",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"playerId\": \"c8d53795-d838-4126-9ecd-95f440c9d49b\",\n    \"speciality\": \"KILLER\",\n    \"rarity\": \"RARE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/player/appendHero",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"player",
+								"appendHero"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "TANK",
+			"value": "{speciality}"
+		},
+		{
+			"key": "COMMON",
+			"value": "{rarity}"
+		},
+		{
+			"key": "rarity",
+			"value": "COMMON"
+		}
+	]
+}

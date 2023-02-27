@@ -25,13 +25,15 @@ public class BattleResource {
     public ResponseEntity<Object> createBattle(
             @RequestBody RoundCreatorDto roundCreatorDto
     ) {
-
-        Optional<Round> round = battleApi.attack(UUID.fromString(roundCreatorDto.sessionId()),
+        Round round = battleApi.attack(UUID.fromString(roundCreatorDto.sessionId()),
                 UUID.fromString(roundCreatorDto.firstPlayerId()),
                 UUID.fromString(roundCreatorDto.secondPlayerId()),
                 UUID.fromString(roundCreatorDto.firstPlayerHeroId()),
                 UUID.fromString(roundCreatorDto.secondPlayerHeroId()));
-        return round.<ResponseEntity<Object>>map(value -> ResponseEntity.ok().body(value))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
+        if (round != null) {
+            return ResponseEntity.ok().body(round);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }

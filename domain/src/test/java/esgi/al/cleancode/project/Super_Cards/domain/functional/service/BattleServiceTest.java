@@ -5,13 +5,17 @@ import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.PlayerHeroPersistenceSpi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.RoundPersistenceSpi;
+import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 
+@ExtendWith(MockitoExtension.class)
 public class BattleServiceTest {
     @InjectMocks
     private BattleService battleService;
@@ -32,15 +36,20 @@ public class BattleServiceTest {
     }
     @Test
     void not_attackHeroesEachOtherInRound() {
-
     }
 
     @Test
-    void attackHeroesEachOther() {
+    void should_attack_heroes_each_other_with_dead_hero_defender() {
+        val heroFighter = Hero.builder()
+                .hp(15)
+                .build();
+        val heroDefender = Hero.builder()
+                .hp(15)
+                .build();
     }
 
     @Test
-    void should_not_attackHeroesEachOther_with_dead_hero_defender() {
+    void should_not_attack_heroes_each_other_with_dead_hero_defender() {
         Hero heroFighter = Hero.builder()
                 .name("super-boy")
                 .hp(30)
