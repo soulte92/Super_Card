@@ -5,15 +5,15 @@ import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 
 public interface PlayerHeroPickerFromDefaultHeroDtoMapper {
 
-  static DefaultHeroDto toDto(Hero hero) {
-    return new DefaultHeroDto(hero.getHeroId(),
-            hero.getName(),
-            hero.getHp(),
-            hero.getXp(),
-            hero.getPower(),
-            hero.getArmor(),
-            hero.getSpeciality(),
-            hero.getRarity(),
-            hero.getLevel());
-  }
+    static DefaultHeroDto toDto(Hero hero) {
+        return new DefaultHeroDto(hero.getHeroId(),
+                hero.getName(),
+                hero.getHp(),
+                hero.getXp(),
+                hero.getPower(),
+                hero.getArmor(),
+                hero.getSpeciality(),
+                hero.getRarity(),
+                hero.getLevel());
+    }
 }

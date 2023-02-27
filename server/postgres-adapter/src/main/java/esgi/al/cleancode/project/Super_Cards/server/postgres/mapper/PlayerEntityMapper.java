@@ -1,7 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.server.postgres.mapper;
 
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
-import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.entity.PlayerEntity;
 
 public interface PlayerEntityMapper {

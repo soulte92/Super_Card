@@ -9,4 +9,5 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 public record PlayerHeroPackAppenderDto(
         @JsonProperty("playerId") String playerId,
         @JsonProperty("packType") String packType
-) { }
+) {
+}

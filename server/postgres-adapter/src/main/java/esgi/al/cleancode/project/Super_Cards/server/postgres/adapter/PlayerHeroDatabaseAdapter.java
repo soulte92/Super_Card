@@ -30,7 +30,7 @@ public class PlayerHeroDatabaseAdapter implements PlayerHeroPersistenceSpi {
         val entity = fromDomain(o);
         try {
             return PlayerHeroEntityMapper.toDomain(playerHeroRepository.save(entity));
-        } catch (Throwable t){
+        } catch (Throwable t) {
             // TODO to verify
             new ApplicationError("Unable to save player hero", null, o, t);
             return null;

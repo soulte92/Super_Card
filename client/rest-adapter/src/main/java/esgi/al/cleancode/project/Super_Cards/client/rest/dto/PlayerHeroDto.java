@@ -8,13 +8,14 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 
 @JsonAutoDetect(fieldVisibility = ANY)
 public record PlayerHeroDto(
-    UUID heroId,
-    String name,
-    double hp,
-    int xp,
-    double power,
-    double armor,
-    String speciality,
-    String rarity,
-    int level
-) {}
+        UUID heroId,
+        String name,
+        double hp,
+        int xp,
+        double power,
+        double armor,
+        String speciality,
+        String rarity,
+        int level
+) {
+}

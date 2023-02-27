@@ -8,6 +8,4 @@ import java.util.UUID;
 
 public interface DefaultHeroesPopulationApi {
     Optional<List<Hero>> createAndSaveDefaultHeroes();
-    Optional<List<Hero>> getDefaultHeroes();
-    Optional<Hero> createAndSaveOneHero();
 }

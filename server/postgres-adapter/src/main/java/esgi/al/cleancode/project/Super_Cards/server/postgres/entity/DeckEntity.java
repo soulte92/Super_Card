@@ -2,11 +2,8 @@ package esgi.al.cleancode.project.Super_Cards.server.postgres.entity;
 
 import lombok.*;
 import lombok.EqualsAndHashCode.Include;
-import org.hibernate.annotations.Type;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.EqualsAndHashCode.Include;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -21,7 +22,7 @@ public class SessionEntity {
     @Include
     public UUID sessionId;
 
-    public Date creationDate;
+    public LocalDate creationDate;
     @ElementCollection
     @CollectionTable(name = "session_player_ids", joinColumns = @JoinColumn(name = "sessionId"))
     @Column(name = "player_id", columnDefinition = "uuid")

@@ -1,6 +1,5 @@
 package esgi.al.cleancode.project.Super_Cards.server.postgres.entity;
 
-import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import lombok.*;
 import lombok.EqualsAndHashCode.Include;
 

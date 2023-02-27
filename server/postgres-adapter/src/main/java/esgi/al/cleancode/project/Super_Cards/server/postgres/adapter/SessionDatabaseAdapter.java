@@ -27,8 +27,7 @@ public class SessionDatabaseAdapter implements SessionPersistenceSpi {
         val entity = fromDomain(o);
         try {
             return SessionEntityMapper.toDomain(repository.save(entity));
-        } catch (Throwable t){
-            // TODO to verify
+        } catch (Throwable t) {
             new ApplicationError("Unable to save Session", null, o, t);
         }
         return o;

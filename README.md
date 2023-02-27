@@ -2,15 +2,14 @@
 
 ## Presentation
 
-This very simple project was developed for a technical presentation at Carbon IT. Functionally, it manages driving
-licences, in a simple way, saved in a postgre relational database, and exposes some endpoints. These REST endpoints
-allow us to manage driving licences.
+This very simple project was developed for a technical presentation for clean code ESGI project. Functionally, it manages 
+heroes attacks by players, in a simple way, saved in a postgre relational database, and exposes some endpoints. These REST endpoints
+allow us to manage heroes, players and rounds.
 
 ## Technical stack
 
 - Java 17
 - Spring boot 2.4.11
-- Vavr
 - Lombok
 - Spring data jpa
 - PostgreSQL

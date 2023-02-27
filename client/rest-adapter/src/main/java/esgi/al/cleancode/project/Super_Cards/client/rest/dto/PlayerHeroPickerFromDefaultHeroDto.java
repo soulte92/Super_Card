@@ -6,8 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 
 @JsonAutoDetect(fieldVisibility = ANY)
-public record PlayerHeroPickerFromDefaultHeroDto (
+public record PlayerHeroPickerFromDefaultHeroDto(
         @JsonProperty("speciality") String speciality,
         @JsonProperty("rarity") String rarity
-){ }
+) {
+}
 

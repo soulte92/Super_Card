@@ -3,7 +3,6 @@ package esgi.al.cleancode.project.Super_Cards.server.postgres.adapter;
 import esgi.al.cleancode.project.Super_Cards.domain.ApplicationError;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.PlayerPersistenceSpi;
-import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.DefaultHeroEntityMapper;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.mapper.PlayerEntityMapper;
 import esgi.al.cleancode.project.Super_Cards.server.postgres.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,7 @@ public class PlayerDatabaseAdapter implements PlayerPersistenceSpi {
         val entity = fromDomain(o);
         try {
             return PlayerEntityMapper.toDomain(repository.save(entity));
-        } catch (Throwable t){
+        } catch (Throwable t) {
             // TODO to verify
             new ApplicationError("Unable to save Player", null, o, t);
         }

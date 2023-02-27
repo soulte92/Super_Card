@@ -24,83 +24,79 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class DefaultHeroDatabaseAdapterTest {
 
-  @InjectMocks private DefaultHeroDatabaseAdapter adapter;
+    @InjectMocks
+    private DefaultHeroDatabaseAdapter adapter;
 
-  @Mock private DefaultHeroRepository repository;
+    @Mock
+    private DefaultHeroRepository repository;
 
-  @Nested
-  class Save {
+    @Nested
+    class Save {
 
-    @Captor private ArgumentCaptor<DefaultHeroEntity> entityCaptor;
+        @Captor
+        private ArgumentCaptor<DefaultHeroEntity> entityCaptor;
 
-    @Test
-    void should_save() {
-      val hero = Hero.builder().build();
-      val entity = DefaultHeroEntityMapper.fromDomain(hero);
+        @Test
+        void should_save() {
+            val hero = Hero.builder().build();
+            val entity = DefaultHeroEntityMapper.fromDomain(hero);
 
-      when(repository.save(any(DefaultHeroEntity.class))).thenReturn(entity);
+            when(repository.save(any(DefaultHeroEntity.class))).thenReturn(entity);
 
-      val actual = adapter.save(hero);
+            val actual = adapter.save(hero);
 
-      verify(repository).save(entityCaptor.capture());
-      verifyNoMoreInteractions(repository);
+            verify(repository).save(entityCaptor.capture());
+            verifyNoMoreInteractions(repository);
 
-      assertThat(actual).isInstanceOf(Hero.class);
-      assertThat(actual).usingRecursiveComparison().isEqualTo(hero);
-      assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
+            assertThat(actual).isInstanceOf(Hero.class);
+            assertThat(actual).usingRecursiveComparison().isEqualTo(hero);
+            assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
+        }
+
+        @Test
+        void should_not_save_if_repository_throw_exception() {
+            val hero = Hero.builder().build();
+            DefaultHeroEntityMapper.fromDomain(hero);
+            val throwable = new IllegalArgumentException();
+
+            doThrow(throwable).when(repository).save(any(DefaultHeroEntity.class));
+
+            adapter.save(hero);
+
+            verify(repository).save(entityCaptor.capture());
+            verifyNoMoreInteractions(repository);
+        }
     }
 
-    @Test
-    void should_not_save_if_repository_throw_exception() {
-      val hero = Hero.builder().build();
-      val entity = DefaultHeroEntityMapper.fromDomain(hero);
-      val throwable = new IllegalArgumentException();
+    @Nested
+    class FindById {
+        @Test
+        void should_find() {
+            val id = UUID.randomUUID();
+            val entity = DefaultHeroEntity.builder().build();
+            val domain = DefaultHeroEntityMapper.toDomain(entity);
 
-      doThrow(throwable).when(repository).save(any(DefaultHeroEntity.class));
+            when(repository.findById(id)).thenReturn(Optional.of(entity));
 
-      val actual = adapter.save(hero);
+            val actual = adapter.findById(id);
 
-      verify(repository).save(entityCaptor.capture());
-      verifyNoMoreInteractions(repository);
+            assertThat(actual).isPresent();
+            assertThat(actual.get()).usingRecursiveComparison().isEqualTo(domain);
 
-      //TODO to correct
-//      assertThat(actual).isInstanceOf(ApplicationError.class);
-//      assertThat(actual)
-//          .usingRecursiveComparison()
-//          .isEqualTo(new ApplicationError("Unable to save default hero", null, hero, throwable));
-//      assertThat(entityCaptor.getValue()).usingRecursiveComparison().isEqualTo(entity);
+            verifyNoMoreInteractions(repository);
+        }
+
+        @Test
+        void should_not_find() {
+            val id = UUID.randomUUID();
+
+            when(repository.findById(id)).thenReturn(Optional.empty());
+
+            val actual = adapter.findById(id);
+
+            assertThat(actual).isEmpty();
+
+            verifyNoMoreInteractions(repository);
+        }
     }
-  }
-
-  @Nested
-  class FindById {
-    @Test
-    void should_find() {
-      val id = UUID.randomUUID();
-      val entity = DefaultHeroEntity.builder().build();
-      val domain = DefaultHeroEntityMapper.toDomain(entity);
-
-      when(repository.findDefaultHeroEntityByHeroId(id)).thenReturn(Optional.of(entity));
-
-      val actual = adapter.findById(id);
-
-      assertThat(actual).isPresent();
-      assertThat(actual.get()).usingRecursiveComparison().isEqualTo(domain);
-
-      verifyNoMoreInteractions(repository);
-    }
-
-    @Test
-    void should_not_find() {
-      val id = UUID.randomUUID();
-
-      when(repository.findDefaultHeroEntityByHeroId(id)).thenReturn(Optional.empty());
-
-      val actual = adapter.findById(id);
-
-      assertThat(actual).isEmpty();
-
-      verifyNoMoreInteractions(repository);
-    }
-  }
 }

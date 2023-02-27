@@ -23,18 +23,19 @@ public class PlayerHeroAppenderInDeckService implements PlayerHeroAppenderInDeck
     @Override
     public Optional<List<UUID>> appendHero(UUID playerId, String speciality, String rarity) {
         Optional<Player> player = playerPersistenceSpi.findById(playerId);
-        if (player.isEmpty()){
-            //TODO throw exception
+        if (player.isEmpty()) {
             return Optional.empty();
         }
 
         Optional<Deck> deck = deckPersistenceSpi.findById(player.get().getDeckId());
-        if (deck.isEmpty()){
-            //TODO throw exception
+        if (deck.isEmpty()) {
             return Optional.empty();
         }
 
         Hero hero = playerHeroCreatorService.pickHeroFromDefaultHero(speciality, rarity);
+        if (hero == null){
+            return Optional.empty();
+        }
 
         Deck newDeck = deck.get();
         newDeck.heroIds.add(hero.getHeroId());

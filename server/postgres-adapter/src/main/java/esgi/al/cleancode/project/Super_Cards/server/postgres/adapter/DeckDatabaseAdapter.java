@@ -27,7 +27,7 @@ public class DeckDatabaseAdapter implements DeckPersistenceSpi {
         val entity = fromDomain(o);
         try {
             return DeckEntityMapper.toDomain(repository.save(entity));
-        } catch (Throwable t){
+        } catch (Throwable t) {
             // TODO to verify
             new ApplicationError("Unable to save Deck", null, o, t);
         }

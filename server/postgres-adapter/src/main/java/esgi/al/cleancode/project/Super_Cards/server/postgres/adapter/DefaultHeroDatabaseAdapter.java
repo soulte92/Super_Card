@@ -30,7 +30,7 @@ public class DefaultHeroDatabaseAdapter implements DefaultHeroPersistenceSpi {
         val entity = fromDomain(o);
         try {
             return DefaultHeroEntityMapper.toDomain(repository.save(entity));
-        } catch (Throwable t){
+        } catch (Throwable t) {
             // TODO to verify
             new ApplicationError("Unable to save hero", null, o, t);
         }

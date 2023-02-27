@@ -1,6 +1,5 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
-import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarity;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static esgi.al.cleancode.project.Super_Cards.domain.functional.service.HeroUtils.enhaceCharacteriticsByRarity;
+import static esgi.al.cleancode.project.Super_Cards.domain.functional.service.HeroUtils.enhanceCharacteristicsByRarity;
 import static esgi.al.cleancode.project.Super_Cards.domain.functional.service.HeroUtils.initCharacteristicsBySpeciality;
 
 @Slf4j
@@ -39,27 +38,9 @@ public class DefaultHeroesPopulationService implements DefaultHeroesPopulationAp
         return Optional.of(heroes);
     }
 
-    @Override
-    public Optional<List<Hero>> getDefaultHeroes() {
-        return Optional.ofNullable(defaultHeroPersistenceSpi.findAll());
-    }
-
-    @Override
-    public Optional<Hero> createAndSaveOneHero() {
-        String speciality = Speciality.TANK.label;
-        String rarity = Rarity.RARE.label;
-        String name = Rarity.RARE.label;
+    public Hero createAndSaveHero(String name, String speciality, String rarity) {
         Hero hero = initCharacteristicsBySpeciality(name, speciality, rarity);
-        hero = enhaceCharacteriticsByRarity(hero);
-        if (hero != null){
-            return Optional.ofNullable(defaultHeroPersistenceSpi.save(hero));
-        }
-        return Optional.empty();
-    }
-
-    public Hero createAndSaveHero(String name, String speciality, String rarity){
-        Hero hero = initCharacteristicsBySpeciality(name, speciality, rarity);
-        hero = enhaceCharacteriticsByRarity(hero);
+        hero = enhanceCharacteristicsByRarity(hero);
         return defaultHeroPersistenceSpi.save(hero);
     }
 

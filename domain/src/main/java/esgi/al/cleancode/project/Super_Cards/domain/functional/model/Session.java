@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Value;
 import lombok.With;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +16,6 @@ public class Session {
     public UUID sessionId = UUID.randomUUID();
     @With
     @Builder.Default
-    public Date creationDate = new Date();
+    public LocalDate creationDate = LocalDate.now();
     public List<UUID> playerIds;
 }
