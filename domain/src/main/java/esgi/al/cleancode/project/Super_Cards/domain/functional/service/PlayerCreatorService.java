@@ -1,5 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.DeckException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Deck;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.PlayerCreatorApi;
@@ -20,7 +21,7 @@ public class PlayerCreatorService implements PlayerCreatorApi {
     public Player create(String pseudo) {
         Deck deck = deckCreatorService.create();
         if (deck == null){
-            return null;
+            throw new DeckException("Deck creation error");
         }
         UUID deckId = deck.deckId;
         Player player = Player.builder().pseudo(pseudo).deckId(deckId).build();

@@ -1,5 +1,7 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.DeckException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.PlayerException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Deck;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.PlayerPersistenceSpi;
@@ -11,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,10 +45,9 @@ public class PlayerCreatorServiceTest {
     void should_not_create_and_save_player_with_empty_deck() {
         when(deckCreatorService.create()).thenReturn(null);
 
-        val actualPlayer = playerCreatorService.create("soso");
-        assertThat(actualPlayer)
-                .usingRecursiveComparison()
-                .isEqualTo(null);
+        assertThatExceptionOfType(DeckException.class).isThrownBy(()->
+                playerCreatorService.create("soso")
+        );
 
         verifyNoMoreInteractions(deckCreatorService);
     }

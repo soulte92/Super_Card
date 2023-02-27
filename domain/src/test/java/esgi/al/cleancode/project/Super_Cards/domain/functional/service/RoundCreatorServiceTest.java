@@ -1,5 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.RoundException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Round;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.RoundPersistenceSpi;
 import lombok.val;
@@ -40,11 +41,10 @@ public class RoundCreatorServiceTest {
 
     @Test
     void should_not_create_and_save_round() {
-        val throwable = new IllegalArgumentException();
-        when(spi.save(any(Round.class))).thenThrow(throwable);
+        when(spi.save(any(Round.class))).thenReturn(null);
 
         val givenUuid = UUID.randomUUID();
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(()->
+        assertThatExceptionOfType(RoundException.class).isThrownBy(()->
                 service.create(givenUuid, givenUuid, givenUuid, givenUuid, givenUuid)
         );
         verifyNoMoreInteractions(spi);

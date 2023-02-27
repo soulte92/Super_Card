@@ -1,5 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.RoundException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Round;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.RoundCreatorApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.RoundPersistenceSpi;
@@ -24,6 +25,10 @@ public class RoundCreatorService implements RoundCreatorApi {
                 .firstPlayerHeroId(firstPlayerHeroId)
                 .secondPlayerHeroId(secondPlayerHeroId)
                 .build();
-        return roundPersistenceSpi.save(round);
+        round = roundPersistenceSpi.save(round);
+        if (round == null){
+            throw new RoundException("Round saving error");
+        }
+        return round;
     }
 }

@@ -2,6 +2,7 @@ package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
 
 import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.PlayerException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.client.PlayerHeroCreatorApi;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DefaultHeroPersistenceSpi;
@@ -21,7 +22,10 @@ public class PlayerHeroCreatorService implements PlayerHeroCreatorApi {
     @Override
     public Hero pickHeroFromDefaultHero(String speciality, String rarity) {
         Optional<Hero> hero = defaultHeroPersistenceSpi.findBySpecialityAndRarity(speciality, rarity);
-        return hero.map(playerHeroPersistenceSpi::save).orElse(null);
+        if (hero.isEmpty()){
+            throw HeroException.notFoundHeroBySpecialityAndRarity(speciality, rarity);
+        }
+        return playerHeroPersistenceSpi.save(hero.get());
     }
 
     @Override

@@ -9,11 +9,17 @@ import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -49,11 +55,16 @@ public class BattleServiceTest {
                 .hp(15)
                 .xp(39)
                 .level(7)
+                .speciality(Speciality.TANK.label)
                 .build();
         val givenHeroDefender = Hero.builder()
                 .hp(40)
                 .armor(0)
+                .speciality(Speciality.TANK.label)
                 .build();
+
+//        when(battleService.getPowerAdvantage(givenHeroFighter.speciality, givenHeroDefender.speciality)).thenReturn(0);
+
         val actualHeroes = battleService.attackHeroesEachOther(givenHeroFighter, givenHeroDefender);
         val givenHeroFighterResult = Hero.builder()
                 .hp(15)

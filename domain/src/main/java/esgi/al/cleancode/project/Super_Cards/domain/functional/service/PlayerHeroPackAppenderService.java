@@ -1,5 +1,8 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.ApplicationException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.PlayerException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.PackType;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.RarityGenerator;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.SpecialityGenerator;
@@ -11,6 +14,7 @@ import esgi.al.cleancode.project.Super_Cards.domain.ports.server.PlayerPersisten
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,13 +31,14 @@ public class PlayerHeroPackAppenderService implements PlayerHeroPackAppenderApi 
     public Optional<List<Hero>> createAndAppendPack(UUID playerId, String packType) {
         Optional<Player> player = playerPersistenceSpi.findById(playerId);
         if (player.isEmpty()) {
-            return Optional.empty();
+            throw PlayerException.notFoundPlayer(playerId);
         }
 
         List<UUID> createdHeroids = new ArrayList<>();
         Player newPlayer = null;
         if (!packType.equals(PackType.SILVER.label) && !packType.equals(PackType.DIAMOND.label)) {
-            return Optional.empty();
+            throw new ApplicationException(String.format("createAndAppendPack error: Invalid packType, you should choose packType between '%s' or '%s'",
+                    PackType.SILVER, PackType.DIAMOND));
         } else if (packType.equals(PackType.SILVER.label) && player.get().getNbToken() >= 1) {
             newPlayer = Player.builder()
                     .playerId(player.get().getPlayerId())
@@ -67,14 +72,14 @@ public class PlayerHeroPackAppenderService implements PlayerHeroPackAppenderApi 
         }
         Player createdHeroids_player = playerPersistenceSpi.save(newPlayer);
         if (createdHeroids_player == null) {
-            return Optional.empty();
+            throw new PlayerException(String.format("createAndAppendPack error: Save playerId [%s] error ", newPlayer.playerId.toString()));
         }
 
         List<Hero> createdHeroes = new ArrayList<>();
         for (UUID heroId : createdHeroids) {
             Optional<Hero> hero = playerHeroPersistenceSpi.findById(heroId);
             if (hero.isEmpty()) {
-                return Optional.empty();
+                throw HeroException.notFoundHero(heroId);
             }
             createdHeroes.add(hero.get());
         }

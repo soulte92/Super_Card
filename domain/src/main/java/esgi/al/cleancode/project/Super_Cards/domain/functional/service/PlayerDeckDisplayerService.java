@@ -1,5 +1,8 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.DeckException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.PlayerException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Deck;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
@@ -27,18 +30,18 @@ public class PlayerDeckDisplayerService implements PlayerDeckDisplayerApi {
     public Optional<List<Hero>> displayDeckContent(UUID playerId) {
         Optional<Player> player = playerPersistenceSpi.findById(playerId);
         if (player.isEmpty()) {
-            return Optional.empty();
+            throw PlayerException.notFoundPlayer(playerId);
         }
         Optional<Deck> deck = deckPersistenceSpi.findById(player.get().getDeckId());
         if (deck.isEmpty()) {
-            return Optional.empty();
+            throw DeckException.notFoundDeck(player.get().getDeckId());
         }
         List<Hero> heroList = new ArrayList<>();
 
         for (UUID heroId : deck.get().heroIds) {
             Optional<Hero> hero = playerHeroPersistenceSpi.findById(heroId);
             if (hero.isEmpty()) {
-                return Optional.empty();
+                throw HeroException.notFoundHero(heroId);
             }
             heroList.add(hero.get());
         }

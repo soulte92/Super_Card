@@ -1,5 +1,8 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.DeckException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.PlayerException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Deck;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
@@ -16,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -65,8 +69,9 @@ public class PlayerDeckDisplayerServiceTest {
 
         when(playerPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        val result = service.displayDeckContent(playerId);
-        assertThat(result).isEmpty();
+        assertThatExceptionOfType(PlayerException.class).isThrownBy(()->
+                service.displayDeckContent(playerId)
+        );
         verifyNoMoreInteractions(playerPersistenceSpi);
     }
 
@@ -83,10 +88,9 @@ public class PlayerDeckDisplayerServiceTest {
         when(playerPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenPlayer));
         when(deckPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        val resultHeroes = service.displayDeckContent(givenPlayerId);
-        Assertions.assertThat(resultHeroes)
-                .usingRecursiveComparison()
-                .isEqualTo(Optional.empty());
+        assertThatExceptionOfType(DeckException.class).isThrownBy(()->
+                service.displayDeckContent(givenPlayerId)
+        );
         verifyNoMoreInteractions(playerPersistenceSpi);
         verifyNoMoreInteractions(deckPersistenceSpi);
     }
@@ -104,10 +108,9 @@ public class PlayerDeckDisplayerServiceTest {
         when(deckPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenDeck));
         when(playerHeroPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        val actualHeroIds = service.displayDeckContent(givenPlayerId);
-        Assertions.assertThat(actualHeroIds)
-                .usingRecursiveComparison()
-                .isEqualTo(Optional.empty());
+        assertThatExceptionOfType(HeroException.class).isThrownBy(()->
+                service.displayDeckContent(givenPlayerId)
+        );
 
         verifyNoMoreInteractions(playerPersistenceSpi);
         verifyNoMoreInteractions(deckPersistenceSpi);

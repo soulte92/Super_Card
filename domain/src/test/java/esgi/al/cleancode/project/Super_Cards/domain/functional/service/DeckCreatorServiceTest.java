@@ -1,5 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.DeckException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Deck;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.DeckPersistenceSpi;
 import lombok.val;
@@ -38,9 +39,9 @@ public class DeckCreatorServiceTest {
 
     @Test
     void should_not_create_and_save_deck() {
-        when(spi.save(any(Deck.class))).thenThrow(new IllegalArgumentException());
+        when(spi.save(any(Deck.class))).thenReturn(null);
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(DeckException.class)
                 .isThrownBy(() ->
                         service.create());
         verifyNoMoreInteractions(spi);

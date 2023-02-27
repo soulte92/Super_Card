@@ -1,5 +1,9 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.ApplicationException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.DeckException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.RoundException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Winner;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Round;
@@ -26,8 +30,10 @@ public class BattleService implements BattleApi {
         Optional<Hero> secondPlayerHero = playerHeroPersistenceSpi.findById(secondPlayerHeroId);
 
         // Check Heroes existence
-        if (firstPlayerHero.isEmpty() || secondPlayerHero.isEmpty()) {
-            return null;
+        if (firstPlayerHero.isEmpty()) {
+            throw HeroException.notFoundHero(firstPlayerHeroId);
+        } else if (secondPlayerHero.isEmpty()) {
+            throw HeroException.notFoundHero(secondPlayerHeroId);
         }
         // Get Heroes
         Hero heroFighter = firstPlayerHero.get();
@@ -36,14 +42,19 @@ public class BattleService implements BattleApi {
         // Create a new round
         Round round = roundCreatorService.create(sessionId, firstPlayerId, secondPlayerId, firstPlayerHeroId, secondPlayerHeroId);
         if (round == null) {
-            return null;
+            throw new RoundException("attack error: Create round error");
         }
 
         // Hero fighter and defender with each others
         Round roundResult = this.attackHeroesEachOtherInRound(round, heroFighter, heroDefender);
 
         // Save the battle round results
-        return roundPersistenceSpi.save(roundResult);
+        roundResult = roundPersistenceSpi.save(roundResult);
+        if (roundResult == null){
+            throw new ApplicationException("Battle Error: Saving round error");
+        } else {
+            return roundResult;
+        }
     }
 
     public Round attackHeroesEachOtherInRound(Round round, Hero heroFighter, Hero heroDefender) {
@@ -105,7 +116,7 @@ public class BattleService implements BattleApi {
         }
 
         // Decrease heroDefender hp
-        int hpToRetrieve = (int) ((heroFighter.power + HeroUtils.configSpecialPowerMap().get(heroFighter.speciality).get(heroDefender.speciality)) - heroDefender.armor);
+        int hpToRetrieve = (int) ((heroFighter.power + getPowerAdvantage(heroFighter.speciality, heroFighter.rarity)) - heroDefender.armor);
         heroDefender = HeroUtils.retrieveHeroHp(heroDefender, hpToRetrieve);
 
         // Increase heroFighter xp and update characteristics
@@ -130,5 +141,9 @@ public class BattleService implements BattleApi {
         result.add(heroFighter);
         result.add(heroDefender);
         return result;
+    }
+
+    public int getPowerAdvantage(String heroFighterSpeciality, String heroDefenderSpeciality){
+        return HeroUtils.configSpecialPowerMap().get(heroFighterSpeciality).get(heroDefenderSpeciality);
     }
 }

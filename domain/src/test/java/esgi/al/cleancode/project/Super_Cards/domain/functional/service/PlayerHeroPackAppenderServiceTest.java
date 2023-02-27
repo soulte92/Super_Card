@@ -1,5 +1,8 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.ApplicationException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.DeckException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.PlayerException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.PackType;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Player;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -44,7 +48,6 @@ public class PlayerHeroPackAppenderServiceTest {
         when(playerPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenPlayer));
         when(playerPersistenceSpi.save(any(Player.class))).thenReturn(givenPlayer);
         when(playerHeroAppenderInDeckService.appendHero(any(UUID.class), anyString(), anyString())).thenReturn(Optional.of((List)givenHeroIds));
-        when(playerHeroPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenHero));
 
         val actualHeroes = service.createAndAppendPack(givenPlayerId, givenPackType);
         assertThat(actualHeroes)
@@ -62,22 +65,21 @@ public class PlayerHeroPackAppenderServiceTest {
 
         when(playerPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.empty());
 
-        val actualHeroes = service.createAndAppendPack(givenPlayerId, givenPackType);
-        assertThat(actualHeroes)
-                .usingRecursiveComparison()
-                .isEqualTo(Optional.empty());
+        assertThatExceptionOfType(PlayerException.class).isThrownBy(()->
+                service.createAndAppendPack(givenPlayerId, givenPackType)
+        );
         verifyNoMoreInteractions(playerPersistenceSpi);
     }
     @Test
-    void should_not_create_and_append_pack_with_not() {
+    void should_not_create_and_append_pack_with_incorrect_packType() {
         val givenPlayerId = UUID.randomUUID();
         val givenPackType = "GOLD";
+        val givenPlayer = Player.builder().build();
 
-        val actualHeroes = service.createAndAppendPack(givenPlayerId, givenPackType);
+        when(playerPersistenceSpi.findById(any(UUID.class))).thenReturn(Optional.of(givenPlayer));
 
-
-        assertThat(actualHeroes)
-                .usingRecursiveComparison()
-                .isEqualTo(Optional.empty());
+        assertThatExceptionOfType(ApplicationException.class).isThrownBy(()->
+                service.createAndAppendPack(givenPlayerId, givenPackType)
+        );
     }
 }

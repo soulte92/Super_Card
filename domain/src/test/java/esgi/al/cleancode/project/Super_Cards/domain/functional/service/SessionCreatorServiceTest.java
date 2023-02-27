@@ -1,5 +1,6 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.SessionException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Session;
 import esgi.al.cleancode.project.Super_Cards.domain.ports.server.SessionPersistenceSpi;
 import lombok.val;
@@ -46,10 +47,9 @@ public class SessionCreatorServiceTest {
     void should_not_create_and_save_session() {
         val givenPlayerIds = new ArrayList<UUID>();
 
-        val throwable = new IllegalArgumentException();
-        when(spi.save(any(Session.class))).thenThrow(throwable);
+        when(spi.save(any(Session.class))).thenReturn(null);
 
-        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(()->
+        assertThatExceptionOfType(SessionException.class).isThrownBy(()->
             service.create(givenPlayerIds)
         );
         verifyNoMoreInteractions(spi);

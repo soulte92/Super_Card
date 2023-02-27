@@ -1,6 +1,7 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
 import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.RoundException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarity;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Hero;
@@ -59,10 +60,9 @@ class PlayerHeroCreatorServiceTest {
 
         val speciality = Speciality.TANK.label;
         val rarity = Rarity.RARE.label;
-        val actualHero = service.pickHeroFromDefaultHero(speciality, rarity);
-        assertThat(actualHero)
-                .usingRecursiveComparison()
-                .isEqualTo(null);
+        assertThatExceptionOfType(HeroException.class).isThrownBy(()->
+                service.pickHeroFromDefaultHero(speciality, rarity)
+        );
         verifyNoMoreInteractions(defaultHeroPersistenceSpi);
     }
 

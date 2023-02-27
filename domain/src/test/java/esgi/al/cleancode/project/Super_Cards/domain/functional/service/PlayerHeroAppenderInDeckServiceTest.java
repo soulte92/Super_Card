@@ -1,5 +1,9 @@
 package esgi.al.cleancode.project.Super_Cards.domain.functional.service;
 
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.DeckException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.HeroException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.PlayerException;
+import esgi.al.cleancode.project.Super_Cards.domain.exceptions.RoundException;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Rarity;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.enums.Speciality;
 import esgi.al.cleancode.project.Super_Cards.domain.functional.model.Deck;
@@ -19,6 +23,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -67,11 +72,9 @@ public class PlayerHeroAppenderInDeckServiceTest {
         val givenSpeciality = Speciality.TANK.label;
         val givenRarity = Rarity.RARE.label;
 
-        val actualHeroes = service.appendHero(givenPlayerId, givenSpeciality, givenRarity);
-
-        assertThat(actualHeroes)
-                .usingRecursiveComparison()
-                .isEqualTo(Optional.empty());
+        assertThatExceptionOfType(PlayerException.class).isThrownBy(()->
+                service.appendHero(givenPlayerId, givenSpeciality, givenRarity)
+        );
         verifyNoMoreInteractions(playerPersistenceSpi);
     }
 
@@ -89,11 +92,9 @@ public class PlayerHeroAppenderInDeckServiceTest {
         val givenSpeciality = Speciality.TANK.label;
         val givenRarity = Rarity.RARE.label;
 
-        val actualHeroes = service.appendHero(givenPlayerId, givenSpeciality, givenRarity);
-
-        assertThat(actualHeroes)
-                .usingRecursiveComparison()
-                .isEqualTo(Optional.empty());
+        assertThatExceptionOfType(DeckException.class).isThrownBy(()->
+                service.appendHero(givenPlayerId, givenSpeciality, givenRarity)
+        );
         verifyNoMoreInteractions(playerPersistenceSpi);
         verifyNoMoreInteractions(deckPersistenceSpi);
     }
@@ -113,11 +114,9 @@ public class PlayerHeroAppenderInDeckServiceTest {
         val givenSpeciality = Speciality.TANK.label;
         val givenRarity = Rarity.RARE.label;
 
-        val actualHeroes = service.appendHero(givenPlayerId, givenSpeciality, givenRarity);
-
-        assertThat(actualHeroes)
-                .usingRecursiveComparison()
-                .isEqualTo(Optional.empty());
+        assertThatExceptionOfType(HeroException.class).isThrownBy(()->
+                service.appendHero(givenPlayerId, givenSpeciality, givenRarity)
+        );
         verifyNoMoreInteractions(playerPersistenceSpi);
     }
 }

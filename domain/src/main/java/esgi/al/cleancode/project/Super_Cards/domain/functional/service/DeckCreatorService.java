@@ -17,7 +17,11 @@ public class DeckCreatorService implements DeckCreatorApi {
     @Override
     public Deck create() {
         Deck deck = Deck.builder().build();
-        return deckPersistenceSpi.save(deck);
+        deck = deckPersistenceSpi.save(deck);
+        if (deck == null){
+            throw new DeckException("Deck Creation error");
+        }
+        return deck;
     }
 
 }
