@@ -15,6 +15,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 public class BattleServiceTest {
     @InjectMocks
@@ -23,6 +26,8 @@ public class BattleServiceTest {
     private PlayerHeroPersistenceSpi playerHeroPersistenceSpi;
     @Mock
     private RoundPersistenceSpi roundPersistenceSpi;
+    @Mock
+    private HeroUtils heroUtils;
 
     @Test
     void should_attack() {
@@ -39,47 +44,50 @@ public class BattleServiceTest {
     }
 
     @Test
-    void should_attack_heroes_each_other_with_dead_hero_defender() {
-        val heroFighter = Hero.builder()
+    void should_attack_heroes_each_other() {
+        val givenHeroFighter = Hero.builder()
                 .hp(15)
+                .xp(39)
+                .level(7)
                 .build();
-        val heroDefender = Hero.builder()
+        val givenHeroDefender = Hero.builder()
+                .hp(40)
+                .armor(0)
+                .build();
+        val actualHeroes = battleService.attackHeroesEachOther(givenHeroFighter, givenHeroDefender);
+        val givenHeroFighterResult = Hero.builder()
                 .hp(15)
+                .xp(40)
+                .level(8)
                 .build();
+        val givenHeroDefenderResult = Hero.builder()
+                .hp(25)
+                .build();
+
+        Assertions.assertEquals(actualHeroes.size(), 2);
+
+        // check hero defender hp decreased
+        Assertions.assertEquals(givenHeroDefenderResult.getHp(), actualHeroes.get(1).hp);
+
+        // check hero fighter xp increased
+        Assertions.assertEquals(givenHeroFighterResult.getXp(), actualHeroes.get(0).xp);
+        Assertions.assertEquals(givenHeroFighterResult.getLevel(), actualHeroes.get(0).level);
     }
 
     @Test
     void should_not_attack_heroes_each_other_with_dead_hero_defender() {
-        Hero heroFighter = Hero.builder()
-                .name("super-boy")
-                .hp(30)
-                .xp(100)
-                .power(20)
-                .armor(5)
-                .level(6)
-                .speciality(Speciality.TANK.label)
-                .rarity(Rarity.COMMON.label).build();
-        Hero heroDefender = Hero.builder()
-                .name("super-duck")
+        val givenHeroFighter = Hero.builder()
+                .hp(15)
+                .build();
+        val givenHeroDefender = Hero.builder()
                 .hp(0)
-                .xp(100)
-                .power(20)
-                .armor(5)
-                .level(6)
-                .speciality(Speciality.TANK.label)
-                .rarity(Rarity.COMMON.label).build();
+                .build();
 
-//        ArrayList<Hero> givenHeroes = new ArrayList<>();
-//        givenHeroes.add(heroFighter);
-//        givenHeroes.add(heroDefender);
+        val actualHeroes = battleService.attackHeroesEachOther(givenHeroFighter, givenHeroDefender);
 
-        ArrayList<Hero> actualHeroes = battleService.attackHeroesEachOther(heroFighter, heroDefender);
-
-        Assertions.assertEquals(heroDefender, actualHeroes.get(1));
-        Assertions.assertEquals(heroFighter, actualHeroes.get(0));
-
-
-
+        Assertions.assertEquals(actualHeroes.size(), 2);
+        Assertions.assertEquals(givenHeroDefender, actualHeroes.get(1));
+        Assertions.assertEquals(givenHeroFighter, actualHeroes.get(0));
     }
 
 }
